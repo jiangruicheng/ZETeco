@@ -5,4 +5,8 @@
     <string name="password">密码</string>
     <string name="forget_password">忘记密码?</string>
     <string name="register">马上注册!</string>
+    <string name="title_activity_main">考勤</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

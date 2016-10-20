@@ -8,4 +8,5 @@
     <color name="colorText">#757575</color>
     <color name="colorHintText">#d4d3d3</color>
     <color name="colorButtonLogin">#f8511a</color>
+    <color name="blak">#1e1d1c</color>
 </resources>

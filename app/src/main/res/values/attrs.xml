@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Lift2Right">
+        <attr name="checkbackgroundcolor" format="color"/>
+        <attr name="uncheckbackgroundcolor" format="color"/>
+        <attr name="lifttext" format="string"/>
+        <attr name="righttext" format="string"/>
+        <attr name="textsize" format="dimension"/>
+        <attr name="checktextcolor" format="color"/>
+        <attr name="unchecktextcolor" format="color"/>
+    </declare-styleable>
+</resources>

@@ -96,7 +96,8 @@
         android:layout_marginTop="@dimen/login_button_margin"
         android:background="@drawable/shape"
         android:text="@string/login"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        android:onClick="onClick"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

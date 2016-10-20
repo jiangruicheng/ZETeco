@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:cont="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorWhite"
+              android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        >
+
+        <ImageView
+
+            android:id="@+id/account_imag"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/login_imag_size"
+            android:background="@drawable/imag_login_80"/>
+
+        <TextView
+            android:id="@+id/text_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@+id/account_imag"
+            android:text="2月13日 星期二 \n MARK"
+            android:textColor="@color/colorText"/>
+
+        <LinearLayout
+            android:id="@+id/layout_imag_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:layout_toLeftOf="@+id/linear_approval"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imag_apply"
+                android:layout_width="36dp"
+                android:layout_height="44dp"
+                android:background="@drawable/icon_apply_yellow"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="申请"
+                android:textColor="@color/colorText"
+                android:textSize="11sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_approval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="18dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imag_approval"
+                android:layout_width="36dp"
+                android:layout_height="44dp"
+                android:background="@drawable/icon_approval_blue"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="审批"
+                android:textColor="@color/colorText"
+                android:textSize="11sp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.zkteco.zkteco.view.Lift2Right
+        cont:lifttext="周"
+        cont:righttext="月"
+        android:layout_width="120dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageButton
+            android:id="@+id/prvmonth"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_marginLeft="48dp"
+            android:background="@drawable/icon_arrow_left"/>
+
+        <TextView
+            android:id="@+id/currdatatext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="2016年10月"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            />
+
+        <ImageButton
+            android:id="@+id/nextmonth"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="48dp"
+            android:background="@drawable/icon_arrow_right"/>
+    </RelativeLayout>
+
+    <com.zkteco.zkteco.view.WeekView
+        android:id="@+id/weekview"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="1dp"/>
+
+    <com.zkteco.zkteco.view.MothDataView
+        android:id="@+id/mothData"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"/>
+</LinearLayout>
