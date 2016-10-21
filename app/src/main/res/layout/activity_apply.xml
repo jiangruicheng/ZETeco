@@ -39,6 +39,7 @@
         android:background="@drawable/content_background_application_page">
 
         <Button
+            android:id="@+id/myapply"
             android:layout_width="120dp"
             android:layout_height="36dp"
             android:layout_alignParentBottom="true"

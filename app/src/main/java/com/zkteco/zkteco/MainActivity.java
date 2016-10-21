@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -12,11 +13,11 @@ import com.zkteco.zkteco.Utill.FragmentCallBack;
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener, FragmentCallBack {
     private BottomNavigationBar navigationBar;
     private FragmentManager fragmentManager;
-    private ApplyFragment applyFragment;
-    private ApplyLeaveFragment applyLeaveFragment;
-    private SignCardFragment signCardFragment;
-    private LeaveListFragment leaveListFragment;
-    private LeaveMesegFragment leaveMesegFragment;
+    /*    private ApplyFragment applyFragment;
+        private ApplyLeaveFragment applyLeaveFragment;
+        private SignCardFragment signCardFragment;
+        private LeaveListFragment leaveListFragment;
+        private LeaveMesegFragment leaveMesegFragment;*/
     private CheckOnWorkFragment checkOnWorkFragment;
 
     private void initFragment() {
@@ -43,13 +44,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     private void addFragment(Fragment fragment) {
         fragmentManager.beginTransaction().
-                add(R.id.layFrame, fragment, fragment.getTag()).
+                replace(R.id.layFrame, fragment, fragment.getTag()).
                 addToBackStack(fragment.getTag()).
                 commit();
     }
 
     private void removeFragment(Fragment fragment) {
-        fragmentManager.beginTransaction().remove(fragment).commit();
+        /*fragmentManager.beginTransaction().
+                remove(fragment).
+                commit();*/
+        fragmentManager.popBackStack();
     }
 
     @Override
@@ -61,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         navigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         initFragment();
         initNavigationBar();
+        fragmentManager.beginTransaction().
+                add(R.id.layFrame, checkOnWorkFragment, checkOnWorkFragment.getTag()).
+                commit();
     }
 
     @Override
@@ -79,9 +86,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
     @Override
-    public void callback(int command) {
-        switch (command) {
+    public void GoTo(Fragment fragment) {
+        addFragment(fragment);
 
+    }
+
+    @Override
+    public void Back(Fragment fragment) {
+        removeFragment(fragment);
+
+    }
+
+    @Override
+    public void SetVisable(boolean Visable) {
+        if (Visable) {
+            navigationBar.setVisibility(View.VISIBLE);
+        } else {
+            navigationBar.setVisibility(View.GONE);
         }
     }
 

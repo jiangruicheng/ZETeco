@@ -1,5 +1,6 @@
 package com.zkteco.zkteco;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,13 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.zkteco.zkteco.Utill.FragmentCallBack;
 import com.zkteco.zkteco.view.WeekView;
 
 public class CheckOnWorkFragment extends Fragment {
     private ImageView apply;
     private ImageView approval;
+    private FragmentCallBack callBack;
 
     public CheckOnWorkFragment() {
+
     }
 
 
@@ -23,6 +27,14 @@ public class CheckOnWorkFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (getActivity() instanceof FragmentCallBack) {
+            this.callBack = (FragmentCallBack) getActivity();
+        }
     }
 
     @Override
@@ -40,12 +52,14 @@ public class CheckOnWorkFragment extends Fragment {
 /*
                 startActivity(new Intent(getActivity(), ApplyActivity.class));
 */
+
+                callBack.GoTo(new ApplyFragment());
             }
         });
         approval.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                callBack.GoTo(new LeaveListFragment(true));
             }
         });
         return view;

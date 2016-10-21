@@ -1,7 +1,6 @@
 package com.zkteco.zkteco;
 
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,15 +14,13 @@ import com.zkteco.zkteco.Utill.FragmentCallBack;
 /**
  * A simple {@link Fragment} subclass.
  */
-@SuppressLint("ValidFragment")
-public class LeaveMesegFragment extends Fragment {
+public class ApprovalerSelectFragment extends Fragment {
 
-    private boolean ButtonVisable;
+
     private FragmentCallBack callBack;
 
-    public LeaveMesegFragment(boolean b) {
+    public ApprovalerSelectFragment() {
         // Required empty public constructor
-        ButtonVisable = b;
     }
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -35,20 +32,14 @@ public class LeaveMesegFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        callBack.SetVisable(false);
+        callBack.SetVisable(true);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_leave_meseg, container, false);
-        View view1 = view.findViewById(R.id.bottom_button);
-        if (ButtonVisable){
-            view1.setVisibility(View.VISIBLE);
-        }else {
-            view1.setVisibility(View.GONE);
-        }
-        return view;
+        return inflater.inflate(R.layout.fragment_approvaler_select, container, false);
     }
 
 }

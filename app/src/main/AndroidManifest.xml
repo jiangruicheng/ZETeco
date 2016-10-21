@@ -20,12 +20,10 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateHidden">
         </activity>
-        <activity android:name=".ApplyActivity">
-        </activity>
-        <activity android:name=".ApplyLeaveActivity">
-        </activity>
+
     </application>
 
 </manifest>
