@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:background="@color/colorWhite"
               android:orientation="vertical"
-              tools:context="com.zkteco.zkteco.LeaveListFragment">
+              tools:context="com.zkteco.bigboss.ui.fragment.LeaveListFragment">
 
     <RelativeLayout
         android:id="@+id/title"
@@ -34,7 +34,7 @@
             android:textSize="21sp"/>
     </RelativeLayout>
 
-    <com.zkteco.zkteco.view.Lift2Right
+    <com.zkteco.bigboss.view.Lift2Right
         android:id="@+id/approval_switch"
         android:layout_width="120dp"
         android:layout_height="24dp"

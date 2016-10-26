@@ -99,7 +99,7 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <com.zkteco.zkteco.view.Lift2Right
+    <com.zkteco.bigboss.view.Lift2Right
         cont:lifttext="周"
         cont:righttext="月"
         android:layout_width="120dp"
@@ -140,13 +140,13 @@
             android:background="@drawable/icon_arrow_right"/>
     </RelativeLayout>
 
-    <com.zkteco.zkteco.view.WeekView
+    <com.zkteco.bigboss.view.WeekView
         android:id="@+id/weekview"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginTop="1dp"/>
 
-    <com.zkteco.zkteco.view.MothDataView
+    <com.zkteco.bigboss.view.MothDataView
         android:id="@+id/mothData"
         android:layout_width="match_parent"
         android:layout_height="220dp"/>

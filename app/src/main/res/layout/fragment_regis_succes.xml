@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorWhite"
+              android:orientation="vertical"
+              tools:context="com.zkteco.bigboss.ui.fragment.RegisSuccesFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@color/colorButtonLogin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="注册"
+            android:textColor="@color/colorWhite"
+            android:textSize="21sp"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/setupcompany"
+        android:layout_width="128dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/shape"
+        android:text="创建企业"
+        android:textColor="@color/colorWhite"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:text="或者"
+        android:textColor="@color/colorButtonLogin"
+        android:textSize="12sp"/>
+
+    <Button
+        android:id="@+id/applyjoincompany"
+        android:layout_width="128dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape"
+        android:text="申请加入企业"
+        android:textColor="@color/colorWhite"/>
+</LinearLayout>

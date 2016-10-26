@@ -50,7 +50,7 @@
         android:orientation="horizontal"
         android:padding="5dp">
 
-        <com.zkteco.zkteco.view.DatePick
+        <com.zkteco.bigboss.view.DatePick
             android:id="@+id/dp_test"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:layout_weight="1"
             android:gravity="center"/>
 
-        <com.zkteco.zkteco.view.TimePicker
+        <com.zkteco.bigboss.view.TimePicker
             android:id="@+id/tp_test"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

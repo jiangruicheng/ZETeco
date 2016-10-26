@@ -15,7 +15,7 @@
         android:textColor="@color/blak"
         android:textSize="19sp"/>
 
-    <com.zkteco.zkteco.view.SelectView
+    <com.zkteco.bigboss.view.SelectView
         android:id="@+id/select"
         android:layout_width="32dp"
         android:layout_height="32dp"
