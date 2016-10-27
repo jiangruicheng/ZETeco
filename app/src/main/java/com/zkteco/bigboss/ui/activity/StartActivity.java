@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
-import com.zkteco.zkteco.R;
+import com.zkteco.bigboss.R;
 
 public class StartActivity extends AppCompatActivity {
     Handler mhandler = new Handler() {

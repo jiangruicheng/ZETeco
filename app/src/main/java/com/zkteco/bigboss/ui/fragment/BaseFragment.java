@@ -3,7 +3,7 @@ package com.zkteco.bigboss.ui.fragment;
 
 import android.support.v4.app.Fragment;
 
-import com.zkteco.zkteco.R;
+import com.zkteco.bigboss.R;
 
 /**
  * A simple {@link Fragment} subclass.

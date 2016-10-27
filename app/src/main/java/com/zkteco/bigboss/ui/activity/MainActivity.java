@@ -8,9 +8,9 @@ import android.view.View;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.zkteco.bigboss.Utill.FragmentCallBack;
+import com.zkteco.bigboss.util.FragmentCallBack;
 import com.zkteco.bigboss.ui.fragment.CheckOnWorkFragment;
-import com.zkteco.zkteco.R;
+import com.zkteco.bigboss.R;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener, FragmentCallBack {
     private BottomNavigationBar navigationBar;

@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.zkteco.bigboss.Utill.FragmentCallBack;
-import com.zkteco.zkteco.R;
+import com.zkteco.bigboss.util.FragmentCallBack;
+import com.zkteco.bigboss.R;
 import com.zkteco.bigboss.view.WeekView;
 
 public class CheckOnWorkFragment extends Fragment {

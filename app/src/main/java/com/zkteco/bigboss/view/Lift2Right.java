@@ -13,7 +13,7 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.zkteco.zkteco.R;
+import com.zkteco.bigboss.R;
 
 
 /**

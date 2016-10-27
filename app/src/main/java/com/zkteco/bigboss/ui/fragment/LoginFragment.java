@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.zkteco.bigboss.ui.activity.MainActivity;
-import com.zkteco.zkteco.R;
+import com.zkteco.bigboss.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.zkteco.zkteco.R;
+import com.zkteco.bigboss.R;
 import com.zkteco.bigboss.ui.fragment.LoginFragment;
 
 public class LoginActivity extends AppCompatActivity {

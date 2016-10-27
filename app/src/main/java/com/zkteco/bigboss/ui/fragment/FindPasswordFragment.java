@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zkteco.zkteco.R;
+import com.zkteco.bigboss.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.zkteco.bigboss.Utill.DateUtils;
+import com.zkteco.bigboss.util.DateUtils;
 
 import java.util.Calendar;
 import java.util.List;

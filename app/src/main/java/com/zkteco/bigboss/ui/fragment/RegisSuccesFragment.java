@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.zkteco.zkteco.R;
+import com.zkteco.bigboss.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

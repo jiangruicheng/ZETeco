@@ -1,4 +1,4 @@
-package com.zkteco.bigboss.bean;
+package com.zkteco.bigboss.bean.json;
 
 /**
  * Created by jiang_ruicheng on 16/10/27.

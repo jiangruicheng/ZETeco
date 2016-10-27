@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zkteco.zkteco.R;
-import com.zkteco.bigboss.Utill.FragmentCallBack;
+import com.zkteco.bigboss.R;
+import com.zkteco.bigboss.util.FragmentCallBack;
 
 
 /**

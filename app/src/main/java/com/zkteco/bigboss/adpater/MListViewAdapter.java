@@ -1,4 +1,4 @@
-package com.zkteco.bigboss.Utill;
+package com.zkteco.bigboss.adpater;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.zkteco.bigboss.view.SelectView;
-import com.zkteco.zkteco.R;
+import com.zkteco.bigboss.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by jiang_ruicheng on 16/10/20.
  */
-public class MListViewAdpater extends BaseAdapter {
+public class MListViewAdapter extends BaseAdapter {
     private ArrayList<String> ItemText;
     private Context context;
     private int SelectItem;
@@ -25,7 +25,7 @@ public class MListViewAdpater extends BaseAdapter {
         ItemText = itemText;
     }
 
-    public MListViewAdpater(Context context) {
+    public MListViewAdapter(Context context) {
         this.context = context;
     }
 

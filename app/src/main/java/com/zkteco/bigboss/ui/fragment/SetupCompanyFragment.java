@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zkteco.zkteco.R;
+import com.zkteco.bigboss.R;
 
 
 /**

@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.zkteco.zkteco.R;
-import com.zkteco.bigboss.Utill.FragmentCallBack;
+import com.zkteco.bigboss.R;
+import com.zkteco.bigboss.util.FragmentCallBack;
 
 /**
  * A simple {@link Fragment} subclass.

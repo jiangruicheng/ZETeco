@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.zkteco.zkteco.R;
-import com.zkteco.bigboss.Utill.FragmentCallBack;
-import com.zkteco.bigboss.Utill.MesgListAdpater;
+import com.zkteco.bigboss.R;
+import com.zkteco.bigboss.util.FragmentCallBack;
+import com.zkteco.bigboss.adpater.MesgListAdapter;
 
 
 /**
@@ -54,8 +54,8 @@ public class LeaveListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_leave_list, container, false);
         listView = (ListView) view.findViewById(R.id.approval_list);
-        MesgListAdpater mesgListAdpater = new MesgListAdpater(getActivity());
-        listView.setAdapter(mesgListAdpater);
+        MesgListAdapter mesgListAdapter = new MesgListAdapter(getActivity());
+        listView.setAdapter(mesgListAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

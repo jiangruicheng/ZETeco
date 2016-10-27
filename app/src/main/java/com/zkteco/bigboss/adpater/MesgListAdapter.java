@@ -1,4 +1,4 @@
-package com.zkteco.bigboss.Utill;
+package com.zkteco.bigboss.adpater;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,15 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.zkteco.zkteco.R;
+import com.zkteco.bigboss.R;
 
 /**
  * Created by jiang_ruicheng on 16/10/21.
  */
-public class MesgListAdpater extends BaseAdapter {
+public class MesgListAdapter extends BaseAdapter {
     private Context context;
 
-    public MesgListAdpater(Context context) {
+    public MesgListAdapter(Context context) {
         this.context = context;
     }
 

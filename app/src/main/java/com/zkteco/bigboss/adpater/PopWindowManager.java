@@ -1,80 +1,36 @@
-/*
-package com.zkteco.zkteco;
+package com.zkteco.bigboss.adpater;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.WindowManager;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import PopWindowManager;
+import com.zkteco.bigboss.view.DatePick;
+import com.zkteco.bigboss.view.TimePicker;
+import com.zkteco.bigboss.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
-public class ApplyLeaveActivity extends AppCompatActivity {
-    private Button button;
-
-    private View back, leavetypes, leavestarttime, leavefinishtime;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_apply_leave);
-        button = (Button) findViewById(R.id.makesure);
-        back = findViewById(R.id.back);
-        leavetypes = findViewById(R.id.leave_types);
-        leavestarttime = findViewById(R.id.leave_start_time);
-        leavefinishtime = findViewById(R.id.leave_finish_time);
-    }
-
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-            case R.id.leave_types:
-                */
-/*popwindow();*//*
-
-                ArrayList<String> items = new ArrayList<>();
-                items.add("事假");
-                items.add("病假");
-                items.add("婚假");
-                items.add("产假");
-                items.add("丧假");
-                items.add("陪产假");
-                PopWindowManager.popListWindow(ApplyLeaveActivity.this, button, items);
-                break;
-            case R.id.leave_start_time:
-                */
-/*poptimewindow();*//*
-
-                PopWindowManager.poptimewindow(ApplyLeaveActivity.this, button);
-                break;
-            case R.id.leave_finish_time:
-                */
-/*poptimewindow();*//*
-
-                PopWindowManager.poptimewindow(ApplyLeaveActivity.this, button);
-                break;
-        }
-    }
-
-   */
-/* private void popwindow() {
-        RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(getApplication()).inflate(R.layout.popview_leave,
+/**
+ * Created by jiang_ruicheng on 16/10/21.
+ */
+public class PopWindowManager {
+    public static void popListWindow(Context context, View view, ArrayList list) {
+        RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.popview_leave,
                 null);
         ListView listView = (ListView) relativeLayout.findViewById(R.id.leavetype_list);
-        MListViewAdpater adpater = new MListViewAdpater(getApplication());
-        ArrayList<String> items = new ArrayList<>();
-        items.add("事假");
-        items.add("病假");
-        items.add("婚假");
-        items.add("产假");
-        items.add("丧假");
-        items.add("陪产假");
-        adpater.setItemText(items);
+        MListViewAdapter adpater = new MListViewAdapter(context.getApplicationContext());
+        adpater.setItemText(list);
         listView.setAdapter(adpater);
-        WindowManager wg = (WindowManager) ApplyLeaveActivity.this.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wg = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         PopupWindow popupWindow = new PopupWindow(relativeLayout, -1, wg.getDefaultDisplay().getHeight() / 5 * 3);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
@@ -85,19 +41,11 @@ public class ApplyLeaveActivity extends AppCompatActivity {
 
             }
         });
-        popupWindow.showAtLocation(button, Gravity.BOTTOM, 0, 0);
+        popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
 
     }
 
-    *//*
-*/
-/*private int currentHour, currentMinute, currentDay, selectHour, selectMinute, selectDay;
-    private String selectDate, selectTime;
-*//*
-*/
-/*
-
-    public void poptimewindow() {
+    public static void poptimewindow(final Context context, View Popview) {
         final int currentHour;
         final int currentMinute;
         final int currentDay;
@@ -126,7 +74,7 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                 selectMinute[0] = minute;
             }
         };
-        View view = View.inflate(ApplyLeaveActivity.this, R.layout.dialog_select_time, null);
+        View view = View.inflate(context, R.layout.dialog_select_time, null);
         selectDate[0] = calendar.get(Calendar.YEAR) + "年" + calendar.get(Calendar.MONTH) + "月"
                 + calendar.get(Calendar.DAY_OF_MONTH) + "日"
                 + DatePick.getDayOfWeekCN(calendar.get(Calendar.DAY_OF_WEEK));
@@ -143,7 +91,7 @@ public class ApplyLeaveActivity extends AppCompatActivity {
         //设置滑动改变监听器
         dp_test.setOnChangeListener(dp_onchanghelistener);
         tp_test.setOnChangeListener(tp_onchanghelistener);
-        WindowManager wg = (WindowManager) ApplyLeaveActivity.this.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wg = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         pw = new PopupWindow(view, -1, wg.getDefaultDisplay().getHeight() / 10 * 3);
 //				//设置这2个使得点击pop以外区域可以去除pop
 //				pw.setOutsideTouchable(true);
@@ -153,7 +101,7 @@ public class ApplyLeaveActivity extends AppCompatActivity {
         pw.setFocusable(true);
         pw.setOutsideTouchable(true);
         pw.setBackgroundDrawable(new BitmapDrawable());
-        pw.showAtLocation(button, 0, 0, Gravity.END);
+        pw.showAtLocation(Popview, 0, 0, Gravity.END);
 
         //点击确定
         tv_ok.setOnClickListener(new View.OnClickListener() {
@@ -161,15 +109,15 @@ public class ApplyLeaveActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 if (selectDay[0] == currentDay) {    //在当前日期情况下可能出现选中过去时间的情况
                     if (selectHour[0] < currentHour) {
-                        Toast.makeText(getApplicationContext(), "不能选择过去的时间\n        请重新选择", 0).show();
+                        Toast.makeText(context.getApplicationContext(), "不能选择过去的时间\n        请重新选择", 0).show();
                     } else if ((selectHour[0] == currentHour) && (selectMinute[0] < currentMinute)) {
-                        Toast.makeText(getApplicationContext(), "不能选择过去的时间\n        请重新选择", 0).show();
+                        Toast.makeText(context.getApplicationContext(), "不能选择过去的时间\n        请重新选择", 0).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), selectDate[0] + selectTime[0], 0).show();
+                        Toast.makeText(context.getApplicationContext(), selectDate[0] + selectTime[0], 0).show();
                         pw.dismiss();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), selectDate[0] + selectTime[0], 0).show();
+                    Toast.makeText(context.getApplicationContext(), selectDate[0] + selectTime[0], 0).show();
                     pw.dismiss();
                 }
             }
@@ -183,10 +131,5 @@ public class ApplyLeaveActivity extends AppCompatActivity {
             }
         });
 
-    }*//*
-
+    }
 }
-
-
-
-*/
