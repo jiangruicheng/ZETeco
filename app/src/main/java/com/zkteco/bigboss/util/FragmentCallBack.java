@@ -1,6 +1,6 @@
 package com.zkteco.bigboss.util;
 
-import android.support.v4.app.Fragment;
+import com.zkteco.bigboss.ui.fragment.BasemainFragment;
 
 /**
  * Created by jiang_ruicheng on 16/10/21.
@@ -17,9 +17,9 @@ public interface FragmentCallBack {
     int GOTO_ApprovalMesgFragment = 8;
     int GOTO_ApprovalerListFragment = 9;*/
 
-    public void GoTo(Fragment fragment);
+    public void GoTo(BasemainFragment fragment);
 
-    public void Back(Fragment fragment);
+    public void Back(BasemainFragment fragment);
 
     public void SetVisable(boolean Visable);
 }

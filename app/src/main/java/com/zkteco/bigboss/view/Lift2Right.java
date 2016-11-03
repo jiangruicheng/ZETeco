@@ -48,8 +48,8 @@ public class Lift2Right extends View {
         right = array.getString(R.styleable.Lift2Right_righttext);
         unclickbackgroundcolor = array.getColor(R.styleable.Lift2Right_uncheckbackgroundcolor, Color.WHITE);
         clickbackgroundcolor = array.getColor(R.styleable.Lift2Right_checkbackgroundcolor, Color.RED);
-        unclicktextcolor = array.getColor(R.styleable.Lift2Right_uncheckbackgroundcolor, Color.RED);
-        clicktextcolor = array.getColor(R.styleable.Lift2Right_checkbackgroundcolor, Color.WHITE);
+        unclicktextcolor = array.getColor(R.styleable.Lift2Right_unchecktextcolor, Color.RED);
+        clicktextcolor = array.getColor(R.styleable.Lift2Right_checktextcolor, Color.WHITE);
         textsize = (int) array.getDimension(R.styleable.Lift2Right_textsize, 48);
         array.recycle();
 
@@ -86,7 +86,7 @@ public class Lift2Right extends View {
         //super.onDraw(canvas);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setTextSize(textsize);
-        paint.setColor(Color.RED);
+        paint.setColor(clickbackgroundcolor);
         RectF rect = new RectF(0, 0, getWidth(), getHeight());
         canvas.drawRoundRect(rect, 20, 20, paint);
         //画整个圆矩形
@@ -137,7 +137,7 @@ public class Lift2Right extends View {
         return super.onTouchEvent(event);
     }
 
-    interface OnButtonClick {
+   public interface OnButtonClick {
         public void onClick(boolean IsCheckLift);
     }
 

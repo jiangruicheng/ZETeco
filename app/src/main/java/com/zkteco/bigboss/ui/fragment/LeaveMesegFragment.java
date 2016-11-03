@@ -17,7 +17,7 @@ import com.zkteco.bigboss.util.FragmentCallBack;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-public class LeaveMesegFragment extends Fragment {
+public class LeaveMesegFragment extends BasemainFragment {
 
     private boolean ButtonVisable;
     private FragmentCallBack callBack;
@@ -25,6 +25,7 @@ public class LeaveMesegFragment extends Fragment {
     public LeaveMesegFragment(boolean b) {
         // Required empty public constructor
         ButtonVisable = b;
+        setIsshownavg(false);
     }
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -36,7 +37,8 @@ public class LeaveMesegFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        callBack.SetVisable(false);
+
+        //callBack.SetVisable(false);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

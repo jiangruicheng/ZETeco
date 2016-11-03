@@ -2,9 +2,13 @@
 <manifest package="com.zkteco.bigboss"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <meta-data
         android:name="APPKEY"
-        android:value="BCrCzzUO/bgxYSN66xCYhaKs0KT0bpYX0IFJdkkCtCH9/Nw077D2LAhyRBTShzVO"></meta-data>
+        android:value="BCrCzzUO/bgxYSN66xCYhaKs0KT0bpYX0IFJdkkCtCH9/Nw077D2LAhyRBTShzVO"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,8 +27,7 @@
         <activity
             android:name="com.zkteco.bigboss.ui.activity.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustPan|stateHidden">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
 
     </application>

@@ -7,4 +7,5 @@
     <dimen name="login_button_margin">42dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="title_height">38dp</dimen>
+    <dimen name="text_size_apply_leav">18sp</dimen>
 </resources>

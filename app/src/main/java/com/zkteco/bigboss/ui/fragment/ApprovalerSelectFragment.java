@@ -15,7 +15,7 @@ import com.zkteco.bigboss.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ApprovalerSelectFragment extends Fragment {
+public class ApprovalerSelectFragment extends BasemainFragment {
 
 
     private FragmentCallBack callBack;
@@ -33,7 +33,8 @@ public class ApprovalerSelectFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        callBack.SetVisable(true);
+        setIsshownavg(true);
+        //callBack.SetVisable(true);
     }
 
     @Override

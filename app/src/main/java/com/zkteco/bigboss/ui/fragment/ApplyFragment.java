@@ -16,11 +16,11 @@ import com.zkteco.bigboss.util.FragmentCallBack;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ApplyFragment extends Fragment {
+public class ApplyFragment extends BasemainFragment {
 
     public ApplyFragment() {
         // Required empty public constructor
-
+        setIsshownavg(true);
     }
 
     private FragmentCallBack callBack;
@@ -41,7 +41,8 @@ public class ApplyFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        callBack.SetVisable(true);
+
+
     }
 
     @Override

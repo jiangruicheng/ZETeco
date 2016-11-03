@@ -18,13 +18,13 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ApplyLeaveFragment extends Fragment implements View.OnClickListener {
+public class ApplyLeaveFragment extends BasemainFragment implements View.OnClickListener {
 
     private FragmentCallBack callBack;
 
     public ApplyLeaveFragment() {
         // Required empty public constructor
-
+        setIsshownavg(false);
     }
 
 
@@ -37,11 +37,14 @@ public class ApplyLeaveFragment extends Fragment implements View.OnClickListener
 
     private Button button, selectapprovaler;
     private View back, leavetypes, leavestarttime, leavefinishtime;
+
     @Override
     public void onResume() {
         super.onResume();
-        callBack.SetVisable(false);
+
+        // callBack.SetVisable(false);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,7 +79,12 @@ public class ApplyLeaveFragment extends Fragment implements View.OnClickListener
                 items.add("产假");
                 items.add("丧假");
                 items.add("陪产假");
-                PopWindowManager.popListWindow(getActivity(), button, items);
+                PopWindowManager.popListWindow(getActivity(), button, items, new PopWindowManager.Popviewcallback() {
+                    @Override
+                    public void callback(int p) {
+
+                    }
+                });
                 break;
             case R.id.leave_start_time:
                 /*poptimewindow();*/

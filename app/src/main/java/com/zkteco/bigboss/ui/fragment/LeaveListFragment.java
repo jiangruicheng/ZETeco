@@ -20,7 +20,7 @@ import com.zkteco.bigboss.adpater.MesgListAdapter;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-public class LeaveListFragment extends Fragment {
+public class LeaveListFragment extends BasemainFragment {
 
 
     private FragmentCallBack callBack;
@@ -30,6 +30,7 @@ public class LeaveListFragment extends Fragment {
     public LeaveListFragment(boolean b) {
         // Required empty public constructor
         a = b;
+        setIsshownavg(true);
     }
 
     private ListView listView;
@@ -37,7 +38,8 @@ public class LeaveListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        callBack.SetVisable(true);
+
+        //callBack.SetVisable(true);
     }
 
     @Override

@@ -17,12 +17,13 @@ import java.util.Calendar;
 import java.util.List;
 
 public class MothDataView extends View {
+    private boolean IsWeek = false;
     private static final int NUM_COLUMNS = 7;
     private static final int NUM_ROWS = 6;
     private Paint mPaint;
     private int mDayColor = Color.parseColor("#000000");
     private int mSelectDayColor = Color.parseColor("#ffffff");
-    private int mSelectBGColor = Color.parseColor("#1FC2F3");
+    private int mSelectBGColor = Color.parseColor("#FFC1C0C0");
     private int mCurrentColor = Color.parseColor("#ff0000");
     private int mCurrYear, mCurrMonth, mCurrDay;
     private int mSelYear, mSelMonth, mSelDay;
@@ -32,9 +33,10 @@ public class MothDataView extends View {
     private TextView tv_date, tv_week;
     private int weekRow;
     private int[][] daysString;
+    private static int[][] dateString;
     private int mCircleRadius = 6;
     private DateClick dateClick;
-    private int mCircleColor = Color.parseColor("#ff0000");
+    private int mCircleColor = Color.parseColor("#00AF00");
     private List<Integer> daysHasThingList;
 
     public MothDataView(Context context, AttributeSet attrs) {
@@ -70,46 +72,145 @@ public class MothDataView extends View {
     protected void onDraw(Canvas canvas) {
         initSize();
         daysString = new int[6][7];
+
         mPaint.setTextSize(mDaySize * mDisplayMetrics.scaledDensity);
         String dayString;
         int mMonthDays = DateUtils.getMonthDays(mSelYear, mSelMonth);
         int weekNumber = DateUtils.getFirstDayWeek(mSelYear, mSelMonth);
         Log.d("DateView", "DateView:" + mSelMonth + "月1号周" + weekNumber);
-        for (int day = 0; day < mMonthDays; day++) {
-            dayString = (day + 1) + "";
-            int column = (day + weekNumber-2) % 7;
-            int row = (day + weekNumber - 2) / 7;
-            daysString[row][column] = day + 1;
-            int startX = (int) (mColumnSize * column + (mColumnSize - mPaint.measureText(dayString)) / 2);
-            int startY = (int) (mRowSize * row + mRowSize / 2 - (mPaint.ascent() + mPaint.descent()) / 2);
-            if (dayString.equals(mSelDay + "")) {
-                //绘制背景色矩形
-                int startRecX = mColumnSize * column;
-                int startRecY = mRowSize * row;
-                int endRecX = startRecX + mColumnSize;
-                int endRecY = startRecY + mRowSize;
-                mPaint.setColor(mSelectBGColor);
-                canvas.drawRect(startRecX, startRecY, endRecX, endRecY, mPaint);
-                //记录第几行，即第几周
-                weekRow = row + 1;
-            }
-            //绘制事务圆形标志
-            drawCircle(row, column, day + 1, canvas);
-            if (dayString.equals(mSelDay + "")) {
-                mPaint.setColor(mSelectDayColor);
-            } else if (dayString.equals(mCurrDay + "") && mCurrDay != mSelDay && mCurrMonth == mSelMonth) {
-                //正常月，选中其他日期，则今日为红色
-                mPaint.setColor(mCurrentColor);
+        if (IsWeek) {
+
+            /*int currdayweeknum = DateUtils.getDay2Week();
+            int currday = Calendar.getInstance().get(Calendar.DATE);
+            int firstweekday, lastweekday;
+            firstweekday = currday - currdayweeknum + 1;
+            if ((currday + 7 - currdayweeknum) > mMonthDays) {
+                lastweekday = mMonthDays;
             } else {
-                mPaint.setColor(mDayColor);
-            }
-            canvas.drawText(dayString, startX, startY, mPaint);
-            if (tv_date != null) {
-                tv_date.setText(mSelYear + "年" + (mSelMonth + 1) + "月");
+                lastweekday = currday + 7 - currdayweeknum;
             }
 
-            if (tv_week != null) {
-                tv_week.setText("第" + weekRow + "周");
+            for (int i = 0; i < lastweekday - firstweekday + 1; i++) {
+                dayString = firstweekday + i + "";
+                int startX = (int) (mColumnSize * i + (mColumnSize - mPaint.measureText(dayString)) / 2);
+                int startY = (int) (mRowSize + mRowSize / 2 - (mPaint.ascent() + mPaint.descent()) / 2);
+                canvas.drawText(dayString, startX, startY, mPaint);
+                *//*int X = (int) (mColumnSize * i + (mColumnSize - mPaint.measureText(dayString)) / 2);
+                int Y = (int) (mRowSize + mRowSize / 2 - (mPaint.ascent() + mPaint.descent()) / 2);*//*
+                if (dayString.equals(currday + "")) {
+                    //绘制背景色矩形
+                *//*int startRecX = mColumnSize * column;
+                int startRecY = mRowSize * row;
+                int endRecX = startRecX + mColumnSize;
+                int endRecY = startRecY + mRowSize;*//*
+                    mPaint.setColor(mSelectBGColor);
+                    canvas.drawCircle(mColumnSize * i + mColumnSize / 2, mRowSize + mRowSize / 2, mRowSize / 2, mPaint);
+                    // canvas.drawRect(startRecX, startRecY, endRecX, endRecY, mPaint);
+                    //记录第几行，即第几周
+
+                }
+                //绘制事务圆形标志
+                drawCircle(1, i, firstweekday, canvas);
+                *//*if (dayString.equals(mSelDay + "")) {
+                    mPaint.setColor(mSelectDayColor);
+                } else if (dayString.equals(mCurrDay + "") && mCurrDay != mSelDay && mCurrMonth == mSelMonth) {
+                    //正常月，选中其他日期，则今日为红色
+                    //mPaint.setColor(mCurrentColor);
+                } else {
+                    mPaint.setColor(mDayColor);
+                }*//*
+                mPaint.setColor(mDayColor);
+                canvas.drawText(dayString, startX, startY, mPaint);
+            }*/
+
+            for (int day = 0; day < dateString[weekRow - 1].length; day++) {
+                dayString = dateString[weekRow - 1][day] + "";
+
+                int startX = (int) (mColumnSize * day + (mColumnSize - mPaint.measureText(dayString)) / 2);
+                int startY = (int) (mRowSize + mRowSize / 2 - (mPaint.ascent() + mPaint.descent()) / 2);
+                if (dayString.equals(mSelDay + "")) {
+                    //绘制背景色矩形
+                /*int startRecX = mColumnSize * column;
+                int startRecY = mRowSize * row;
+                int endRecX = startRecX + mColumnSize;
+                int endRecY = startRecY + mRowSize;*/
+                    mPaint.setColor(mSelectBGColor);
+                    canvas.drawCircle(mColumnSize * day + mColumnSize / 2, mRowSize + mRowSize / 2, mRowSize / 2, mPaint);
+                    // canvas.drawRect(startRecX, startRecY, endRecX, endRecY, mPaint);
+                    //记录第几行，即第几周
+
+                }
+                //绘制事务圆形标志
+                if (!dayString.equals("0")) {
+                    drawCircle(1, day, day + 1, canvas);
+                }
+
+                if (dayString.equals(mSelDay + "")) {
+                    mPaint.setColor(mSelectDayColor);
+                } else if (dayString.equals(mCurrDay + "") && mCurrDay != mSelDay && mCurrMonth == mSelMonth) {
+                    //正常月，选中其他日期，则今日为红色
+                    mPaint.setColor(mCurrentColor);
+                } else {
+                    mPaint.setColor(mDayColor);
+                }
+                if (!dayString.equals("0")) {
+                    canvas.drawText(dayString, startX, startY, mPaint);
+                }
+                if (tv_date != null) {
+                    tv_date.setText(mSelYear + "年" + (mSelMonth + 1) + "月");
+                }
+
+                if (tv_week != null) {
+                    tv_week.setText("第" + weekRow + "周");
+                }
+            }
+        } else {
+            dateString = new int[6][7];
+            int linerow = (mMonthDays + weekNumber - 2) / 7;
+            for (int i = 1; i <= linerow; i++) {
+                mPaint.setColor(mSelectBGColor);
+                canvas.drawLine(0, i * mRowSize, getWidth(), i * mRowSize, mPaint);
+            }
+            for (int day = 0; day < mMonthDays; day++) {
+                dayString = (day + 1) + "";
+                int column = (day + weekNumber - 1) % 7;
+                int row = (day + weekNumber - 1) / 7;
+
+                dateString[row][column] = day + 1;
+                daysString[row][column] = day + 1;
+                int startX = (int) (mColumnSize * column + (mColumnSize - mPaint.measureText(dayString)) / 2);
+                int startY = (int) (mRowSize * row + mRowSize / 2 - (mPaint.ascent() + mPaint.descent()) / 2);
+                if (dayString.equals(mSelDay + "")) {
+                    //绘制背景色矩形
+                /*int startRecX = mColumnSize * column;
+                int startRecY = mRowSize * row;
+                int endRecX = startRecX + mColumnSize;
+                int endRecY = startRecY + mRowSize;*/
+                    mPaint.setColor(mSelectBGColor);
+                    canvas.drawCircle(mColumnSize * column + mColumnSize / 2, mRowSize * row + mRowSize / 2, mRowSize / 2, mPaint);
+                    // canvas.drawRect(startRecX, startRecY, endRecX, endRecY, mPaint);
+                    //记录第几行，即第几周
+                    weekRow = row + 1;
+                    Log.i("rowday", "onDraw: " + daysString[row][1]);
+                }
+                //绘制事务圆形标志
+                drawCircle(row, column, day + 1, canvas);
+                if (dayString.equals(mSelDay + "")) {
+                    mPaint.setColor(mSelectDayColor);
+                } else if (dayString.equals(mCurrDay + "") && mCurrDay != mSelDay && mCurrMonth == mSelMonth) {
+                    //正常月，选中其他日期，则今日为红色
+                    mPaint.setColor(mCurrentColor);
+                } else {
+                    mPaint.setColor(mDayColor);
+                }
+                canvas.drawText(dayString, startX, startY, mPaint);
+                if (tv_date != null) {
+                    tv_date.setText(mSelYear + "年" + (mSelMonth + 1) + "月");
+                }
+
+                if (tv_week != null) {
+                    tv_week.setText("第" + weekRow + "周");
+                }
             }
         }
     }
@@ -122,6 +223,10 @@ public class MothDataView extends View {
             float circley = (float) (mRowSize * row + mRowSize * 0.2);
             canvas.drawCircle(circleX, circley, mCircleRadius, mPaint);
         }
+        mPaint.setColor(mCircleColor);
+        float circleX = (float) (mColumnSize * column + mColumnSize / 2);
+        float circley = (float) (mRowSize * row + mRowSize * 0.8);
+        canvas.drawCircle(circleX, circley, mCircleRadius, mPaint);
     }
 
     @Override
@@ -182,7 +287,11 @@ public class MothDataView extends View {
     private void doClickAction(int x, int y) {
         int row = y / mRowSize;
         int column = x / mColumnSize;
-        setSelectYearMonth(mSelYear, mSelMonth, daysString[row][column]);
+        if (IsWeek) {
+            setSelectYearMonth(mSelYear, mSelMonth, dateString[weekRow - 1][column]);
+        } else {
+            setSelectYearMonth(mSelYear, mSelMonth, daysString[row][column]);
+        }
         invalidate();
         //执行activity发送过来的点击处理事件
         if (dateClick != null) {
@@ -209,12 +318,14 @@ public class MothDataView extends View {
         }
         setSelectYearMonth(year, month, day);
         invalidate();
+
     }
 
     /**
      * 右点击，日历向前翻页
      */
     public void onRightClick() {
+
         int year = mSelYear;
         int month = mSelMonth;
         int day = mSelDay;
@@ -364,6 +475,11 @@ public class MothDataView extends View {
      */
     public void setTodayToView() {
         setSelectYearMonth(mCurrYear, mCurrMonth, mCurrDay);
+        invalidate();
+    }
+
+    public void swichMonthorWeek(boolean isWeek) {
+        IsWeek = isWeek;
         invalidate();
     }
 }

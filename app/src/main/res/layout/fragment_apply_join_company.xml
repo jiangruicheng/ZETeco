@@ -2,7 +2,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorWhite"
+                android:background="@color/yinse"
                 tools:context="com.zkteco.bigboss.ui.fragment.ApplyJoinCompanyFragment">
 
     <LinearLayout
@@ -39,26 +39,47 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="24dp"
-            android:background="@color/colorHintText">
+            >
 
-            <SearchView
-                android:layout_width="148dp"
-                android:layout_height="48dp"
-                android:layout_alignParentLeft="true"
-                android:layout_gravity="center"
-                android:layout_marginRight="70dp"/>
+            <RelativeLayout
+
+                android:layout_width="290dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/shape_searche">
+
+                <ImageView
+                    android:id="@+id/search_imag"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:background="@drawable/icon_search"/>
+
+                <EditText
+                    android:id="@+id/search_edit"
+                    android:layout_width="240dp"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/search_imag"
+                    android:background="@null"
+                    android:textColor="@color/blak"/>
+
+            </RelativeLayout>
 
             <Button
-                android:layout_width="68dp"
-                android:layout_height="48dp"
+                android:id="@+id/search_button"
+                android:layout_width="56dp"
+                android:layout_height="32dp"
                 android:layout_alignParentRight="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="24dp"
                 android:background="@drawable/shape"
                 android:text="搜索"
                 android:textColor="@color/colorWhite"
-                android:textSize="19sp"
+                android:textSize="17sp"
                 />
         </RelativeLayout>
 
@@ -69,11 +90,14 @@
             android:layout_marginTop="12dp"
             android:text="查询结果"
             android:textColor="@color/colorHintText"
-            android:textSize="17sp"/>
+            android:textSize="12sp"/>
 
         <FrameLayout
+            android:id="@+id/companymesg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            >
 
             <TextView
                 android:id="@+id/result"
@@ -87,10 +111,12 @@
                 android:visibility="gone"/>
 
             <LinearLayout
+                android:id="@+id/companymesglist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
 
                 <RelativeLayout
@@ -109,9 +135,10 @@
                         android:padding="5dp"
                         android:text="企业ID"
                         android:textColor="@color/blak"
-                        android:textSize="19sp"/>
+                        android:textSize="@dimen/text_size_apply_leav"/>
 
                     <TextView
+                        android:id="@+id/showid"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
@@ -119,7 +146,7 @@
                         android:padding="5dp"
                         android:text="1234567"
                         android:textColor="@color/blak"
-                        android:textSize="19sp"/>
+                        android:textSize="@dimen/text_size_apply_leav"/>
                 </RelativeLayout>
 
                 <View
@@ -143,18 +170,18 @@
                         android:padding="5dp"
                         android:text="企业名称"
                         android:textColor="@color/blak"
-                        android:textSize="19sp"/>
+                        android:textSize="@dimen/text_size_apply_leav"/>
 
-                    <EditText
+                    <TextView
+                        android:id="@+id/showname"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:gravity="center"
-                        android:hint="请输入企业名称"
                         android:padding="5dp"
                         android:textColor="@color/blak"
                         android:textColorHint="@color/blak"
-                        android:textSize="19sp"/>
+                        android:textSize="@dimen/text_size_apply_leav"/>
                 </RelativeLayout>
 
                 <View
@@ -178,14 +205,17 @@
                         android:padding="5dp"
                         android:text="所属行业"
                         android:textColor="@color/blak"
-                        android:textSize="19sp"/>
+                        android:textSize="@dimen/text_size_apply_leav"/>
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                    <TextView
+                        android:id="@+id/showindustrydesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/icon_arrow_right_big"/>
+                        android:textColor="@color/blak"
+                        android:textSize="@dimen/text_size_apply_leav"
+                        />
                 </RelativeLayout>
 
                 <View
@@ -209,18 +239,18 @@
                         android:padding="5dp"
                         android:text="企业地址"
                         android:textColor="@color/blak"
-                        android:textSize="19sp"/>
+                        android:textSize="@dimen/text_size_apply_leav"/>
 
-                    <EditText
+                    <TextView
+                        android:id="@+id/showaddress"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:gravity="center"
-                        android:hint="广东省深圳市"
                         android:padding="5dp"
                         android:textColor="@color/blak"
                         android:textColorHint="@color/blak"
-                        android:textSize="19sp"/>
+                        android:textSize="@dimen/text_size_apply_leav"/>
                 </RelativeLayout>
 
                 <View
@@ -235,6 +265,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/applyjoincompany"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"

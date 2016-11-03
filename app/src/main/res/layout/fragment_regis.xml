@@ -53,11 +53,11 @@
             android:layout_height="24dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="24dp"
-            android:background="@drawable/imag_login_80"/>
+            android:background="@drawable/icon_register_phone_number"/>
 
         <EditText
             android:id="@+id/phonenumb"
-            android:layout_width="128dp"
+            android:layout_width="240dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="12dp"
             android:hint="手机号"
@@ -76,7 +76,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="24dp"
-            android:background="@drawable/imag_login_80"/>
+            android:background="@drawable/icon_verification"/>
 
         <EditText
             android:id="@+id/IDcode"

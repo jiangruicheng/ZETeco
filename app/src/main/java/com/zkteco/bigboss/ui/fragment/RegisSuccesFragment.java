@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.zkteco.bigboss.R;
+import com.zkteco.bigboss.mvp.presenter.Impl.ApplyJoinCompanyPresenterImpl;
+import com.zkteco.bigboss.mvp.presenter.Impl.SetupCompanyPresenterImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,12 +31,12 @@ public class RegisSuccesFragment extends BaseFragment {
 
     @OnClick(R.id.setupcompany)
     void onsetup() {
-        replaceFragment(new SetupCompanyFragment());
+        replaceFragment(new SetupCompanyFragment(), new SetupCompanyPresenterImpl());
     }
 
     @OnClick(R.id.applyjoincompany)
     void onapplayjoin() {
-        replaceFragment(new ApplyJoinCompanyFragment());
+        replaceFragment(new ApplyJoinCompanyFragment(), new ApplyJoinCompanyPresenterImpl());
     }
 
     public RegisSuccesFragment() {

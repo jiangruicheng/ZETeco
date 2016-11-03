@@ -12,7 +12,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="3.7"
         android:background="@drawable/imag_logo"/>
 
     <LinearLayout
@@ -31,6 +31,7 @@
             android:background="@drawable/imag_login_80"/>
 
         <EditText
+            android:id="@+id/account"
             android:layout_width="240dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -43,7 +44,6 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/account"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="@dimen/imag_lift_margin"
@@ -73,6 +73,7 @@
             android:layout_marginLeft="@dimen/imag_lift_margin"
             android:background="@null"
             android:hint="@string/password"
+            android:password="true"
             android:singleLine="true"
             android:textColor="@color/colorText"
             android:textColorHint="@color/colorHintText"/>

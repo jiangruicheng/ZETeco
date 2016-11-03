@@ -43,6 +43,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginTop="12dp"
+            android:visibility="gone"
             >
 
             <TextView
@@ -87,18 +88,20 @@
                 android:padding="5dp"
                 android:text="企业名称"
                 android:textColor="@color/blak"
-                android:textSize="19sp"/>
+                android:textSize="@dimen/text_size_apply_leav"/>
 
             <EditText
+                android:id="@+id/editcmpname"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
+                android:background="@null"
                 android:gravity="center"
                 android:hint="请输入企业名称"
                 android:padding="5dp"
                 android:textColor="@color/blak"
                 android:textColorHint="@color/blak"
-                android:textSize="19sp"/>
+                android:textSize="@dimen/text_size_apply_leav"/>
         </RelativeLayout>
 
         <View
@@ -122,9 +125,10 @@
                 android:padding="5dp"
                 android:text="所属行业"
                 android:textColor="@color/blak"
-                android:textSize="19sp"/>
+                android:textSize="@dimen/text_size_apply_leav"/>
 
             <ImageView
+                android:id="@+id/getindus"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentRight="true"
@@ -153,18 +157,27 @@
                 android:padding="5dp"
                 android:text="企业地址"
                 android:textColor="@color/blak"
-                android:textSize="19sp"/>
+                android:textSize="@dimen/text_size_apply_leav"/>
 
-            <EditText
+            <TextView
+                android:id="@+id/Edit_location"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
+                android:layout_marginRight="4dp"
+                android:layout_toLeftOf="@+id/getlocation"
                 android:gravity="center"
-                android:hint="广东省深圳市"
                 android:padding="5dp"
                 android:textColor="@color/blak"
                 android:textColorHint="@color/blak"
-                android:textSize="19sp"/>
+                android:textSize="@dimen/text_size_apply_leav"/>
+
+            <ImageView
+                android:id="@+id/getlocation"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/icon_location"/>
         </RelativeLayout>
 
         <View
@@ -188,23 +201,26 @@
                 android:padding="5dp"
                 android:text="详细地址"
                 android:textColor="@color/blak"
-                android:textSize="19sp"/>
+                android:textSize="@dimen/text_size_apply_leav"/>
 
             <EditText
+                android:id="@+id/editaddress"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
+                android:background="@null"
                 android:gravity="center"
                 android:hint="请输入详细地址"
                 android:padding="5dp"
                 android:textColor="@color/blak"
                 android:textColorHint="@color/blak"
-                android:textSize="19sp"/>
+                android:textSize="@dimen/text_size_apply_leav"/>
         </RelativeLayout>
     </LinearLayout>
 
 
     <Button
+        android:id="@+id/setup"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"

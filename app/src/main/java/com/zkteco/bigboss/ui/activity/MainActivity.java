@@ -1,16 +1,19 @@
 package com.zkteco.bigboss.ui.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.zkteco.bigboss.util.FragmentCallBack;
-import com.zkteco.bigboss.ui.fragment.CheckOnWorkFragment;
 import com.zkteco.bigboss.R;
+import com.zkteco.bigboss.ui.fragment.BasemainFragment;
+import com.zkteco.bigboss.ui.fragment.CheckOnWorkFragment;
+import com.zkteco.bigboss.util.FragmentCallBack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener, FragmentCallBack {
     private BottomNavigationBar navigationBar;
@@ -44,18 +47,35 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 .setFirstSelectedPosition(2).initialise();
     }
 
-    private void addFragment(Fragment fragment) {
+    private List<BasemainFragment> fragmentList = new ArrayList<>();
+
+    private void addFragment(BasemainFragment fragment) {
+        SetVisable(fragment.isIsshownavg());
         fragmentManager.beginTransaction().
-                replace(R.id.layFrame, fragment, fragment.getTag()).
-                addToBackStack(fragment.getTag()).
+                add(R.id.layFrame, fragment, fragment.getTag()).
                 commit();
+        /*for (int i = 0; i < fragmentList.size(); i++) {
+            fragmentManager.beginTransaction().hide(fragmentList.get(i)).commit();
+        }*/
+        if (fragmentList.size() > 0) {
+            fragmentManager.beginTransaction().hide(fragmentList.get(fragmentList.size() - 1)).commit();
+        }
+        fragmentList.add(fragment);
     }
 
-    private void removeFragment(Fragment fragment) {
+    private void removeFragment(BasemainFragment fragment) {
         /*fragmentManager.beginTransaction().
                 remove(fragment).
                 commit();*/
-        fragmentManager.popBackStack();
+
+        if (fragmentList.size() > 1) {
+            fragmentManager.beginTransaction().remove(fragmentList.get(fragmentList.size() - 1)).commit();
+            fragmentList.remove(fragmentList.size() - 1);
+            fragmentManager.beginTransaction().show(fragmentList.get(fragmentList.size() - 1)).commit();
+            SetVisable(fragmentList.get(fragmentList.size() - 1).isIsshownavg());
+        } else {
+            finish();
+        }
     }
 
     @Override
@@ -67,9 +87,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         navigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         initFragment();
         initNavigationBar();
-        fragmentManager.beginTransaction().
+        /*fragmentManager.beginTransaction().
                 add(R.id.layFrame, checkOnWorkFragment, checkOnWorkFragment.getTag()).
-                commit();
+                commit();*/
+        addFragment(checkOnWorkFragment);
     }
 
     @Override
@@ -88,13 +109,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
     @Override
-    public void GoTo(Fragment fragment) {
+    public void GoTo(BasemainFragment fragment) {
         addFragment(fragment);
 
     }
 
     @Override
-    public void Back(Fragment fragment) {
+    public void Back(BasemainFragment fragment) {
         removeFragment(fragment);
 
     }
@@ -108,5 +129,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Back(null);
+    }
 }
 

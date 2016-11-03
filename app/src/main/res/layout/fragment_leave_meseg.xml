@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="我的请假单"
+                android:text="请假"
                 android:textColor="@color/colorWhite"
                 android:textSize="21sp"/>
         </RelativeLayout>
@@ -43,11 +43,13 @@
         <RelativeLayout
             android:id="@+id/content_leave"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="280dp"
+            android:padding="12dp"
             android:layout_below="@+id/title"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
-            android:layout_marginTop="42dp">
+            android:layout_marginTop="42dp"
+            android:background="@drawable/content_background_frame">
 
             <TextView
                 android:id="@+id/leave_types"
@@ -81,7 +83,7 @@
                 android:layout_marginTop="24dp"
                 android:text="2016-10-10 10:33"
                 android:textColor="@color/blak"
-                android:textSize="21sp"/>
+                android:textSize="@dimen/text_size_apply_leav"/>
 
             <TextView
                 android:id="@+id/leave_finish_time"
@@ -101,16 +103,17 @@
                 android:layout_marginTop="24dp"
                 android:text="2016-10-10 03:33"
                 android:textColor="@color/blak"
-                android:textSize="21sp"/>
+                android:textSize="@dimen/text_size_apply_leav"/>
 
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:layout_below="@id/leave_finish_time"
                 android:layout_marginTop="12dp"
                 android:hint="家里有急事"
                 android:textColorHint="@color/blak"
-                android:textSize="19sp"/>
+                android:textSize="@dimen/text_size_apply_leav"/>
         </RelativeLayout>
 
         <LinearLayout

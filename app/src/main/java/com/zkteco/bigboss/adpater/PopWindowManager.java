@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -23,10 +24,22 @@ import java.util.Calendar;
  * Created by jiang_ruicheng on 16/10/21.
  */
 public class PopWindowManager {
-    public static void popListWindow(Context context, View view, ArrayList list) {
+    public interface Popviewcallback {
+        void callback(int p);
+    }
+
+    ;
+
+    public static void popListWindow(Context context, View view, ArrayList list, final Popviewcallback popviewcallback) {
         RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.popview_leave,
                 null);
         ListView listView = (ListView) relativeLayout.findViewById(R.id.leavetype_list);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                popviewcallback.callback(position);
+            }
+        });
         MListViewAdapter adpater = new MListViewAdapter(context.getApplicationContext());
         adpater.setItemText(list);
         listView.setAdapter(adpater);

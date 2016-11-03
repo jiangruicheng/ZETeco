@@ -42,7 +42,7 @@ public class FindPasswordFragment extends BaseFragment {
 
     @OnClick(R.id.next)
     void onnext() {
-        replaceFragment(new ResetPasswordFragment());
+        replaceFragment(new ResetPasswordFragment(),null);
     }
 
     public FindPasswordFragment() {

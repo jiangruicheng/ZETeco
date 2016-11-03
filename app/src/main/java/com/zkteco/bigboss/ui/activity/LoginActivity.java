@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.zkteco.bigboss.R;
+import com.zkteco.bigboss.mvp.presenter.Impl.LoginPresenterImpl;
 import com.zkteco.bigboss.ui.fragment.LoginFragment;
 
 public class LoginActivity extends AppCompatActivity {
@@ -17,7 +18,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.frame_fragment, new LoginFragment()).commit();
+        LoginFragment loginFragment = new LoginFragment();
+        LoginPresenterImpl loginPresenter = new LoginPresenterImpl();
+        loginPresenter.setview(loginFragment);
+        loginFragment.setPresenter(loginPresenter);
+        fragmentManager.beginTransaction().add(R.id.frame_fragment, loginFragment).commit();
     }
 
     public void onClick(View view) {

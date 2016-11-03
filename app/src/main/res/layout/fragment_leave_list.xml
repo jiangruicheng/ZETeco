@@ -43,6 +43,8 @@
         app:lifttext="待审批"
         app:righttext="已审批"
         app:textsize="14sp"
+        app:checkbackgroundcolor="@color/colorButtonLogin"
+
         />
 
     <ListView

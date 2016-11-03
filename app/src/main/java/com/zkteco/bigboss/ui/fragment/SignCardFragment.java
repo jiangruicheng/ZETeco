@@ -19,12 +19,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SignCardFragment extends Fragment {
+public class SignCardFragment extends BasemainFragment {
     private FragmentCallBack callBack;
 
     public SignCardFragment() {
         // Required empty public constructor
-
+        setIsshownavg(false);
     }
 
     private TextView types, selectTime;
@@ -42,7 +42,8 @@ public class SignCardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        callBack.SetVisable(false);
+
+        //callBack.SetVisable(false);
     }
 
     @Override
@@ -73,7 +74,12 @@ public class SignCardFragment extends Fragment {
                 ArrayList<String> item = new ArrayList<String>();
                 item.add("上班签到");
                 item.add("下班签退");
-                PopWindowManager.popListWindow(getActivity(), button, item);
+                PopWindowManager.popListWindow(getActivity(), button, item, new PopWindowManager.Popviewcallback() {
+                    @Override
+                    public void callback(int p) {
+
+                    }
+                });
             }
         });
         selectTime.setOnClickListener(new View.OnClickListener() {
