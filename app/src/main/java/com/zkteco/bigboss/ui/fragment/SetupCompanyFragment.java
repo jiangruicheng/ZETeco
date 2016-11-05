@@ -13,8 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bigkoo.pickerview.OptionsPickerView;
-import com.bigkoo.pickerview.model.IPickerViewData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -23,6 +21,8 @@ import com.zkteco.bigboss.adpater.PopWindowManager;
 import com.zkteco.bigboss.bean.json.bean.CounAddress;
 import com.zkteco.bigboss.mvp.presenter.SetupCompanyPresenter;
 import com.zkteco.bigboss.mvp.view.SetupCompanyView;
+import com.zkteco.bigboss.view.com.bigkoo.pickerview.OptionsPickerView;
+import com.zkteco.bigboss.view.com.bigkoo.pickerview.model.IPickerViewData;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -155,6 +155,7 @@ public class SetupCompanyFragment extends Fragment implements SetupCompanyView {
             @Override
             public void onNext(Object o) {
                 OptionsPickerView optionsPickerView = new OptionsPickerView(getActivity());
+
                 optionsPickerView.setPicker(item0, item1, item2, true);
                 optionsPickerView.setCyclic(false, false, false);
                 //optionsPickerView.setSelectOptions(3,3,3);

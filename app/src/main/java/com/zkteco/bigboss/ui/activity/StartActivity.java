@@ -7,13 +7,13 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.bigkoo.pickerview.OptionsPickerView;
-import com.bigkoo.pickerview.model.IPickerViewData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.zkteco.bigboss.R;
 import com.zkteco.bigboss.bean.json.bean.CounAddress;
+import com.zkteco.bigboss.view.com.bigkoo.pickerview.OptionsPickerView;
+import com.zkteco.bigboss.view.com.bigkoo.pickerview.model.IPickerViewData;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
