@@ -9,14 +9,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.zkteco.bigboss.R;
+import com.zkteco.bigboss.bean.json.QueryStatiRequest;
+import com.zkteco.bigboss.bean.json.QueryStatiResponse;
+import com.zkteco.bigboss.bean.json.bean.UserMesg;
+import com.zkteco.bigboss.mvp.mode.ZKTecoRequest;
 import com.zkteco.bigboss.util.FragmentCallBack;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ApplyFragment extends BasemainFragment {
+
+    @BindView(R.id.back)
+    ImageView back;
+    @BindView(R.id.myapply)
+    Button myapply;
+    @BindView(R.id.stati)
+    TextView stati;
+    @BindView(R.id.leave)
+    ImageView leave;
+    @BindView(R.id.signcard)
+    ImageView signcard;
 
     public ApplyFragment() {
         // Required empty public constructor
@@ -35,8 +59,6 @@ public class ApplyFragment extends BasemainFragment {
     }
 */
 
-    private ImageView back, signcard, leave;
-    private Button myapply;
 
     @Override
     public void onResume() {
@@ -53,10 +75,14 @@ public class ApplyFragment extends BasemainFragment {
         }
     }
 
+    private Unbinder unbinder;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_apply, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        setStati();
         myapply = (Button) view.findViewById(R.id.myapply);
         back = (ImageView) view.findViewById(R.id.back);
         signcard = (ImageView) view.findViewById(R.id.signcard);
@@ -87,7 +113,44 @@ public class ApplyFragment extends BasemainFragment {
                 callBack.GoTo(new SignCardFragment());
             }
         });
+
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    private void setStati() {
+        QueryStatiRequest request = new QueryStatiRequest();
+        if (UserMesg.getInstance().getResponse() != null) {
+            request.setSessionId(UserMesg.getInstance().getResponse().getSessionId());
+            request.setCmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getCmpId());
+            request.getPayload().getParams().setCmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getCmpId());
+            request.getPayload().getParams().setEmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getEmpId());
+        }
+        Subscription subscription = ZKTecoRequest.getAPI().
+                querystati(request).
+                subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<QueryStatiResponse>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(QueryStatiResponse queryStatiResponse) {
+                if (queryStatiResponse.getCode().equals("00000000")) {
+                    stati.setText("当月请假: " + queryStatiResponse.getPayload().getResults().getMyStatistics().getTotalLeaveMins() + "分钟");
+                }
+            }
+        });
+    }
 }

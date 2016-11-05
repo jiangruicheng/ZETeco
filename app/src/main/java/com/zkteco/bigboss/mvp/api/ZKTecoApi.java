@@ -6,6 +6,12 @@ import com.zkteco.bigboss.bean.json.CheckoutCmpindusRequest;
 import com.zkteco.bigboss.bean.json.CmpIndusResponse;
 import com.zkteco.bigboss.bean.json.LoginRequest;
 import com.zkteco.bigboss.bean.json.LoginResponse;
+import com.zkteco.bigboss.bean.json.QueryAproResponse;
+import com.zkteco.bigboss.bean.json.QueryAprolistRquest;
+import com.zkteco.bigboss.bean.json.QueryAttRequest;
+import com.zkteco.bigboss.bean.json.QueryAttResponse;
+import com.zkteco.bigboss.bean.json.QueryStatiResponse;
+import com.zkteco.bigboss.bean.json.QueryStatiRequest;
 import com.zkteco.bigboss.bean.json.SearchCompanyRequest;
 import com.zkteco.bigboss.bean.json.SearchCompanyResponse;
 import com.zkteco.bigboss.bean.json.SendSmsCaptchaRequest;
@@ -49,5 +55,14 @@ public interface ZKTecoApi {
 
     @POST("/apiv1/account/register")
     Observable<SetupCmpResponse> setupcmp(@Body SetupCmpRequest searchCompanyRequest);
+
+    @POST("/zktime5/queryPersonalAttLogs")
+    Observable<QueryAttResponse> queryatt(@Body QueryAttRequest queryAttRequest);
+
+    @POST("/zktime5/queryPersonalAttLogs")
+    Observable<QueryStatiResponse> querystati(@Body QueryStatiRequest quryStatiRequest);
+
+    @POST("/att/queryApprovalList")
+    Observable<QueryAproResponse> queryaprolist(@Body QueryAprolistRquest quryStatiRequest);
 
 }

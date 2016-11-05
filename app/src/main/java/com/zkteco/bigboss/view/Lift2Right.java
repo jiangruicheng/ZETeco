@@ -64,6 +64,14 @@ public class Lift2Right extends View {
         super(context, attrs, defStyleAttr);
     }
 
+    public void setLiftText(String lift) {
+        this.lift = lift;
+    }
+
+    public void setRightText(String right) {
+        this.right = right;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -137,7 +145,7 @@ public class Lift2Right extends View {
         return super.onTouchEvent(event);
     }
 
-   public interface OnButtonClick {
+    public interface OnButtonClick {
         public void onClick(boolean IsCheckLift);
     }
 

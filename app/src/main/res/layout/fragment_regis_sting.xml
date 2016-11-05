@@ -14,12 +14,12 @@
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="4dp"
-            android:background="@drawable/icon_arrow_left"
+            android:background="@drawable/whiteback"
             />
 
         <TextView
@@ -84,24 +84,24 @@
             android:orientation="vertical">
 
             <EditText
-                android:password="true"
                 android:id="@+id/setpassword"
                 android:layout_width="128dp"
                 android:layout_height="0dp"
                 android:layout_marginLeft="12dp"
                 android:layout_weight="1"
                 android:hint="设置密码"
+                android:password="true"
                 android:textColor="@color/colorHintText"
                 android:textColorHint="@color/colorHintText"/>
 
             <EditText
-                android:password="true"
                 android:id="@+id/makesurepassword"
                 android:layout_width="128dp"
                 android:layout_height="0dp"
                 android:layout_marginLeft="12dp"
                 android:layout_weight="1"
                 android:hint="确定密码"
+                android:password="true"
                 android:textColor="@color/colorHintText"
                 android:textColorHint="@color/colorHintText"/>
         </LinearLayout>

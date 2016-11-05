@@ -28,7 +28,6 @@ public class LoginPresenterImpl implements LoginPresenter {
 
     @Override
     public void login(final Context context, String user, String password) {
-        context.startActivity(new Intent(context, MainActivity.class));
         loginRequest = new LoginRequest();
         payloadBean = new LoginRequest.PayloadBean();
         paramsBean = new LoginRequest.PayloadBean.ParamsBean();
@@ -56,8 +55,8 @@ public class LoginPresenterImpl implements LoginPresenter {
 
                     @Override
                     public void onNext(LoginResponse loginResponse) {
-                        if (loginResponse.getCode().equals("E2WA0002")) {
-                           // context.startActivity(new Intent(context, MainActivity.class));
+                        if (loginResponse.getCode().equals("00000000")) {
+                            context.startActivity(new Intent(context, MainActivity.class));
                         }
                     }
                 });

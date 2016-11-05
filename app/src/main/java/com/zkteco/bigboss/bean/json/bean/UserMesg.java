@@ -1,9 +1,21 @@
 package com.zkteco.bigboss.bean.json.bean;
 
+import com.zkteco.bigboss.bean.json.LoginResponse;
+
 /**
  * Created by jiang_ruicheng on 16/10/30.
  */
 public class UserMesg {
+    private LoginResponse response;
+
+    public LoginResponse getResponse() {
+        return response;
+    }
+
+    public void setResponse(LoginResponse response) {
+        this.response = response;
+    }
+
     private String account;
 
     public String getAccount() {

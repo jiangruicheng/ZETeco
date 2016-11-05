@@ -39,11 +39,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private void initNavigationBar() {
         navigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         navigationBar.setActiveColor(R.color.colorButtonLogin).setBarBackgroundColor(R.color.colorWhite);
-        navigationBar.addItem(new BottomNavigationItem(R.drawable.imag_login_80, "大数据"))
-                .addItem(new BottomNavigationItem(R.drawable.imag_login_80, "店面"))
-                .addItem(new BottomNavigationItem(R.drawable.imag_login_80, "考勤"))
-                .addItem(new BottomNavigationItem(R.drawable.imag_login_80, "监控"))
-                .addItem(new BottomNavigationItem(R.drawable.imag_login_80, "我的"))
+        navigationBar.addItem(new BottomNavigationItem(R.drawable.dashuju, "大数据"))
+                .addItem(new BottomNavigationItem(R.drawable.dianmian, "店面"))
+                .addItem(new BottomNavigationItem(R.drawable.att_unselect, "考勤"))
+                .addItem(new BottomNavigationItem(R.drawable.jiankong, "监控"))
+                .addItem(new BottomNavigationItem(R.drawable.user, "我的"))
                 .setFirstSelectedPosition(2).initialise();
     }
 

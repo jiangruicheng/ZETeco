@@ -2,7 +2,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorWhite"
+                android:background="@color/yinse"
                 tools:context="com.zkteco.bigboss.ui.fragment.ApprovalerSelectFragment">
 
     <RelativeLayout
@@ -27,16 +27,36 @@
     <LinearLayout
         android:id="@+id/search_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:layout_below="@+id/main_title"
-        android:background="@color/colorHintText">
+        android:gravity="center">
 
-        <SearchView
-            android:id="@+id/searche_approvaler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="42dp"
-            android:layout_marginRight="42dp"/>
+        <RelativeLayout
+            android:layout_width="290dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+
+            android:background="@drawable/shape_searche">
+
+            <ImageView
+                android:id="@+id/search_imag"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:background="@drawable/icon_search"/>
+
+            <EditText
+                android:id="@+id/search_edit"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/search_imag"
+                android:background="@null"
+                android:textColor="@color/blak"/>
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 
@@ -45,6 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/search_layout"
+
         >
 
         <android.support.v7.widget.RecyclerView

@@ -23,12 +23,13 @@
 
             <ImageView
                 android:id="@+id/back"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="4dp"
-                android:background="@drawable/icon_arrow_left"
+                android:background="@drawable/whiteback"
                 />
 
             <TextView
@@ -52,20 +53,20 @@
             android:padding="12dp">
 
             <TextView
-                android:layout_marginTop="4dp"
                 android:id="@+id/leave_types"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="请假种类"
                 android:textColor="@color/blak"
                 android:textSize="@dimen/text_size_apply_leav"/>
 
             <TextView
-                android:layout_marginTop="4dp"
                 android:id="@+id/leave_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="4dp"
                 android:text="产假"
                 android:textColor="@color/blak"
                 android:textSize="@dimen/text_size_apply_leav"/>
@@ -135,7 +136,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/imag_login_80"/>
+                android:background="@drawable/userwomen"/>
 
             <TextView
                 android:layout_width="wrap_content"

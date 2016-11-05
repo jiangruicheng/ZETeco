@@ -38,6 +38,7 @@ public class RegisFragment extends BaseFragment implements RegisView {
     EditText IDcode;
     @BindView(R.id.getIDcode)
     TextView getIDcode;
+
     @OnClick(R.id.phonenumb)
     void clickphoenumb() {
         phonenumb.setFocusable(true);
@@ -57,10 +58,11 @@ public class RegisFragment extends BaseFragment implements RegisView {
 
     @OnClick(R.id.next)
     void onnext() {
-        if(StringUtil.isMobile(phonenumb.getText().toString())){
-            regisPresenter.nextstep(phonenumb.getText().toString(), IDcode.getText().toString());
-        }else {
-            postmesg("请输入正确的手机号");
+        replaceFragment();
+        if (StringUtil.isMobile(phonenumb.getText().toString())) {
+            //regisPresenter.nextstep(phonenumb.getText().toString(), IDcode.getText().toString());
+        } else {
+           // postmesg("请输入正确的手机号");
         }
     }
 

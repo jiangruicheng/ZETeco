@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +15,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zkteco.bigboss.R;
+import com.zkteco.bigboss.mvp.presenter.QueryAttPresenter;
+import com.zkteco.bigboss.mvp.view.QueryAttView;
 import com.zkteco.bigboss.util.FragmentCallBack;
 import com.zkteco.bigboss.view.Lift2Right;
 import com.zkteco.bigboss.view.MothDataView;
 import com.zkteco.bigboss.view.WeekView;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class CheckOnWorkFragment extends BasemainFragment {
+public class CheckOnWorkFragment extends BasemainFragment implements QueryAttView {
     @BindView(R.id.main_title)
     RelativeLayout mainTitle;
     @BindView(R.id.account_imag)
@@ -43,6 +50,30 @@ public class CheckOnWorkFragment extends BasemainFragment {
     Lift2Right swichWeektoMonth;
     @BindView(R.id.prvmonth)
     ImageButton prvmonth;
+    @BindView(R.id.statu0)
+    TextView statu0;
+    @BindView(R.id.name0)
+    TextView name0;
+    @BindView(R.id.value0)
+    TextView value0;
+    @BindView(R.id.type0)
+    LinearLayout type0;
+    @BindView(R.id.statu1)
+    TextView statu1;
+    @BindView(R.id.name1)
+    TextView name1;
+    @BindView(R.id.value1)
+    TextView value1;
+    @BindView(R.id.type1)
+    LinearLayout type1;
+    @BindView(R.id.statu3)
+    TextView statu3;
+    @BindView(R.id.name3)
+    TextView name3;
+    @BindView(R.id.value3)
+    TextView value3;
+    @BindView(R.id.type3)
+    LinearLayout type3;
 
     @OnClick(R.id.prvmonth)
     void setPrvmonth() {
@@ -68,6 +99,7 @@ public class CheckOnWorkFragment extends BasemainFragment {
     private ImageView apply;
     private ImageView approval;
     private FragmentCallBack callBack;
+    private QueryAttPresenter presenter;
 
     public CheckOnWorkFragment() {
         setIsshownavg(true);
@@ -120,7 +152,27 @@ public class CheckOnWorkFragment extends BasemainFragment {
                 callBack.GoTo(new LeaveListFragment(true));
             }
         });
+        mothData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (presenter != null) {
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                    Date date = null;
+                    try {
+                        date = simpleDateFormat.parse(mothData.getmSelYear() + "-" + mothData.getmSelMonth() + "-" + mothData.getmSelDay() + " 00:00");
+                        long start = date.getTime();
+                        date = simpleDateFormat.parse(mothData.getmSelYear() + "-" + mothData.getmSelMonth() + "-" + mothData.getmSelDay() + " 23:59");
+                        long end = date.getTime();
+                        presenter.queryatt(start, end);
+                        Log.i("time", "onClick: " + start + "\n" + end);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        Log.i("time", "onClick: " + e.getMessage());
+                    }
 
+                }
+            }
+        });
         return view;
     }
 
@@ -142,5 +194,34 @@ public class CheckOnWorkFragment extends BasemainFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void showtype0(String name, String value) {
+        name0.setText(name);
+        value0.setText(value);
+    }
+
+    @Override
+    public void showtype1(String name, String value) {
+        name1.setText(name);
+        value1.setText(value);
+    }
+
+    @Override
+    public void showtype3(String name, String value) {
+        statu3.setText(name);
+        name3.setText(name);
+        value3.setText(value);
+    }
+
+    @Override
+    public void setPresenter(QueryAttPresenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void postmesg(String msg) {
+
     }
 }

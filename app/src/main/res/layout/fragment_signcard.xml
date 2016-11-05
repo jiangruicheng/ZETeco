@@ -22,12 +22,12 @@
 
             <ImageView
                 android:id="@+id/back"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/whiteback"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="4dp"
-                android:background="@drawable/icon_arrow_left"
                 android:onClick="onClick"
                 />
 
@@ -140,7 +140,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/imag_login_80"/>
+                android:background="@drawable/userwomen"/>
 
             <TextView
                 android:layout_width="wrap_content"

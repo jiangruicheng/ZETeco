@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cont="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:cont="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     android:orientation="vertical"
     >
@@ -17,12 +17,13 @@
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="4dp"
-            android:background="@drawable/icon_arrow_left"
+            android:background="@drawable/whiteback"
             />
 
         <TextView
@@ -48,12 +49,12 @@
             android:layout_marginRight="12dp"
             android:background="@drawable/shape"
             android:text="我的申请  >"
-            cont:checkbackgroundcolor="@color/colorButtonLogin"
             android:textColor="@color/colorWhite"
             android:textSize="16sp"/>
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/stati"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="42dp"
@@ -102,7 +103,7 @@
                 android:layout_height="64dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/icon_signthecard_yellow"
-               />
+                />
 
             <TextView
                 android:layout_width="wrap_content"

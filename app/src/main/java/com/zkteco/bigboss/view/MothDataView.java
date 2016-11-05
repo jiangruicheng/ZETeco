@@ -229,6 +229,14 @@ public class MothDataView extends View {
         canvas.drawCircle(circleX, circley, mCircleRadius, mPaint);
     }
 
+    OnClickListener clickListener;
+
+    @Override
+    public void setOnClickListener(OnClickListener l) {
+        super.setOnClickListener(l);
+        this.clickListener = l;
+    }
+
     @Override
     public boolean performClick() {
         return super.performClick();
@@ -252,6 +260,7 @@ public class MothDataView extends View {
                 if (Math.abs(upX - downX) < 10 && Math.abs(upY - downY) < 10) {//点击事件
                     performClick();
                     doClickAction((upX + downX) / 2, (upY + downY) / 2);
+                    clickListener.onClick(MothDataView.this);
                 }
                 break;
         }
