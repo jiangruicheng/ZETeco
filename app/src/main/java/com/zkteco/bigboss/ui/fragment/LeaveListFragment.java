@@ -96,11 +96,12 @@ public class LeaveListFragment extends BasemainFragment implements QueryAproView
             titleTxt.setText("审批");
             approvalSwitch.setLiftText("待审批");
             approvalSwitch.setRightText("已审批");
+            presentrer.queryApro(QueryAproPresenterImpl.APPROVAL, QueryAproPresenterImpl.YES);
         } else {
             titleTxt.setText("我的申请");
             approvalSwitch.setLiftText("待处理");
             approvalSwitch.setRightText("已处理");
-
+            presentrer.queryApro(QueryAproPresenterImpl.APPLY, QueryAproPresenterImpl.YES);
         }
 
         approvalSwitch.setOnButtonClick(new Lift2Right.OnButtonClick() {
@@ -111,13 +112,13 @@ public class LeaveListFragment extends BasemainFragment implements QueryAproView
                         if (IsCheckLift) {
                             presentrer.queryApro(QueryAproPresenterImpl.APPROVAL, QueryAproPresenterImpl.NOT);
                         } else {
-                            presentrer.queryApro(QueryAproPresenterImpl.APPROVAL, QueryAproPresenterImpl.NOT);
+                            presentrer.queryApro(QueryAproPresenterImpl.APPROVAL, QueryAproPresenterImpl.YES);
                         }
                     } else {
                         if (IsCheckLift) {
                             presentrer.queryApro(QueryAproPresenterImpl.APPLY, QueryAproPresenterImpl.NOT);
                         } else {
-                            presentrer.queryApro(QueryAproPresenterImpl.APPLY, QueryAproPresenterImpl.NOT);
+                            presentrer.queryApro(QueryAproPresenterImpl.APPLY, QueryAproPresenterImpl.YES);
 
                         }
                     }
@@ -128,7 +129,9 @@ public class LeaveListFragment extends BasemainFragment implements QueryAproView
         approvalList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                callBack.GoTo(new LeaveMesegFragment(isapproval));
+                LeaveMesegFragment leaveMesegFragment = new LeaveMesegFragment(isapproval);
+                leaveMesegFragment.setBean(mesgListAdapter.getList().get(position));
+                callBack.GoTo(leaveMesegFragment, null);
             }
         });
 
@@ -139,6 +142,7 @@ public class LeaveListFragment extends BasemainFragment implements QueryAproView
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        mesgListAdapter.setUnbinder();
     }
 
     @Override

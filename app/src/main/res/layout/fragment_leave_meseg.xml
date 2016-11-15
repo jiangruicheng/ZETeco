@@ -33,6 +33,7 @@
                 />
 
             <TextView
+                android:id="@+id/title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -50,14 +51,15 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="42dp"
             android:background="@drawable/content_background_frame"
-            android:padding="12dp">
+            android:padding="24dp">
 
             <TextView
                 android:id="@+id/leave_types"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/blak"
-                android:textSize="21sp"/>
+                android:textSize="21sp"
+                android:visibility="invisible"/>
 
             <TextView
                 android:id="@+id/leave_type"
@@ -65,7 +67,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:textColor="@color/blak"
-                android:textSize="21sp"/>
+                android:textSize="21sp"
+                android:visibility="invisible"/>
 
             <ImageView
                 android:id="@+id/applayimag"
@@ -74,6 +77,16 @@
                 android:layout_below="@+id/leave_types"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/userman"/>
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/applayimag"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorHintText"
+                android:textSize="11sp"
+                />
 
             <TextView
                 android:id="@+id/select_leave_start_time"
@@ -94,7 +107,8 @@
                 android:layout_below="@+id/leave_start_time"
                 android:layout_marginTop="24dp"
                 android:textColor="@color/blak"
-                android:textSize="21sp"/>
+                android:textSize="21sp"
+                android:visibility="invisible"/>
 
             <TextView
                 android:id="@+id/select_leave_finish_time"
@@ -109,6 +123,7 @@
                 android:textSize="@dimen/text_size_apply_leav"/>
 
             <TextView
+                android:id="@+id/reason"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:layout_below="@id/select_leave_finish_time"
@@ -124,7 +139,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginBottom="24dp"
-                android:background="@drawable/background_content_approval"/>
+                android:background="@drawable/pass"/>
         </RelativeLayout>
 
         <LinearLayout

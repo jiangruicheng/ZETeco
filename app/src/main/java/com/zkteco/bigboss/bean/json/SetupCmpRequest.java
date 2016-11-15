@@ -128,7 +128,7 @@ public class SetupCmpRequest {
             private String district;
             private String province;
             private String city;
-            private String country;
+            private String country = "100001";
             private String cmpAddress;
             private String industryId;
 

@@ -15,15 +15,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zkteco.bigboss.R;
+import com.zkteco.bigboss.bean.json.bean.UserMesg;
+import com.zkteco.bigboss.mvp.presenter.Impl.QueryAproPresenterImpl;
 import com.zkteco.bigboss.mvp.presenter.QueryAttPresenter;
 import com.zkteco.bigboss.mvp.view.QueryAttView;
+import com.zkteco.bigboss.util.DateUtils;
 import com.zkteco.bigboss.util.FragmentCallBack;
+import com.zkteco.bigboss.util.ScreenUtil;
 import com.zkteco.bigboss.view.Lift2Right;
 import com.zkteco.bigboss.view.MothDataView;
 import com.zkteco.bigboss.view.WeekView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -77,6 +82,11 @@ public class CheckOnWorkFragment extends BasemainFragment implements QueryAttVie
 
     @OnClick(R.id.prvmonth)
     void setPrvmonth() {
+        swichWeektoMonth.setCheckLift(false);
+        mothData.swichMonthorWeek(false);
+        ViewGroup.LayoutParams layoutParams = mothData.getLayoutParams();
+        layoutParams.height = ScreenUtil.dip2px(getActivity(), 210);
+        mothData.setLayoutParams(layoutParams);
         mothData.onLeftClick();
         currdatatext.setText(mothData.getmSelYear() + "年" + (mothData.getmSelMonth() + 1) + "月");
     }
@@ -88,6 +98,11 @@ public class CheckOnWorkFragment extends BasemainFragment implements QueryAttVie
 
     @OnClick(R.id.nextmonth)
     void setNextmonth() {
+        swichWeektoMonth.setCheckLift(false);
+        mothData.swichMonthorWeek(false);
+        ViewGroup.LayoutParams layoutParams = mothData.getLayoutParams();
+        layoutParams.height = ScreenUtil.dip2px(getActivity(), 210);
+        mothData.setLayoutParams(layoutParams);
         mothData.onRightClick();
         currdatatext.setText(mothData.getmSelYear() + "年" + (mothData.getmSelMonth() + 1) + "月");
     }
@@ -128,12 +143,36 @@ public class CheckOnWorkFragment extends BasemainFragment implements QueryAttVie
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_check_on_work, container, false);
         unbinder = ButterKnife.bind(this, view);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(Calendar.getInstance().get(Calendar.MONTH) + 1 + "月" + (Calendar.getInstance().get(Calendar.DATE) < 10 ? "0" + Calendar.getInstance().get(Calendar.DATE) : Calendar.getInstance().get(Calendar.DATE)) + "日" + " " + "星期" + DateUtils.getDay2Week(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)-1) + "\n");
+        stringBuilder.append(UserMesg.getInstance().getResponse().getPayload().getResults().getName());
+        textInfo.setText(stringBuilder);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(Calendar.getInstance().get(Calendar.YEAR) + "-" + Calendar.getInstance().get(Calendar.MONTH) + "-" + Calendar.getInstance().get(Calendar.DATE) + " 00:00");
+            long start = date.getTime();
+            date = simpleDateFormat.parse(Calendar.getInstance().get(Calendar.YEAR) + "-" + Calendar.getInstance().get(Calendar.MONTH) + "-" + Calendar.getInstance().get(Calendar.DATE) + " 23:59");
+            long end = date.getTime();
+            presenter.queryatt(start, end);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         currdatatext.setText(mothData.getmSelYear() + "年" + (mothData.getmSelMonth() + 1) + "月");
         weekview.setLineColor(Color.BLACK);
         swichWeektoMonth.setOnButtonClick(new Lift2Right.OnButtonClick() {
             @Override
             public void onClick(boolean IsCheckLift) {
                 mothData.swichMonthorWeek(IsCheckLift);
+                ViewGroup.LayoutParams layoutParams = mothData.getLayoutParams();
+                if (IsCheckLift) {
+                    layoutParams.height = ScreenUtil.dip2px(getActivity(), 210 / 6);
+                    mothData.setLayoutParams(layoutParams);
+                } else {
+                    layoutParams.height = ScreenUtil.dip2px(getActivity(), 210);
+                    mothData.setLayoutParams(layoutParams);
+                }
             }
         });
         imagApply.setOnClickListener(new View.OnClickListener() {
@@ -143,13 +182,13 @@ public class CheckOnWorkFragment extends BasemainFragment implements QueryAttVie
                 startActivity(new Intent(getActivity(), ApplyActivity.class));
 */
 
-                callBack.GoTo(new ApplyFragment());
+                callBack.GoTo(new ApplyFragment(), null);
             }
         });
         imagApproval.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callBack.GoTo(new LeaveListFragment(true));
+                callBack.GoTo(new LeaveListFragment(true), new QueryAproPresenterImpl());
             }
         });
         mothData.setOnClickListener(new View.OnClickListener() {

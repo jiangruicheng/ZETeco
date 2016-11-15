@@ -9,6 +9,8 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.zkteco.bigboss.R;
+
 /**
  * Created by jiang_ruicheng on 16/10/20.
  */
@@ -54,17 +56,23 @@ public class SelectView extends View {
         super.onDraw(canvas);
         int width = getWidth();
         int height = getHeight();
-        paint.setColor(Color.RED);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(3);
-        canvas.drawCircle(width / 2, height / 2, width / 2 - 5, paint);
+
         /*for (int i = 0; i < 4; i++) {
             canvas.drawLine(width / 2, 0, width / 2, height / 4, paint);
             canvas.rotate(30, width / 2, height / 2);
         }*/
         if (IsSelect) {
+            paint.setColor(getResources().getColor(R.color.colorButtonLogin));
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(3);
+            canvas.drawCircle(width / 2, height / 2, width / 2 - 5, paint);
             canvas.drawLine(width / 2, height / 2 + height / 4, width / 6, height / 2, paint);
             canvas.drawLine(width / 2, height / 2 + height / 4, width, height / 4, paint);
+        } else {
+            paint.setColor(Color.GRAY);
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(3);
+            canvas.drawCircle(width / 2, height / 2, width / 2 - 5, paint);
         }
     }
 

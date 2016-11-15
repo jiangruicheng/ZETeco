@@ -28,11 +28,17 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ApplyJoinCompanyFragment extends Fragment implements ApplyJoinCompanyView {
+public class ApplyJoinCompanyFragment extends BaseFragment implements ApplyJoinCompanyView {
 
 
     @BindView(R.id.back)
     ImageView back;
+
+    @OnClick(R.id.back)
+    void onback() {
+        popbackFragment();
+    }
+
     @BindView(R.id.search_imag)
     ImageView searchImag;
     @BindView(R.id.search_edit)

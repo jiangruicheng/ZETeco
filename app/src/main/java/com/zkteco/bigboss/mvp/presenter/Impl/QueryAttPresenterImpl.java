@@ -44,7 +44,7 @@ public class QueryAttPresenterImpl implements QueryAttPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.postmesg(e.getMessage());
                     }
 
                     @Override

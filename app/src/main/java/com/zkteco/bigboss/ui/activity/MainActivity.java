@@ -8,6 +8,9 @@ import android.view.View;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.zkteco.bigboss.R;
+import com.zkteco.bigboss.mvp.BasePresenter;
+import com.zkteco.bigboss.mvp.BaseView;
+import com.zkteco.bigboss.mvp.presenter.Impl.QueryAttPresenterImpl;
 import com.zkteco.bigboss.ui.fragment.BasemainFragment;
 import com.zkteco.bigboss.ui.fragment.CheckOnWorkFragment;
 import com.zkteco.bigboss.util.FragmentCallBack;
@@ -90,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         /*fragmentManager.beginTransaction().
                 add(R.id.layFrame, checkOnWorkFragment, checkOnWorkFragment.getTag()).
                 commit();*/
-        addFragment(checkOnWorkFragment);
+        GoTo(checkOnWorkFragment,new QueryAttPresenterImpl());
     }
 
     @Override
@@ -109,9 +112,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
     @Override
-    public void GoTo(BasemainFragment fragment) {
+    public void GoTo(BasemainFragment fragment, BasePresenter presenter) {
         addFragment(fragment);
-
+        if (presenter != null && fragment instanceof BaseView) {
+            ((BaseView) fragment).setPresenter(presenter);
+            presenter.setview((BaseView) fragment);
+        }
     }
 
     @Override

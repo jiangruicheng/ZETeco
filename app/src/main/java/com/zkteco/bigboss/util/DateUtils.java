@@ -2,7 +2,9 @@ package com.zkteco.bigboss.util;
 
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DateUtils {
     /**
@@ -95,4 +97,30 @@ public class DateUtils {
         return weeknum;
     }
 
+    public static String getDay2Week(int week) {
+        switch (week) {
+            case 0:
+                return "日";
+            case 1:
+                return "一";
+            case 2:
+                return "二";
+            case 3:
+                return "三";
+            case 4:
+                return "四";
+            case 5:
+                return "五";
+            case 6:
+                return "六";
+            default:
+                return "";
+        }
+    }
+
+    public static String parseDataYMDHM(long time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM");
+        String sd = sdf.format(new Date(time));
+        return sd;
+    }
 }

@@ -154,4 +154,9 @@ public class Lift2Right extends View {
     public void setOnButtonClick(OnButtonClick onButtonClick) {
         this.onButtonClick = onButtonClick;
     }
+
+    public void setCheckLift(boolean checkLift) {
+        isCheckLift = checkLift;
+        invalidate();
+    }
 }

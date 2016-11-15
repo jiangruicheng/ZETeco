@@ -52,7 +52,7 @@ public class QueryAproPresenterImpl implements QueryAproPresentrer {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.postmesg(e.getMessage());
                     }
 
                     @Override

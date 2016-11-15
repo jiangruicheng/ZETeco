@@ -1,5 +1,8 @@
 package com.zkteco.bigboss.mvp.presenter;
 
+import android.content.Context;
+
+import com.zkteco.bigboss.bean.json.SetupCmpRequest;
 import com.zkteco.bigboss.mvp.BasePresenter;
 
 /**
@@ -7,5 +10,8 @@ import com.zkteco.bigboss.mvp.BasePresenter;
  */
 public interface SetupCompanyPresenter extends BasePresenter {
     void checkoutindu();
-    void setup(int id);
+
+    void setup(SetupCmpRequest.PayloadBean.ParamsBean paramsBean, Context context);
+
+    String getIndID(int id);
 }

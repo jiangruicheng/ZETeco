@@ -3,6 +3,7 @@ package com.zkteco.bigboss.view.com.bigkoo.pickerview.view;
 import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,7 +38,7 @@ public class BasePickerView {
     private boolean isShowing;
     private int gravity = Gravity.BOTTOM;
 
-    public BasePickerView(Context context){
+    public BasePickerView(Context context) {
         this.context = context;
 
         initViews();
@@ -45,9 +46,9 @@ public class BasePickerView {
         initEvents();
     }
 
-    protected void initViews(){
+    protected void initViews() {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        decorView = (ViewGroup) ((Activity)context).getWindow().getDecorView().findViewById(android.R.id.content);
+        decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
         rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, decorView, false);
         rootView.setLayoutParams(new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
@@ -60,8 +61,10 @@ public class BasePickerView {
         inAnim = getInAnimation();
         outAnim = getOutAnimation();
     }
+
     protected void initEvents() {
     }
+
     /**
      * show的时候调用
      *
@@ -71,6 +74,7 @@ public class BasePickerView {
         decorView.addView(view);
         contentContainer.startAnimation(inAnim);
     }
+
     /**
      * 添加这个View到Activity的根视图
      */
@@ -81,8 +85,10 @@ public class BasePickerView {
         isShowing = true;
         onAttached(rootView);
     }
+
     /**
      * 检测该View是不是已经添加到根视图
+     *
      * @return 如果视图已经存在该View返回true
      */
     public boolean isShowing() {
@@ -131,6 +137,7 @@ public class BasePickerView {
         }
 
     }
+
     public Animation getInAnimation() {
         int res = PickerViewAnimateUtil.getAnimationResource(this.gravity, true);
         return AnimationUtils.loadAnimation(context, res);
@@ -151,12 +158,12 @@ public class BasePickerView {
 
         if (isCancelable) {
             view.setOnTouchListener(onCancelableTouchListener);
-        }
-        else{
+        } else {
             view.setOnTouchListener(null);
         }
         return this;
     }
+
     /**
      * Called when the user touch on black overlay in order to dismiss the dialog
      */
@@ -170,7 +177,68 @@ public class BasePickerView {
         }
     };
 
-    public View findViewById(int id){
+    public View findViewById(int id) {
         return contentContainer.findViewById(id);
+    }
+
+    private class BaseViewGroup extends FrameLayout {
+
+        public BaseViewGroup(Context context) {
+            super(context);
+        }
+
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent event) {
+            if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+                if (getKeyDispatcherState() == null) {
+                    return super.dispatchKeyEvent(event);
+                }
+
+                if (event.getAction() == KeyEvent.ACTION_DOWN
+                        && event.getRepeatCount() == 0) {
+                    KeyEvent.DispatcherState state = getKeyDispatcherState();
+                    if (state != null) {
+                        state.startTracking(event, this);
+                    }
+                    return true;
+                } else if (event.getAction() == KeyEvent.ACTION_UP) {
+                    KeyEvent.DispatcherState state = getKeyDispatcherState();
+                    if (state != null && state.isTracking(event) && !event.isCanceled()) {
+                        dismiss();
+                        return true;
+                    }
+                }
+                return super.dispatchKeyEvent(event);
+            } else {
+                return super.dispatchKeyEvent(event);
+            }
+        }
+
+        /*private OnTouchListener mTouchInterceptor;
+
+        @Override
+        public boolean dispatchTouchEvent(MotionEvent ev) {
+            if (mTouchInterceptor != null && mTouchInterceptor.onTouch(this, ev)) {
+                return true;
+            }
+            return super.dispatchTouchEvent(ev);
+        }*/
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            final int x = (int) event.getX();
+            final int y = (int) event.getY();
+
+            if ((event.getAction() == MotionEvent.ACTION_DOWN)
+                    && ((x < 0) || (x >= getWidth()) || (y < 0) || (y >= getHeight()))) {
+                dismiss();
+                return true;
+            } else if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                dismiss();
+                return true;
+            } else {
+                return super.onTouchEvent(event);
+            }
+        }
     }
 }

@@ -3,14 +3,18 @@ package com.zkteco.bigboss.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zkteco.bigboss.R;
+import com.zkteco.bigboss.bean.json.bean.UserMesg;
+import com.zkteco.bigboss.util.StringUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,8 +51,8 @@ public class RegisStingFragment extends BaseFragment {
 
     @OnClick(R.id.next)
     void onnextclick() {
-        replaceFragment(new RegisSuccesFragment(), null);
-        /*Log.i("user", "onnextclick: " + user.getText().toString());
+        //replaceFragment(new RegisSuccesFragment(), null);
+        Log.i("user", "onnextclick: " + user.getText().toString());
         if (StringUtil.isEmptyIgnoreBlank(user.getText().toString())) {
             Toast.makeText(getActivity(), "昵称不能为空", Toast.LENGTH_SHORT).show();
             return;
@@ -63,7 +67,7 @@ public class RegisStingFragment extends BaseFragment {
             } else {
                 Toast.makeText(getActivity(), "密码不一致", Toast.LENGTH_SHORT).show();
             }
-        }*/
+        }
 
     }
 

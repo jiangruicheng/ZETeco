@@ -10,14 +10,14 @@ import android.widget.TextView;
 
 import com.zkteco.bigboss.R;
 import com.zkteco.bigboss.bean.json.QueryAproResponse;
+import com.zkteco.bigboss.util.DateUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by jiang_ruicheng on 16/10/21.
@@ -35,17 +35,18 @@ public class MesgListAdapter extends BaseAdapter {
         resultsBean = list;
     }
 
+    public List<QueryAproResponse.PayloadBean.ResultsBean> getList() {
+        return resultsBean;
+    }
+
     public int getCount() {
-        //return resultsBean.size();
-        return 1;
+        return resultsBean.size();
 
     }
 
     @Override
     public Object getItem(int position) {
-        //return resultsBean.get(position);
-        return 1;
-
+        return resultsBean.get(position);
     }
 
     @Override
@@ -60,8 +61,14 @@ public class MesgListAdapter extends BaseAdapter {
         viewHolder = new ViewHolder(convertView);
         if (resultsBean != null && !resultsBean.isEmpty()) {
             switch (resultsBean.get(position).getType()) {
+                case 5:
+                    viewHolder.imag.setBackgroundResource(R.drawable.icon_signthecard_yellow);
+                    break;
+                case 7:
+                    viewHolder.imag.setBackgroundResource(R.drawable.icon_approval_blue_dir);
+                    break;
                 default:
-                    viewHolder.imag.setBackgroundResource(R.drawable.icon_apply_yellow);
+                    viewHolder.imag.setBackgroundResource(R.drawable.icon_approval_blue_dir);
             }
             viewHolder.mesg.setText(resultsBean.get(position).getTitle());
             switch (resultsBean.get(position).getApproveStatus()) {
@@ -75,16 +82,14 @@ public class MesgListAdapter extends BaseAdapter {
                     viewHolder.statu.setText("审批 驳回");
                     break;
             }
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM");
-            String sd = sdf.format(new Date(resultsBean.get(position).getCommitDate()));
-            viewHolder.time.setText(sd);
-        } else {
-            viewHolder.statu.setText("审批 通过");
-            viewHolder.time.setText("11小时前  >");
-            viewHolder.imag.setBackgroundResource(R.drawable.icon_apply_yellow);
+            /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM");
+            String sd = sdf.format(new Date(resultsBean.get(position).getCommitDate()));*/
+            viewHolder.time.setText(DateUtils.parseDataYMDHM(resultsBean.get(position).getCommitDate()));
         }
         return convertView;
     }
+
+    private static Unbinder unbinder;
 
     static class ViewHolder {
         @BindView(R.id.imag)
@@ -97,8 +102,12 @@ public class MesgListAdapter extends BaseAdapter {
         TextView time;
 
         ViewHolder(View view) {
-            ButterKnife.bind(this, view);
+            unbinder = ButterKnife.bind(this, view);
         }
     }
 
+    public static void setUnbinder() {
+        unbinder.unbind();
+        unbinder = null;
+    }
 }

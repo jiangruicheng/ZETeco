@@ -1,5 +1,6 @@
 package com.zkteco.bigboss.util;
 
+import com.zkteco.bigboss.mvp.BasePresenter;
 import com.zkteco.bigboss.ui.fragment.BasemainFragment;
 
 /**
@@ -17,7 +18,7 @@ public interface FragmentCallBack {
     int GOTO_ApprovalMesgFragment = 8;
     int GOTO_ApprovalerListFragment = 9;*/
 
-    public void GoTo(BasemainFragment fragment);
+    public void GoTo(BasemainFragment fragment, BasePresenter presenter);
 
     public void Back(BasemainFragment fragment);
 

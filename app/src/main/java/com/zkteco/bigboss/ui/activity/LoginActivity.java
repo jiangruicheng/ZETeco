@@ -32,4 +32,27 @@ public class LoginActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public interface Setbackcallback {
+        void backcallback();
+    }
+
+    private Setbackcallback setbackcallback;
+
+    public void setBack(Setbackcallback setbackcallback) {
+        this.setbackcallback = setbackcallback;
+    }
+
+    public void dissetback() {
+        this.setbackcallback = null;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (setbackcallback != null) {
+            setbackcallback.backcallback();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

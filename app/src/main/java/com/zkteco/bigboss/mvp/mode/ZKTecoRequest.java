@@ -13,16 +13,16 @@ public class ZKTecoRequest {
     private ZKTecoRequest() {
     }
 
-    private static String baseURL = "http://218.17.43.228:28080/";
-    private static ZKTecoRequest zkTecoRequest;
+    private static String baseURL = "http://218.17.43.228:28081/m/";
+    private static String loginURL = "http://218.17.43.228:28080/";
+    /*private static ZKTecoRequest zkTecoRequest;
 
     public static ZKTecoRequest getInstance() {
         if (zkTecoRequest == null) {
             zkTecoRequest = new ZKTecoRequest();
         }
         return zkTecoRequest;
-    }
-
+    }*/
     public static ZKTecoApi getAPI() {
         return new Retrofit.Builder().
                 baseUrl(baseURL).
@@ -31,5 +31,15 @@ public class ZKTecoRequest {
                 build().
                 create(ZKTecoApi.class);
     }
+
+    public static ZKTecoApi getLoginAPI() {
+        return new Retrofit.Builder().
+                baseUrl(loginURL).
+                addCallAdapterFactory(RxJavaCallAdapterFactory.create()).
+                addConverterFactory(GsonConverterFactory.create()).
+                build().
+                create(ZKTecoApi.class);
+    }
+
 
 }

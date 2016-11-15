@@ -34,14 +34,14 @@ public class RegisPresentImpl implements RegisPresenter {
         sendSmsCaptchaRequest.getPayload().getParams().setUsername(user);
         VerifyRequest verifyRequest = new VerifyRequest();
         verifyRequest.getPayload().getParams().setUsername(user);
-        Subscription subscription = ZKTecoRequest.getAPI().verify(verifyRequest).
+        Subscription subscription = ZKTecoRequest.getLoginAPI().verify(verifyRequest).
                 observeOn(AndroidSchedulers.mainThread()).
                 subscribeOn(Schedulers.io()).
                 map(new Func1<VerifyResponse, Boolean>() {
                     @Override
                     public Boolean call(VerifyResponse verifyResponse) {
                         if (verifyResponse.getCode().equals("00000000")) {
-                            ZKTecoRequest.getAPI().
+                            ZKTecoRequest.getLoginAPI().
                                     sendsmscaptcha(sendSmsCaptchaRequest).
                                     subscribeOn(Schedulers.io()).
                                     observeOn(AndroidSchedulers.mainThread()).
@@ -97,7 +97,7 @@ public class RegisPresentImpl implements RegisPresenter {
         VerifyCaptchaRequest r = new VerifyCaptchaRequest();
         r.getPayload().getParams().setUsername(user);
         r.getPayload().getParams().setCaptchaValue(MD5.GetMD5Code(captcha));
-        Subscription subscription = ZKTecoRequest.getAPI().
+        Subscription subscription = ZKTecoRequest.getLoginAPI().
                 verifycaptcha(url, r).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).

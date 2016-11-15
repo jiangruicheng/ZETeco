@@ -23,8 +23,8 @@
 
     <Button
         android:id="@+id/setupcompany"
-        android:layout_width="240dp"
-        android:layout_height="48dp"
+        android:layout_width="280dp"
+        android:layout_height="42dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="48dp"
         android:background="@drawable/shape"
@@ -42,8 +42,8 @@
 
     <Button
         android:id="@+id/applyjoincompany"
-        android:layout_width="240dp"
-        android:layout_height="48dp"
+        android:layout_width="280dp"
+        android:layout_height="42dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="12dp"
         android:background="@drawable/shape"

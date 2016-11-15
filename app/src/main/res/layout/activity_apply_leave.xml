@@ -50,7 +50,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="42dp"
             android:background="@drawable/content_background_frame"
-            android:padding="12dp">
+            android:padding="24dp">
 
             <TextView
                 android:id="@+id/leave_types"
@@ -114,11 +114,13 @@
                 android:textSize="@dimen/text_size_apply_leav"/>
 
             <EditText
+                android:id="@+id/reason"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:layout_below="@id/leave_finish_time"
                 android:layout_marginTop="12dp"
                 android:hint="请填写请假理由"
+                android:textColor="@color/blak"
                 android:textColorHint="@color/colorHintText"
                 android:textSize="@dimen/text_size_apply_leav"/>
         </RelativeLayout>
@@ -168,7 +170,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/colorButtonLogin"
             android:text="提交申请"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorHintText"
             android:textSize="26sp"/>
     </RelativeLayout>
 </LinearLayout>

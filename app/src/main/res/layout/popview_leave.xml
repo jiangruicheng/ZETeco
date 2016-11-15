@@ -8,28 +8,29 @@
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_alignParentTop="true"
-        android:background="@color/colorBottom"
+        android:background="@color/yinse"
         >
 
         <TextView
+            android:id="@+id/title_listview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="选择请假种类"
             android:textColor="@color/colorButtonLogin"
-            android:textSize="21sp"/>
+            android:textSize="18sp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/cancel"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
-            android:text="X"
-            android:textColor="@color/blak"
-            android:textSize="21sp"/>
+            android:background="@drawable/delete"
+            />
     </RelativeLayout>
 
     <ListView

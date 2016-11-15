@@ -58,11 +58,11 @@ public class RegisFragment extends BaseFragment implements RegisView {
 
     @OnClick(R.id.next)
     void onnext() {
-        replaceFragment();
+        //replaceFragment();
         if (StringUtil.isMobile(phonenumb.getText().toString())) {
-            //regisPresenter.nextstep(phonenumb.getText().toString(), IDcode.getText().toString());
+            regisPresenter.nextstep(phonenumb.getText().toString(), IDcode.getText().toString());
         } else {
-           // postmesg("请输入正确的手机号");
+            postmesg("请输入正确的手机号");
         }
     }
 

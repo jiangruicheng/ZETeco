@@ -1,11 +1,15 @@
 package com.zkteco.bigboss.mvp.presenter.Impl;
 
+import android.content.Context;
+
 import com.zkteco.bigboss.bean.json.CheckoutCmpindusRequest;
 import com.zkteco.bigboss.bean.json.CmpIndusResponse;
 import com.zkteco.bigboss.bean.json.SetupCmpRequest;
 import com.zkteco.bigboss.bean.json.SetupCmpResponse;
+import com.zkteco.bigboss.bean.json.bean.UserMesg;
 import com.zkteco.bigboss.mvp.BaseView;
 import com.zkteco.bigboss.mvp.mode.ZKTecoRequest;
+import com.zkteco.bigboss.mvp.presenter.LoginPresenter;
 import com.zkteco.bigboss.mvp.presenter.SetupCompanyPresenter;
 import com.zkteco.bigboss.mvp.view.SetupCompanyView;
 
@@ -64,10 +68,10 @@ public class SetupCompanyPresenterImpl implements SetupCompanyPresenter {
     SetupCmpRequest request;
 
     @Override
-    public void setup(int id) {
+    public void setup(SetupCmpRequest.PayloadBean.ParamsBean paramsBean, final Context context) {
         request = new SetupCmpRequest();
-        request.getPayload().getParams().setIndustryId(cmpIndus.getPayload().getResults().get(id).getIndustryId() + "");
-        Subscription subscription = ZKTecoRequest.getAPI().
+        request.getPayload().setParams(paramsBean);
+        Subscription subscription = ZKTecoRequest.getLoginAPI().
                 setupcmp(request).
                 observeOn(AndroidSchedulers.mainThread()).
                 subscribeOn(Schedulers.io()).
@@ -79,14 +83,26 @@ public class SetupCompanyPresenterImpl implements SetupCompanyPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.postmesg(e.getMessage());
                     }
 
                     @Override
                     public void onNext(SetupCmpResponse setupCmpResponse) {
-
+                        if (setupCmpResponse.getCode().equals("00000000")) {
+                            LoginPresenter presenter = new LoginPresenterImpl();
+                            presenter.login(context, UserMesg.getInstance().getAccount(), UserMesg.getInstance().getPassword());
+                        }
                     }
                 });
+        /*LoginPresenter presenter = new LoginPresenterImpl();
+        presenter.login(context, "15001372759", "123456");*/
+    }
+
+    @Override
+    public String getIndID(int id) {
+        if (cmpIndus != null)
+            return cmpIndus.getPayload().getResults().get(id).getIndustryId() + "";
+        return null;
     }
 
     @Override

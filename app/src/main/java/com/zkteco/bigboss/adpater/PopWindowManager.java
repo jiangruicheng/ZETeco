@@ -7,18 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.zkteco.bigboss.R;
 import com.zkteco.bigboss.view.DatePick;
 import com.zkteco.bigboss.view.TimePicker;
-import com.zkteco.bigboss.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by jiang_ruicheng on 16/10/21.
@@ -28,12 +32,19 @@ public class PopWindowManager {
         void callback(int p);
     }
 
-    ;
+    public interface PopviewTimeCallback {
+        void setTime(long time);
+    }
 
-    public static void popListWindow(Context context, View view, ArrayList list, final Popviewcallback popviewcallback) {
+    public static void popListWindow(Context context, View view, ArrayList list, final Popviewcallback popviewcallback, String title) {
         RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.popview_leave,
                 null);
         ListView listView = (ListView) relativeLayout.findViewById(R.id.leavetype_list);
+        TextView textView = (TextView) relativeLayout.findViewById(R.id.title_listview);
+        ImageView cancel = (ImageView) relativeLayout.findViewById(R.id.cancel);
+        Button makesure = (Button) relativeLayout.findViewById(R.id.makesure);
+
+        textView.setText(title);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -44,27 +55,41 @@ public class PopWindowManager {
         adpater.setItemText(list);
         listView.setAdapter(adpater);
         WindowManager wg = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        PopupWindow popupWindow = new PopupWindow(relativeLayout, -1, wg.getDefaultDisplay().getHeight() / 5 * 3);
+        final PopupWindow popupWindow = new PopupWindow(relativeLayout, -1, wg.getDefaultDisplay().getHeight() / 5 * 3);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-
+                MListViewAdapter.setUnbinder();
             }
         });
         popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
 
+            }
+        });
+        makesure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
     }
 
-    public static void poptimewindow(final Context context, View Popview) {
+    public static void poptimewindow(final Context context, View Popview, final PopviewTimeCallback callback) {
         final int currentHour;
         final int currentMinute;
         final int currentDay;
         final int[] selectHour = new int[1];
         final int[] selectMinute = new int[1];
         final int[] selectDay = new int[1];
+        final int[] selectmonth = new int[1];
+        final int[] selectyear = new int[1];
         final String[] selectDate = new String[1];
         final String[] selectTime = new String[1];
         final Calendar calendar = Calendar.getInstance();
@@ -76,6 +101,8 @@ public class PopWindowManager {
             @Override
             public void onChange(int year, int month, int day, int day_of_week) {
                 selectDay[0] = day;
+                selectyear[0] = year;
+                selectmonth[0] = month;
                 selectDate[0] = year + "年" + month + "月" + day + "日" + DatePick.getDayOfWeekCN(day_of_week);
             }
         };
@@ -95,7 +122,8 @@ public class PopWindowManager {
         selectDay[0] = currentDay = calendar.get(Calendar.DAY_OF_MONTH);
         selectMinute[0] = currentMinute = calendar.get(Calendar.MINUTE);
         selectHour[0] = currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-
+        selectyear[0] = calendar.get(Calendar.YEAR);
+        selectmonth[0] = calendar.get(Calendar.MONTH);
         selectTime[0] = currentHour + "点" + ((currentMinute < 10) ? ("0" + currentMinute) : currentMinute) + "分";
         dp_test = (DatePick) view.findViewById(R.id.dp_test);
         tp_test = (TimePicker) view.findViewById(R.id.tp_test);
@@ -120,29 +148,34 @@ public class PopWindowManager {
         tv_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (selectDay[0] == currentDay) {    //在当前日期情况下可能出现选中过去时间的情况
-                    if (selectHour[0] < currentHour) {
-                        Toast.makeText(context.getApplicationContext(), "不能选择过去的时间\n        请重新选择", 0).show();
-                    } else if ((selectHour[0] == currentHour) && (selectMinute[0] < currentMinute)) {
-                        Toast.makeText(context.getApplicationContext(), "不能选择过去的时间\n        请重新选择", 0).show();
-                    } else {
-                        Toast.makeText(context.getApplicationContext(), selectDate[0] + selectTime[0], 0).show();
-                        pw.dismiss();
-                    }
-                } else {
-                    Toast.makeText(context.getApplicationContext(), selectDate[0] + selectTime[0], 0).show();
-                    pw.dismiss();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                Date date = null;
+
+                try {
+                    date = simpleDateFormat.parse(selectyear[0] + "-" + selectmonth[0] + "-" + selectDay[0] + " " + selectHour[0] + ":" + selectMinute[0]);
+                    long time = date.getTime();
+                    callback.setTime(time);
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
+                pw.dismiss();
+
             }
+
         });
 
         //点击取消
-        tv_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                pw.dismiss();
-            }
-        });
+        tv_cancel.setOnClickListener(new View.OnClickListener()
+
+                                     {
+                                         @Override
+                                         public void onClick(View arg0) {
+                                             pw.dismiss();
+                                         }
+                                     }
+
+        );
 
     }
 }

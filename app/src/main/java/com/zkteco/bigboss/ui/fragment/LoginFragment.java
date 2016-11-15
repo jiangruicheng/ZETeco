@@ -1,6 +1,5 @@
 package com.zkteco.bigboss.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import com.zkteco.bigboss.R;
 import com.zkteco.bigboss.mvp.presenter.Impl.RegisPresentImpl;
 import com.zkteco.bigboss.mvp.presenter.LoginPresenter;
 import com.zkteco.bigboss.mvp.view.LoginView;
-import com.zkteco.bigboss.ui.activity.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,9 +43,9 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
     @OnClick(R.id.login)
     void onclick() {
-        getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
+        // getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
 
-        // presenter.login(getActivity(), account.getText().toString(), password.getText().toString());
+        presenter.login(getActivity(), account.getText().toString(), password.getText().toString());
 
     }
 

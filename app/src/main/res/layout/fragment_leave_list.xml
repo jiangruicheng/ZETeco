@@ -16,14 +16,14 @@
         >
 
         <ImageView
+            android:id="@+id/back"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="@drawable/whiteback"
 
-            android:id="@+id/back"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="4dp"
+            android:background="@drawable/whiteback"
             />
 
         <TextView
@@ -42,10 +42,11 @@
         android:layout_height="24dp"
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
+        app:checkbackgroundcolor="@color/colorButtonLogin"
         app:lifttext="待审批"
         app:righttext="已审批"
         app:textsize="14sp"
-        app:checkbackgroundcolor="@color/colorButtonLogin"
+        app:unchecktextcolor="@color/blak"
 
         />
 

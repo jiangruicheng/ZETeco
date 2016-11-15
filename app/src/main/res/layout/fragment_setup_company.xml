@@ -99,9 +99,10 @@
                 android:gravity="center"
                 android:hint="请输入企业名称"
                 android:padding="5dp"
-                android:textColor="@color/blak"
-                android:textColorHint="@color/blak"
-                android:textSize="@dimen/text_size_apply_leav"/>
+                android:textColor="@color/colorHintText"
+
+                android:textColorHint="@color/colorHintText"
+                android:textSize="15sp"/>
         </RelativeLayout>
 
         <View
@@ -129,8 +130,8 @@
 
             <ImageView
                 android:id="@+id/getindus"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/icon_arrow_right_big"/>
@@ -167,9 +168,9 @@
                 android:layout_toLeftOf="@+id/getlocation"
                 android:gravity="center"
                 android:padding="5dp"
-                android:textColor="@color/blak"
-                android:textColorHint="@color/blak"
-                android:textSize="@dimen/text_size_apply_leav"/>
+                android:textColor="@color/colorHintText"
+                android:textColorHint="@color/colorHintText"
+                android:textSize="15sp"/>
 
             <ImageView
                 android:id="@+id/getlocation"
@@ -212,9 +213,9 @@
                 android:gravity="center"
                 android:hint="请输入详细地址"
                 android:padding="5dp"
-                android:textColor="@color/blak"
-                android:textColorHint="@color/blak"
-                android:textSize="@dimen/text_size_apply_leav"/>
+                android:textColor="@color/colorHintText"
+                android:textColorHint="@color/colorHintText"
+                android:textSize="15sp"/>
         </RelativeLayout>
     </LinearLayout>
 

@@ -16,6 +16,9 @@ import com.zkteco.bigboss.bean.json.QueryStatiRequest;
 import com.zkteco.bigboss.bean.json.QueryStatiResponse;
 import com.zkteco.bigboss.bean.json.bean.UserMesg;
 import com.zkteco.bigboss.mvp.mode.ZKTecoRequest;
+import com.zkteco.bigboss.mvp.presenter.Impl.ApplyPresenterImpl;
+import com.zkteco.bigboss.mvp.presenter.Impl.QueryAproPresenterImpl;
+import com.zkteco.bigboss.mvp.presenter.Impl.SignCardPresenterImpl;
 import com.zkteco.bigboss.util.FragmentCallBack;
 
 import butterknife.BindView;
@@ -90,7 +93,7 @@ public class ApplyFragment extends BasemainFragment {
         myapply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callBack.GoTo(new LeaveListFragment(false));
+                callBack.GoTo(new LeaveListFragment(false), new QueryAproPresenterImpl());
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +105,7 @@ public class ApplyFragment extends BasemainFragment {
         leave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callBack.GoTo(new ApplyLeaveFragment());
+                callBack.GoTo(new ApplyLeaveFragment(), new ApplyPresenterImpl());
                 /*callBack.callback(FragmentCallBack.GOTO_ApplyLeaveFragment);*/
             }
         });
@@ -110,7 +113,7 @@ public class ApplyFragment extends BasemainFragment {
             @Override
             public void onClick(View v) {
                 /*callBack.callback(FragmentCallBack.GOTO_SignCardFragment);*/
-                callBack.GoTo(new SignCardFragment());
+                callBack.GoTo(new SignCardFragment(), new SignCardPresenterImpl());
             }
         });
 
