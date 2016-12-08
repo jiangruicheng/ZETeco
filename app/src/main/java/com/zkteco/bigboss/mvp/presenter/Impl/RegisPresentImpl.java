@@ -34,14 +34,14 @@ public class RegisPresentImpl implements RegisPresenter {
         sendSmsCaptchaRequest.getPayload().getParams().setUsername(user);
         VerifyRequest verifyRequest = new VerifyRequest();
         verifyRequest.getPayload().getParams().setUsername(user);
-        Subscription subscription = ZKTecoRequest.getLoginAPI().verify(verifyRequest).
+        Subscription subscription = ZKTecoRequest.getAccountAPI().verify(verifyRequest).
                 observeOn(AndroidSchedulers.mainThread()).
                 subscribeOn(Schedulers.io()).
                 map(new Func1<VerifyResponse, Boolean>() {
                     @Override
                     public Boolean call(VerifyResponse verifyResponse) {
                         if (verifyResponse.getCode().equals("00000000")) {
-                            ZKTecoRequest.getLoginAPI().
+                            ZKTecoRequest.getAccountAPI().
                                     sendsmscaptcha(sendSmsCaptchaRequest).
                                     subscribeOn(Schedulers.io()).
                                     observeOn(AndroidSchedulers.mainThread()).
@@ -53,7 +53,7 @@ public class RegisPresentImpl implements RegisPresenter {
 
                                         @Override
                                         public void onError(Throwable e) {
-                                            regisView.postmesg(e.toString());
+                                            regisView.postmesg(e.getMessage());
                                         }
 
                                         @Override
@@ -76,7 +76,7 @@ public class RegisPresentImpl implements RegisPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        regisView.postmesg(e.toString());
+                        regisView.postmesg(e.getMessage());
                     }
 
                     @Override
@@ -92,12 +92,12 @@ public class RegisPresentImpl implements RegisPresenter {
 
     @Override
     public void nextstep(final String user, String captcha) {
-        final String url = "http://218.17.43.228:28080/apiv1/account/verifycaptcha/" + MD5.GetMD5Code(user) + "/" + MD5.GetMD5Code(captcha);
+        final String url = "http://218.17.43.228:28082/m/apiv1/account/verifycaptcha/";//+ MD5.GetMD5Code(user) + "/" + MD5.GetMD5Code(captcha)
         Log.i("MD5", "nextstep: " + "http://218.17.43.228:28080/apiv1/account/verifycaptcha/" + MD5.GetMD5Code(user) + "/" + MD5.GetMD5Code(captcha));
         VerifyCaptchaRequest r = new VerifyCaptchaRequest();
         r.getPayload().getParams().setUsername(user);
         r.getPayload().getParams().setCaptchaValue(MD5.GetMD5Code(captcha));
-        Subscription subscription = ZKTecoRequest.getLoginAPI().
+        Subscription subscription = ZKTecoRequest.getAccountAPI().
                 verifycaptcha(url, r).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
@@ -109,7 +109,7 @@ public class RegisPresentImpl implements RegisPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        regisView.postmesg(e.toString());
+                        regisView.postmesg(e.getMessage());
                     }
 
                     @Override
@@ -117,7 +117,7 @@ public class RegisPresentImpl implements RegisPresenter {
                         if (verifyCaptchaResponse.getCode().equals("00000000")) {
                             regisView.replaceFragment();
                             UserMesg.getInstance().setAccount(user);
-                            regisView.postmesg(verifyCaptchaResponse.getMessage());
+                            // regisView.postmesg(verifyCaptchaResponse.getMessage());
                         } else {
                             regisView.postmesg(verifyCaptchaResponse.getMessage());
                         }

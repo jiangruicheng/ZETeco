@@ -47,7 +47,7 @@ public interface ZKTecoApi {
     @POST("apiv1/account/login")
     Observable<LoginResponse> login(@Body LoginRequest loginRequest);
 
-    @POST("apiv1/account/sendsmscaptcha ")
+    @POST("apiv1/account/sendcaptcha")
     Observable<SendSmsCaptchaResponse> sendsmscaptcha(@Body SendSmsCaptchaRequest sendSmsCaptcha);
 
     @POST("apiv1/account/verify")

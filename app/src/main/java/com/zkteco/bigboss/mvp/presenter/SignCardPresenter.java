@@ -11,5 +11,7 @@ public interface SignCardPresenter extends BasePresenter {
 
     void quedic();
 
+    String getTypeName(int id);
+
     String getTypeID(int id);
 }

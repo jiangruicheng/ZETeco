@@ -13,8 +13,10 @@ public class ZKTecoRequest {
     private ZKTecoRequest() {
     }
 
-    private static String baseURL = "http://218.17.43.228:28081/m/";
-    private static String loginURL = "http://218.17.43.228:28080/";
+    private static String ATTURL = "http://218.17.43.228:28081/m/";
+    private static String listURL = "http://218.17.43.228:28081/";
+    private static String ACCOUNTURL = "http://218.17.43.228:28082/m/";
+
     /*private static ZKTecoRequest zkTecoRequest;
 
     public static ZKTecoRequest getInstance() {
@@ -23,18 +25,27 @@ public class ZKTecoRequest {
         }
         return zkTecoRequest;
     }*/
-    public static ZKTecoApi getAPI() {
+    public static ZKTecoApi getAccountAPI() {
         return new Retrofit.Builder().
-                baseUrl(baseURL).
+                baseUrl(ACCOUNTURL).
                 addCallAdapterFactory(RxJavaCallAdapterFactory.create()).
                 addConverterFactory(GsonConverterFactory.create()).
                 build().
                 create(ZKTecoApi.class);
     }
 
-    public static ZKTecoApi getLoginAPI() {
+    public static ZKTecoApi getListApi() {
         return new Retrofit.Builder().
-                baseUrl(loginURL).
+                baseUrl(listURL).
+                addCallAdapterFactory(RxJavaCallAdapterFactory.create()).
+                addConverterFactory(GsonConverterFactory.create()).
+                build().
+                create(ZKTecoApi.class);
+    }
+
+    public static ZKTecoApi getATTPAI() {
+        return new Retrofit.Builder().
+                baseUrl(ATTURL).
                 addCallAdapterFactory(RxJavaCallAdapterFactory.create()).
                 addConverterFactory(GsonConverterFactory.create()).
                 build().

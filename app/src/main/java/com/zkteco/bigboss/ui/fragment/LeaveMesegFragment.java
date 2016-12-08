@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,10 @@ import com.zkteco.bigboss.bean.json.bean.UserMesg;
 import com.zkteco.bigboss.mvp.mode.ZKTecoRequest;
 import com.zkteco.bigboss.util.DateUtils;
 import com.zkteco.bigboss.util.FragmentCallBack;
+import com.zkteco.bigboss.view.kankan.wheel.widget.DateObject;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,6 +99,16 @@ public class LeaveMesegFragment extends BasemainFragment {
     private FragmentCallBack callBack;
     private QueryAproResponse.PayloadBean.ResultsBean bean;
 
+    public interface callback {
+        void callback();
+    }
+
+    private callback c;
+
+    public void setCallBack(callback c) {
+        this.c = c;
+    }
+
     public void setBean(QueryAproResponse.PayloadBean.ResultsBean bean) {
         this.bean = bean;
     }
@@ -126,41 +141,81 @@ public class LeaveMesegFragment extends BasemainFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_leave_meseg, container, false);
         unbinder = ButterKnife.bind(this, view);
+        reason.setMovementMethod(ScrollingMovementMethod.getInstance());
         if (ButtonVisable && bean != null) {
             switch (bean.getType()) {
                 case 5:
                     titleText.setText("签卡");
                     break;
-                case 7:
+                case 1:
                     titleText.setText("请假");
-                    break;
-            }
-            approvalimag.setVisibility(View.GONE);
-            bottomButton.setVisibility(View.VISIBLE);
-        } else {
-            switch (bean.getType()) {
-                case 5:
-                    titleText.setText("我的签卡单");
-                    break;
-                case 7:
-                    titleText.setText("我的申请单");
                     break;
             }
             approvalimag.setVisibility(View.VISIBLE);
             switch (bean.getApproveStatus()) {
-                case 0:
+                case 2:
+                    bottomButton.setVisibility(View.GONE);
                     approvalimag.setBackgroundResource(R.drawable.unpass);
                     break;
-                case 3:
+                case 1:
+                    bottomButton.setVisibility(View.GONE);
                     approvalimag.setBackgroundResource(R.drawable.pass);
+                    break;
+                case 0:
+                    bottomButton.setVisibility(View.VISIBLE);
+                    approvalimag.setVisibility(View.GONE);
+                    break;
+            }
+
+
+        } else {
+            int i = bean.getType();
+            switch (bean.getType()) {
+                case 5:
+                    titleText.setText("我的签卡单");
+                    break;
+                case 1:
+                    titleText.setText("我的请假单");
+                    break;
+
+            }
+            approvalimag.setVisibility(View.VISIBLE);
+            switch (bean.getApproveStatus()) {
+                case 2:
+                    approvalimag.setBackgroundResource(R.drawable.unpass);
+                    break;
+                case 1:
+                    approvalimag.setBackgroundResource(R.drawable.pass);
+                    break;
+                case 0:
+                    approvalimag.setVisibility(View.GONE);
                     break;
             }
             bottomButton.setVisibility(View.GONE);
 
         }
         name.setText(bean.getName());
-        selectLeaveStartTime.setText(DateUtils.parseDataYMDHM(bean.getStartTime()));
-        selectLeaveFinishTime.setText(DateUtils.parseDataYMDHM(bean.getEndTime()));
+        if (bean.getType() == 5) {
+            Date date = new Date(bean.getPunchTime());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            int startweek = calendar.get(Calendar.DAY_OF_WEEK);
+
+            startweek = startweek % 7 == 0 ? 7 : startweek % 7;
+            selectLeaveStartTime.setText(DateUtils.parseDataYMDHM(bean.getPunchTime()) + " " + DateObject.getDayOfWeekCN(startweek));
+        } else {
+            Date date = new Date(bean.getStartTime());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            int startweek = calendar.get(Calendar.DAY_OF_WEEK);
+            date.setTime(bean.getEndTime());
+            calendar.setTime(date);
+            int endweek = calendar.get(Calendar.DAY_OF_WEEK);
+            startweek = startweek % 7 == 0 ? 7 : startweek % 7;
+            endweek = endweek % 7 == 0 ? 7 : endweek % 7;
+            selectLeaveStartTime.setText(DateUtils.parseDataYMDHM(bean.getStartTime()) + " " + DateObject.getDayOfWeekCN(startweek));
+            selectLeaveFinishTime.setText(DateUtils.parseDataYMDHM(bean.getEndTime()) + " " + DateObject.getDayOfWeekCN(endweek));
+        }
         reason.setText(bean.getReason());
         return view;
     }
@@ -181,7 +236,7 @@ public class LeaveMesegFragment extends BasemainFragment {
         reviewRequireRequest.getPayload().getParams().setUid(bean.getUid());
 
 
-        Subscription subscription = ZKTecoRequest.getAPI().reviewrequire(reviewRequireRequest).
+        Subscription subscription = ZKTecoRequest.getATTPAI().reviewrequire(reviewRequireRequest).
                 observeOn(AndroidSchedulers.mainThread()).
                 subscribeOn(Schedulers.io()).
                 subscribe(new Observer<ReviewRequireResponse>() {
@@ -198,8 +253,11 @@ public class LeaveMesegFragment extends BasemainFragment {
                     @Override
                     public void onNext(ReviewRequireResponse reviewRequireResponse) {
                         if (reviewRequireResponse.getCode().equals("00000000")) {
-                            Toast.makeText(getActivity(), "操作完成", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "审批成功", Toast.LENGTH_SHORT).show();
                             callBack.Back(LeaveMesegFragment.this);
+                            if (c != null) {
+                                c.callback();
+                            }
                         }
                     }
                 });

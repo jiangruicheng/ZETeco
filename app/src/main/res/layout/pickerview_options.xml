@@ -1,15 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:cont="http://schemas.android.com/apk/res-auto"
-
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <include
-        layout="@layout/include_pickerview_topbar"
+    <!--    <include
+            layout="@layout/include_pickerview_topbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pickerview_topbar_height"/>-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/pickerview_topbar_height"/>
+        android:layout_height="@dimen/pickerview_topbar_height"
+        android:background="@color/yinse">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="地区"
+            android:textColor="@color/colorButtonLogin"
+            android:textSize="19sp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="@dimen/pickerview_topbar_height"
+                android:layout_height="match_parent"
+                android:background="@drawable/delete"/>
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/optionspicker"
@@ -21,7 +53,7 @@
         <com.zkteco.bigboss.view.com.bigkoo.pickerview.lib.WheelView
             android:id="@+id/options1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             cont:pickerview_textSize="15sp"
             />
@@ -29,17 +61,26 @@
         <com.zkteco.bigboss.view.com.bigkoo.pickerview.lib.WheelView
             android:id="@+id/options2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             cont:pickerview_textSize="15sp"/>
 
         <com.zkteco.bigboss.view.com.bigkoo.pickerview.lib.WheelView
             android:id="@+id/options3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             cont:pickerview_textSize="15sp"/>
     </LinearLayout>
 
+    <Button
+        android:id="@id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/colorButtonLogin"
+        android:text="确定"
+        android:gravity="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="19sp"/>
 
 </LinearLayout>

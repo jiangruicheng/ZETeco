@@ -11,5 +11,6 @@ import java.util.ArrayList;
 public interface ApplyView extends BaseView<ApplysPresenter> {
     void showList(ArrayList arrayList);
 
+    void backup();
 
 }

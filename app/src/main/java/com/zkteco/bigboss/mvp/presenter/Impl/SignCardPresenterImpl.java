@@ -30,7 +30,7 @@ public class SignCardPresenterImpl implements SignCardPresenter {
         request.setCmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getCmpId());
         request.setSessionId(UserMesg.getInstance().getResponse().getSessionId());
         request.getPayload().setParams(paramsBean);
-        Subscription subscription = ZKTecoRequest.getAPI().
+        Subscription subscription = ZKTecoRequest.getATTPAI().
                 signcard(request).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
@@ -47,7 +47,13 @@ public class SignCardPresenterImpl implements SignCardPresenter {
 
                     @Override
                     public void onNext(SignCardResponse signCardResponse) {
-                        view.postmesg(signCardResponse.getMessage());
+
+                        if (signCardResponse.getCode().equals("00000000")) {
+                            view.postmesg("申请成功");
+                            view.backup();
+                        } else {
+                            view.postmesg(signCardResponse.getMessage());
+                        }
                     }
                 });
     }
@@ -59,7 +65,7 @@ public class SignCardPresenterImpl implements SignCardPresenter {
         request.setSessionId(UserMesg.getInstance().getResponse().getSessionId());
         request.getPayload().getParams().setCmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getCmpId());
         request.getPayload().getParams().setEmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getEmpId());
-        Subscription subscription = ZKTecoRequest.getAPI().
+        Subscription subscription = ZKTecoRequest.getATTPAI().
                 quedesc(request).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
@@ -100,6 +106,13 @@ public class SignCardPresenterImpl implements SignCardPresenter {
         if (response != null) {
             return response.getPayload().getResults().get(id).getValue();
         }
+        return null;
+    }
+
+    @Override
+    public String getTypeName(int id) {
+        if (response != null)
+            return response.getPayload().getResults().get(id).getDesc();
         return null;
     }
 

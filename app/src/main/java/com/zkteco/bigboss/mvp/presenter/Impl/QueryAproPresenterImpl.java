@@ -40,7 +40,7 @@ public class QueryAproPresenterImpl implements QueryAproPresentrer {
             rquest.getPayload().getParams().setPageSize(20);
             rquest.getPayload().getParams().setApprovalRet(statu);
         }
-        Subscription subscription = ZKTecoRequest.getAPI().
+        Subscription subscription = ZKTecoRequest.getATTPAI().
                 queryaprolist(rquest).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).

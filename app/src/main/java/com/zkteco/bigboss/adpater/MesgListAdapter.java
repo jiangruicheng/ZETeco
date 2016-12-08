@@ -70,10 +70,14 @@ public class MesgListAdapter extends BaseAdapter {
                 default:
                     viewHolder.imag.setBackgroundResource(R.drawable.icon_approval_blue_dir);
             }
-            viewHolder.mesg.setText(resultsBean.get(position).getTitle());
+            if (resultsBean.get(position).getSubType() != null) {
+                viewHolder.mesg.setText(resultsBean.get(position).getTitle() + ":" + resultsBean.get(position).getSubType());
+            } else {
+                viewHolder.mesg.setText(resultsBean.get(position).getTitle());
+            }
             switch (resultsBean.get(position).getApproveStatus()) {
                 case 0:
-                    viewHolder.statu.setText("");
+                    viewHolder.statu.setText("等待审批");
                     break;
                 case 1:
                     viewHolder.statu.setText("审批 通过");
@@ -84,7 +88,7 @@ public class MesgListAdapter extends BaseAdapter {
             }
             /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM");
             String sd = sdf.format(new Date(resultsBean.get(position).getCommitDate()));*/
-            viewHolder.time.setText(DateUtils.parseDataYMDHM(resultsBean.get(position).getCommitDate()));
+            viewHolder.time.setText(DateUtils.parseDataYMDHM(resultsBean.get(position).getCommitDate()) + "  >");
         }
         return convertView;
     }
@@ -107,7 +111,9 @@ public class MesgListAdapter extends BaseAdapter {
     }
 
     public static void setUnbinder() {
-        unbinder.unbind();
-        unbinder = null;
+        if (unbinder != null) {
+            unbinder.unbind();
+            unbinder = null;
+        }
     }
 }

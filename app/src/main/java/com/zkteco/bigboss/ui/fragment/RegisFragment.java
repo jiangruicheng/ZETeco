@@ -46,8 +46,10 @@ public class RegisFragment extends BaseFragment implements RegisView {
 
     @OnClick(R.id.getIDcode)
     void setGetIDcode() {
-        if (phonenumb.getText() != null) {
+        if (StringUtil.isMobile(phonenumb.getText().toString())) {
             regisPresenter.sendsmscaptcha(phonenumb.getText().toString());
+        } else {
+            postmesg("请输入正确的手机号");
         }
     }
 
@@ -59,7 +61,8 @@ public class RegisFragment extends BaseFragment implements RegisView {
     @OnClick(R.id.next)
     void onnext() {
         //replaceFragment();
-        if (StringUtil.isMobile(phonenumb.getText().toString())) {
+        /*UserMesg.getInstance().setAccount(phonenumb.getText().toString());*/
+       if (StringUtil.isMobile(phonenumb.getText().toString())) {
             regisPresenter.nextstep(phonenumb.getText().toString(), IDcode.getText().toString());
         } else {
             postmesg("请输入正确的手机号");

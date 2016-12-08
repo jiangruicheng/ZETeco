@@ -3,15 +3,24 @@ apply plugin: 'android-apt'
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
-
+    compileSdkVersion 25
+    buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "com.zkteco.bigboss"
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [
+                GETUI_APP_ID    : "X1YgiFHw6O7KywyHc7hr62",
+                GETUI_APP_KEY   : "XiEgUQWhFN6gKiuBHF3Mb1",
+                GETUI_APP_SECRET: "HJTycrdnBK63cfcxeaiJm9"
+        ]
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "mips", "mips64", "x86", "x86_64"
+        }
+
     }
     buildTypes {
         release {
@@ -19,16 +28,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
+    compile 'com.tencent.bugly:crashreport:latest.release'
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.2.0'
-    compile 'com.android.support:support-v4:23.4.0'
     compile 'com.bigkoo:quicksidebar:1.0.3'
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'com.google.code.gson:gson:2.7'
@@ -44,4 +54,7 @@ dependencies {
     }
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
     compile files('libs/pinyin4j-2.5.0.jar')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.getui:sdk:2.9.5.0'
+    compile 'com.android.support:support-v4:25.0.1'
 }

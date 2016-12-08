@@ -20,6 +20,7 @@ import com.zkteco.bigboss.mvp.presenter.Impl.QueryReviewersPresenterImpl;
 import com.zkteco.bigboss.mvp.presenter.SignCardPresenter;
 import com.zkteco.bigboss.mvp.view.SignCardView;
 import com.zkteco.bigboss.util.FragmentCallBack;
+import com.zkteco.bigboss.view.TimePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class SignCardFragment extends BasemainFragment implements SignCardView {
         paramsBean = new SignCardRequest.PayloadBean.ParamsBean();
     }
 
-    private TextView types, selectTime,selectstarttime;
+    private TextView selectTime, selectstarttime, approvalname, type;
     private EditText reason;
     private Button button, selectapprovaler;
     private View back;
@@ -62,9 +63,10 @@ public class SignCardFragment extends BasemainFragment implements SignCardView {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signcard, container, false);
         back = view.findViewById(R.id.back);
+        approvalname = (TextView) view.findViewById(R.id.approvalname);
         reason = (EditText) view.findViewById(R.id.reason);
         selectapprovaler = (Button) view.findViewById(R.id.select_approvaler);
-        types = (TextView) view.findViewById(R.id.signcard_types);
+        type = (TextView) view.findViewById(R.id.sign_card_type);
         selectTime = (TextView) view.findViewById(R.id.signcard_start_time);
         button = (Button) view.findViewById(R.id.makesure);
         selectstarttime = (TextView) view.findViewById(R.id.select_start_time);
@@ -74,7 +76,19 @@ public class SignCardFragment extends BasemainFragment implements SignCardView {
                 paramsBean.setCmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getCmpId());
                 paramsBean.setEmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getEmpId());
                 paramsBean.setReason(reason.getText().toString());
-                presenter.signcard(paramsBean);
+                if (paramsBean.getPunchType() == -1) {
+                    postmesg("请选择签卡类型");
+                    return;
+                }
+                if (paramsBean.getPunchTime() == -1) {
+                    postmesg("请选择时间");
+                    return;
+                }
+                if (paramsBean.getApproveManId() == null) {
+                    postmesg("请选择审批人");
+                } else {
+                    presenter.signcard(paramsBean);
+                }
             }
         });
         selectapprovaler.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +99,11 @@ public class SignCardFragment extends BasemainFragment implements SignCardView {
                     public void setID(String ID) {
                         paramsBean.setApproveManId(ID);
                     }
+
+                    @Override
+                    public void setName(String name) {
+                        approvalname.setText(name);
+                    }
                 }), new QueryReviewersPresenterImpl());
             }
         });
@@ -94,7 +113,7 @@ public class SignCardFragment extends BasemainFragment implements SignCardView {
                 callBack.Back(SignCardFragment.this);
             }
         });
-        types.setOnClickListener(new View.OnClickListener() {
+        type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.quedic();
@@ -109,15 +128,14 @@ public class SignCardFragment extends BasemainFragment implements SignCardView {
                 }, "选择签卡种类");*/
             }
         });
-        selectTime.setOnClickListener(new View.OnClickListener() {
+        selectstarttime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopWindowManager.poptimewindow(getActivity(), button, new PopWindowManager.PopviewTimeCallback() {
+                PopWindowManager.poptimewindow(getActivity(), button, TimePicker.MINUTE_TYPE_ALL, new PopWindowManager.PopviewTimeCallback() {
                     @Override
-                    public void setTime(long time) {
+                    public void setTime(long time, String week) {
                         paramsBean.setPunchTime(time);
-                        SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                         String d = format.format(time);
                         selectstarttime.setText(d);
 
@@ -135,8 +153,14 @@ public class SignCardFragment extends BasemainFragment implements SignCardView {
             @Override
             public void callback(int p) {
                 paramsBean.setPunchType(Integer.valueOf(presenter.getTypeID(p)));
+                type.setText(presenter.getTypeName(p));
             }
         }, "选择签卡种类");
+    }
+
+    @Override
+    public void backup() {
+        callBack.Back(SignCardFragment.this);
     }
 
     private SignCardPresenter presenter;

@@ -96,7 +96,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="12dp"
                 android:layout_toRightOf="@+id/applayimag"
-                android:text="2016-10-10 10:33"
+                android:text=""
                 android:textColor="@color/blak"
                 android:textSize="@dimen/text_size_apply_leav"/>
 
@@ -118,7 +118,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="12dp"
                 android:layout_toRightOf="@id/applayimag"
-                android:text="2016-10-10 03:33"
+                android:text=""
                 android:textColor="@color/blak"
                 android:textSize="@dimen/text_size_apply_leav"/>
 
@@ -128,8 +128,8 @@
                 android:layout_height="72dp"
                 android:layout_below="@id/select_leave_finish_time"
                 android:layout_marginTop="12dp"
-                android:hint="家里有急事"
-                android:textColorHint="@color/blak"
+                android:scrollbars="vertical"
+                android:textColor="@color/blak"
                 android:textSize="@dimen/text_size_apply_leav"/>
 
             <ImageView

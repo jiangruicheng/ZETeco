@@ -25,6 +25,7 @@ import com.zkteco.bigboss.mvp.presenter.SetupCompanyPresenter;
 import com.zkteco.bigboss.mvp.view.SetupCompanyView;
 import com.zkteco.bigboss.ui.activity.LoginActivity;
 import com.zkteco.bigboss.util.MD5;
+import com.zkteco.bigboss.view.MyRelativeLayout;
 import com.zkteco.bigboss.view.com.bigkoo.pickerview.OptionsPickerView;
 import com.zkteco.bigboss.view.com.bigkoo.pickerview.listener.OnDismissListener;
 import com.zkteco.bigboss.view.com.bigkoo.pickerview.model.IPickerViewData;
@@ -54,6 +55,23 @@ public class SetupCompanyFragment extends BaseFragment implements SetupCompanyVi
 
     @BindView(R.id.back)
     ImageView back;
+    @BindView(R.id.Edit_indus)
+    TextView EditIndus;
+    @BindView(R.id.indus_layout)
+    MyRelativeLayout indusLayout;
+
+    @OnClick(R.id.indus_layout)
+    void setGetindus() {
+        presenter.checkoutindu();
+    }
+
+    @BindView(R.id.address_layout)
+    MyRelativeLayout addressLayout;
+
+    @OnClick(R.id.address_layout)
+    void setGetlocation() {
+        showaddress();
+    }
 
     @OnClick(R.id.back)
     void onback() {
@@ -65,20 +83,20 @@ public class SetupCompanyFragment extends BaseFragment implements SetupCompanyVi
     @BindView(R.id.getindus)
     ImageView getindus;
 
-    @OnClick(R.id.getindus)
+    /*@OnClick(R.id.getindus)
     void setGetindus() {
         presenter.checkoutindu();
-    }
+    }*/
 
     @BindView(R.id.Edit_location)
     TextView EditLocation;
     @BindView(R.id.getlocation)
     ImageView getlocation;
 
-    @OnClick(R.id.getlocation)
+/*    @OnClick(R.id.getlocation)
     void setGetlocation() {
         showaddress();
-    }
+    }*/
 
     @BindView(R.id.editaddress)
     EditText editaddress;
@@ -95,6 +113,7 @@ public class SetupCompanyFragment extends BaseFragment implements SetupCompanyVi
         paramsBean.setFirstName(UserMesg.getInstance().getUsername());
         paramsBean.setPassword(MD5.GetMD5Code(UserMesg.getInstance().getPassword()));
         presenter.setup(paramsBean, getActivity());
+
     }
 
     private SetupCmpRequest.PayloadBean.ParamsBean paramsBean;
@@ -202,12 +221,13 @@ public class SetupCompanyFragment extends BaseFragment implements SetupCompanyVi
                 optionsPickerView.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int option2, int options3) {
-                        sheng = options1;
+                        /*sheng = options1;
                         shi = option2;
-                        xian = options3;
+                        xian = options3;*/
                         paramsBean.setProvince(Integer.toString(addressList.get(options1).getAreaId()));
                         paramsBean.setCity(Integer.toString(addressList.get(options1).getSubArea().get(option2).getAreaId()));
                         paramsBean.setDistrict(Integer.toString(addressList.get(options1).getSubArea().get(option2).getSubArea().get(options3).getAreaId()));
+                        EditLocation.setText(addressList.get(options1).getName() + addressList.get(options1).getSubArea().get(option2).getName() + addressList.get(options1).getSubArea().get(option2).getSubArea().get(options3).getName());
                     }
                 });
                /* Class optclass = optionsPickerView.getClass();
@@ -234,18 +254,13 @@ public class SetupCompanyFragment extends BaseFragment implements SetupCompanyVi
         });
     }
 
-    private int sheng;
-    private int shi;
-    private int xian;
-
-    private int id;
-
     @Override
     public void showindus(final List<String> cmpIndusResponse) {
         PopWindowManager.popListWindow(getActivity(), setup, (ArrayList) cmpIndusResponse, new PopWindowManager.Popviewcallback() {
             @Override
             public void callback(int p) {
-                paramsBean.setIndustryId(presenter.getIndID(id));
+                paramsBean.setIndustryId(presenter.getIndID(p));
+                EditIndus.setText(presenter.getIndName(p));
             }
         }, "选择所属行业");
     }

@@ -56,7 +56,7 @@ public class LeaveListFragment extends BasemainFragment implements QueryAproView
     TextView titleTxt;
     private QueryAproPresentrer presentrer;
     private FragmentCallBack callBack;
-
+    private boolean IsLIFT = true;
     private boolean isapproval;
 
     public LeaveListFragment(boolean isapproval) {
@@ -92,27 +92,56 @@ public class LeaveListFragment extends BasemainFragment implements QueryAproView
         View view = inflater.inflate(R.layout.fragment_leave_list, container, false);
         unbinder = ButterKnife.bind(this, view);
         mesgListAdapter = new MesgListAdapter(getActivity());
+        approvalSwitch.setCheckLift(true);
+        init();
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+        mesgListAdapter.setUnbinder();
+    }
+
+    private void init() {
         if (isapproval) {
             titleTxt.setText("审批");
             approvalSwitch.setLiftText("待审批");
             approvalSwitch.setRightText("已审批");
-            presentrer.queryApro(QueryAproPresenterImpl.APPROVAL, QueryAproPresenterImpl.YES);
+            if (!IsLIFT) {
+                presentrer.queryApro(QueryAproPresenterImpl.APPROVAL, QueryAproPresenterImpl.YES);
+            } else {
+                presentrer.queryApro(QueryAproPresenterImpl.APPROVAL, QueryAproPresenterImpl.NOT);
+            }
         } else {
             titleTxt.setText("我的申请");
             approvalSwitch.setLiftText("待处理");
             approvalSwitch.setRightText("已处理");
-            presentrer.queryApro(QueryAproPresenterImpl.APPLY, QueryAproPresenterImpl.YES);
+            if (!IsLIFT) {
+                presentrer.queryApro(QueryAproPresenterImpl.APPLY, QueryAproPresenterImpl.YES);
+            } else {
+                presentrer.queryApro(QueryAproPresenterImpl.APPLY, QueryAproPresenterImpl.NOT);
+            }
         }
 
         approvalSwitch.setOnButtonClick(new Lift2Right.OnButtonClick() {
             @Override
             public void onClick(boolean IsCheckLift) {
+                IsLIFT = IsCheckLift;
                 if (presentrer != null) {
                     if (isapproval) {
                         if (IsCheckLift) {
                             presentrer.queryApro(QueryAproPresenterImpl.APPROVAL, QueryAproPresenterImpl.NOT);
                         } else {
                             presentrer.queryApro(QueryAproPresenterImpl.APPROVAL, QueryAproPresenterImpl.YES);
+
                         }
                     } else {
                         if (IsCheckLift) {
@@ -131,18 +160,15 @@ public class LeaveListFragment extends BasemainFragment implements QueryAproView
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 LeaveMesegFragment leaveMesegFragment = new LeaveMesegFragment(isapproval);
                 leaveMesegFragment.setBean(mesgListAdapter.getList().get(position));
+                leaveMesegFragment.setCallBack(new LeaveMesegFragment.callback() {
+                    @Override
+                    public void callback() {
+                        init();
+                    }
+                });
                 callBack.GoTo(leaveMesegFragment, null);
             }
         });
-
-        return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-        mesgListAdapter.setUnbinder();
     }
 
     @Override

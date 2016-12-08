@@ -1,5 +1,7 @@
 package com.zkteco.bigboss.ui.fragment;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import com.zkteco.bigboss.R;
 import com.zkteco.bigboss.mvp.presenter.Impl.RegisPresentImpl;
 import com.zkteco.bigboss.mvp.presenter.LoginPresenter;
 import com.zkteco.bigboss.mvp.view.LoginView;
+import com.zkteco.bigboss.view.MyDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,9 +47,13 @@ public class LoginFragment extends BaseFragment implements LoginView {
     @OnClick(R.id.login)
     void onclick() {
         // getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
-
         presenter.login(getActivity(), account.getText().toString(), password.getText().toString());
+        /*PopWindowManager.poptimewindow(getActivity(), login, TimePicker.MINUTE_TYPE_FIVE ,new PopWindowManager.PopviewTimeCallback() {
+            @Override
+            public void setTime(long time, String week) {
 
+            }
+        });*/
     }
 
     @OnClick(R.id.forget_password)
@@ -89,19 +96,35 @@ public class LoginFragment extends BaseFragment implements LoginView {
         mUnbinder.unbind();
     }
 
+    private ProgressDialog progressDialog;
 
     @Override
     public void showprogs() {
-
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("正在登陆");
+        progressDialog.show();
     }
 
     @Override
     public void postmesg(String msg) {
-
+        /*Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();*/
+        MyDialog.Builder mydialog = new MyDialog.Builder(getActivity());
+        mydialog.setMessage(msg);
+        mydialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        mydialog.create().show();
     }
 
     @Override
     public void displayprogs() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
 
     }
 

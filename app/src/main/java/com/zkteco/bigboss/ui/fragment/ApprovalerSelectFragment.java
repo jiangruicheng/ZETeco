@@ -36,6 +36,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -49,7 +54,7 @@ public class ApprovalerSelectFragment extends BasemainFragment implements Review
 
     @Override
     public void showList(final List<QueryReviewersResponse.PayloadBean.ResultsBean> resultsBeen) {
-        for (int i = 0; i < resultsBeen.size(); i++) {
+        /*for (int i = 0; i < resultsBeen.size(); i++) {
             resultsBeen.get(i).setFirstLetter(StringHelper.getHeadChar(StringHelper.getPingYin(resultsBeen.get(i).getName())));
             if (!lettermap.containsKey(resultsBeen.get(i).getFirstLetter())) {
                 letters.add(resultsBeen.get(i).getFirstLetter());
@@ -81,8 +86,8 @@ public class ApprovalerSelectFragment extends BasemainFragment implements Review
                 setID.setID(resultsBeen.get(posion).getEmpId());
                 callBack.Back(ApprovalerSelectFragment.this);
             }
-        });
-        /*Observable.just(resultsBeen).
+        });*/
+        Observable.just(resultsBeen).
                 map(new Func1<List<QueryReviewersResponse.PayloadBean.ResultsBean>, List<QueryReviewersResponse.PayloadBean.ResultsBean>>() {
 
                     @Override
@@ -98,8 +103,8 @@ public class ApprovalerSelectFragment extends BasemainFragment implements Review
                         return resultsBeen;
                     }
                 }).
-                subscribeOn(AndroidSchedulers.mainThread()).
-                observeOn(Schedulers.newThread()).
+                subscribeOn(Schedulers.newThread()).
+                observeOn(AndroidSchedulers.mainThread()).
                 subscribe(new Observer<List<QueryReviewersResponse.PayloadBean.ResultsBean>>() {
                     @Override
                     public void onCompleted() {
@@ -118,6 +123,7 @@ public class ApprovalerSelectFragment extends BasemainFragment implements Review
                         quickSideBarView.setLetters(letters);
                         recyclerView.setAdapter(adpater);
                         StickyRecyclerHeadersDecoration headersDecoration = new StickyRecyclerHeadersDecoration(adpater);
+
                         recyclerView.addItemDecoration(headersDecoration);
                         quickSideBarView.setOnQuickSideBarTouchListener(new OnQuickSideBarTouchListener() {
                             @Override
@@ -136,15 +142,18 @@ public class ApprovalerSelectFragment extends BasemainFragment implements Review
                             @Override
                             public void onItemClick(int posion) {
                                 setID.setID(resultsBeen.get(posion).getEmpId());
+                                setID.setName(resultsBeen.get(posion).getName());
                                 callBack.Back(ApprovalerSelectFragment.this);
                             }
                         });
                     }
-                });*/
+                });
     }
 
     public interface SetID {
         void setID(String ID);
+
+        void setName(String name);
     }
 
     private SetID setID;

@@ -14,4 +14,6 @@ public interface SetupCompanyPresenter extends BasePresenter {
     void setup(SetupCmpRequest.PayloadBean.ParamsBean paramsBean, Context context);
 
     String getIndID(int id);
+
+    String getIndName(int id);
 }

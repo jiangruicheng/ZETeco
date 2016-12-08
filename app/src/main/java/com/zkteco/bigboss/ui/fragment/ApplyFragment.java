@@ -4,6 +4,7 @@ package com.zkteco.bigboss.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,7 +135,7 @@ public class ApplyFragment extends BasemainFragment {
             request.getPayload().getParams().setCmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getCmpId());
             request.getPayload().getParams().setEmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getEmpId());
         }
-        Subscription subscription = ZKTecoRequest.getAPI().
+        Subscription subscription = ZKTecoRequest.getATTPAI().
                 querystati(request).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<QueryStatiResponse>() {
@@ -151,7 +152,11 @@ public class ApplyFragment extends BasemainFragment {
             @Override
             public void onNext(QueryStatiResponse queryStatiResponse) {
                 if (queryStatiResponse.getCode().equals("00000000")) {
-                    stati.setText("当月请假: " + queryStatiResponse.getPayload().getResults().getMyStatistics().getTotalLeaveMins() + "分钟");
+                    long time = queryStatiResponse.getPayload().getResults().getMyStatistics().getTotalLeaveMins();
+                    Log.i("TAG", "onNext: " + time);
+                    int day = (int) Math.floor(time / (60 * 24));
+                    int miunit = (int) (time % (60 * 24));
+                    stati.setText("当月请假:  " + day + "天" + (miunit == 0 ? time : miunit) + "分钟");
                 }
             }
         });

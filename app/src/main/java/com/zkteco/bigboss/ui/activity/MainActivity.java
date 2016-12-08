@@ -1,8 +1,9 @@
 package com.zkteco.bigboss.ui.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -18,7 +19,7 @@ import com.zkteco.bigboss.util.FragmentCallBack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener, FragmentCallBack {
+public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener, FragmentCallBack {
     private BottomNavigationBar navigationBar;
     private FragmentManager fragmentManager;
     /*    private ApplyFragment applyFragment;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private List<BasemainFragment> fragmentList = new ArrayList<>();
 
     private void addFragment(BasemainFragment fragment) {
-        SetVisable(fragment.isIsshownavg());
+
         fragmentManager.beginTransaction().
                 add(R.id.layFrame, fragment, fragment.getTag()).
                 commit();
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             fragmentManager.beginTransaction().hide(fragmentList.get(fragmentList.size() - 1)).commit();
         }
         fragmentList.add(fragment);
+        SetVisable(fragment.isIsshownavg());
     }
 
     private void removeFragment(BasemainFragment fragment) {
@@ -77,7 +79,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             fragmentManager.beginTransaction().show(fragmentList.get(fragmentList.size() - 1)).commit();
             SetVisable(fragmentList.get(fragmentList.size() - 1).isIsshownavg());
         } else {
-            finish();
+            final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setTitle("退出APP").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            }).create();
+            alertDialog.show();
         }
     }
 
@@ -93,7 +106,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         /*fragmentManager.beginTransaction().
                 add(R.id.layFrame, checkOnWorkFragment, checkOnWorkFragment.getTag()).
                 commit();*/
-        GoTo(checkOnWorkFragment,new QueryAttPresenterImpl());
+        GoTo(checkOnWorkFragment, new QueryAttPresenterImpl());
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+
     }
 
     @Override
@@ -139,6 +155,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     public void onBackPressed() {
         //super.onBackPressed();
         Back(null);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+
     }
 }
 

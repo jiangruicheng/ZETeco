@@ -16,10 +16,10 @@
 
 package com.zkteco.bigboss.mvp;
 
-public interface BasePresenter {
+public interface BasePresenter<T extends BaseView> {
 
     void start();
 
-    void setview(BaseView view);
+    void setview(T view);
 
 }

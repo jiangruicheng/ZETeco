@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zkteco.bigboss.R;
+import com.zkteco.bigboss.bean.json.bean.AttMesg;
 import com.zkteco.bigboss.util.DateUtils;
 
 import java.util.Calendar;
@@ -39,6 +40,17 @@ public class MothDataView extends View {
     private DateClick dateClick;
     private int mCircleColor = Color.parseColor("#00AF00");
     private List<Integer> daysHasThingList;
+
+    public AttMesg[] getMesgs() {
+        return mesgs;
+    }
+
+    public void setMesgs(AttMesg[] mesgs) {
+        this.mesgs = mesgs;
+        invalidate();
+    }
+
+    private AttMesg[] mesgs;
 
     public MothDataView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -142,12 +154,15 @@ public class MothDataView extends View {
 
                 }
                 //绘制事务圆形标志
-                if (!dayString.equals("0")) {
-                    if (dayString.equals(mCurrDay + "")) {
+                if (!dayString.equals("0") && mesgs != null) {
+                    if ((day == 5 || day == 6) && mesgs[dateString[weekRow - 1][day] - 1] == null) {
+                        mPaint.setColor(getResources().getColor(R.color.green));
+                    } else if (dayString.equals(mCurrDay + "") || mesgs[dateString[weekRow - 1][day] - 1] == null || mesgs[dateString[weekRow - 1][day] - 1].iserro()) {
                         mPaint.setColor(getResources().getColor(R.color.colorButtonLogin));
-                    } else {
+                    } else if ((mesgs[dateString[weekRow - 1][day] - 1] != null && !mesgs[dateString[weekRow - 1][day] - 1].iserro())) {
                         mPaint.setColor(getResources().getColor(R.color.green));
                     }
+
                     drawCircle(0, day, day + 1, canvas);
                     mPaint.setColor(mDayColor);
                     canvas.drawText(dayString, startX, startY, mPaint);
@@ -202,11 +217,17 @@ public class MothDataView extends View {
                     Log.i("rowday", "onDraw: " + daysString[row][1]);
                 }
                 //绘制事务圆形标志
-                if (dayString.equals(mCurrDay + "")) {
-                    mPaint.setColor(getResources().getColor(R.color.colorButtonLogin));
-                } else {
-                    mPaint.setColor(getResources().getColor(R.color.green));
+
+                if (mesgs != null) {
+                    if ((column == 5 || column == 6) && mesgs[day] == null) {
+                        mPaint.setColor(getResources().getColor(R.color.green));
+                    } else if (dayString.equals(mCurrDay + "") || mesgs[day] == null || mesgs[day].iserro()) {
+                        mPaint.setColor(getResources().getColor(R.color.colorButtonLogin));
+                    } else if ((mesgs[day] != null && !mesgs[day].iserro())) {
+                        mPaint.setColor(getResources().getColor(R.color.green));
+                    }
                 }
+
                 drawCircle(row, column, day + 1, canvas);
                 /*if (dayString.equals(mSelDay + "")) {
                     mPaint.setColor(mSelectDayColor);
@@ -247,7 +268,7 @@ public class MothDataView extends View {
 
     @Override
     public void setOnClickListener(OnClickListener l) {
-        super.setOnClickListener(l);
+        //super.setOnClickListener(l);
         this.clickListener = l;
     }
 
@@ -333,20 +354,25 @@ public class MothDataView extends View {
      * 左点击，日历向后翻页
      */
     public void onLeftClick() {
-        int year = mSelYear;
-        int month = mSelMonth;
-        int day = mSelDay;
-        if (month == 0) {//若果是1月份，则变成12月份
-            year = mSelYear - 1;
-            month = 11;
-        } else if (DateUtils.getMonthDays(year, month) == day) {
-            //如果当前日期为该月最后一点，当向前推的时候，就需要改变选中的日期
-            month = month - 1;
-            day = DateUtils.getMonthDays(year, month);
+        if (!IsWeek) {
+            int year = mSelYear;
+            int month = mSelMonth;
+            int day = mSelDay;
+            if (month == 0) {//若果是1月份，则变成12月份
+                year = mSelYear - 1;
+                month = 11;
+            } else if (DateUtils.getMonthDays(year, month) == day) {
+                //如果当前日期为该月最后一点，当向前推的时候，就需要改变选中的日期
+                month = month - 1;
+                day = DateUtils.getMonthDays(year, month);
+            } else {
+                month = month - 1;
+            }
+            setSelectYearMonth(year, month, day);
         } else {
-            month = month - 1;
+            if (weekRow > 1)
+                weekRow = weekRow - 1;
         }
-        setSelectYearMonth(year, month, day);
         invalidate();
 
     }
@@ -355,20 +381,25 @@ public class MothDataView extends View {
      * 右点击，日历向前翻页
      */
     public void onRightClick() {
-        int year = mSelYear;
-        int month = mSelMonth;
-        int day = mSelDay;
-        if (month == 11) {//若果是12月份，则变成1月份
-            year = mSelYear + 1;
-            month = 0;
-        } else if (DateUtils.getMonthDays(year, month) == day) {
-            //如果当前日期为该月最后一点，当向前推的时候，就需要改变选中的日期
-            month = month + 1;
-            day = DateUtils.getMonthDays(year, month);
+        if (!IsWeek) {
+            int year = mSelYear;
+            int month = mSelMonth;
+            int day = mSelDay;
+            if (month == 11) {//若果是12月份，则变成1月份
+                year = mSelYear + 1;
+                month = 0;
+            } else if (DateUtils.getMonthDays(year, month) == day) {
+                //如果当前日期为该月最后一点，当向前推的时候，就需要改变选中的日期
+                month = month + 1;
+                day = DateUtils.getMonthDays(year, month);
+            } else {
+                month = month + 1;
+            }
+            setSelectYearMonth(year, month, day);
         } else {
-            month = month + 1;
+            if (weekRow < 6)
+                weekRow = weekRow + 1;
         }
-        setSelectYearMonth(year, month, day);
         invalidate();
     }
 

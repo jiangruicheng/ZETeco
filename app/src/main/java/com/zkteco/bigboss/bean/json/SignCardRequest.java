@@ -125,9 +125,9 @@ public class SignCardRequest {
         public static class ParamsBean {
             private String cmpId;
             private String approveManId;
-            private long punchTime;
+            private long punchTime = -1;
             private String reason;
-            private int punchType;
+            private int punchType = -1;
             private String empId;
 
             public String getCmpId() {

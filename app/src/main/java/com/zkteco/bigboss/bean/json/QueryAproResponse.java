@@ -129,10 +129,21 @@ public class QueryAproResponse {
             private String address;
             private long startTime;
             private long commitDate;
+            private long punchTime;
             private int approveStatus;
             private long updateTimestamp;
             private String empId;
             private long endTime;
+
+            public String getSubType() {
+                return subType;
+            }
+
+            public void setSubType(String subType) {
+                this.subType = subType;
+            }
+
+            private String subType;
             private String jobNumber;
 
             public String getAddress() {
@@ -145,6 +156,14 @@ public class QueryAproResponse {
 
             public int getType() {
                 return type;
+            }
+
+            public long getPunchTime() {
+                return punchTime;
+            }
+
+            public void setPunchTime(long punchTime) {
+                this.punchTime = punchTime;
             }
 
             public void setType(int type) {

@@ -18,14 +18,14 @@
             >
 
             <ImageView
+                android:id="@+id/back"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:background="@drawable/whiteback"
 
-                android:id="@+id/back"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="4dp"
+                android:background="@drawable/whiteback"
                 />
 
             <TextView
@@ -65,7 +65,7 @@
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@id/search_imag"
                     android:background="@null"
-                    android:textColor="@color/blak"/>
+                    android:textColor="@color/colorText"/>
 
             </RelativeLayout>
 
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
 
                 <RelativeLayout

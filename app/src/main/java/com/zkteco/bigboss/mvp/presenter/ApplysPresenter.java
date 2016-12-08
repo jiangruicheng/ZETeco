@@ -11,5 +11,7 @@ public interface ApplysPresenter extends BasePresenter {
 
     void querytype();
 
+    String getTypeName(int id);
+
     String getTypeID(int id);
 }

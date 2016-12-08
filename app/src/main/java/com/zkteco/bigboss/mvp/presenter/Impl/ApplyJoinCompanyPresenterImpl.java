@@ -27,7 +27,7 @@ public class ApplyJoinCompanyPresenterImpl implements ApplyJoinCompanyPresenter 
     public void search(String id) {
         SearchCompanyRequest request = new SearchCompanyRequest();
         request.getPayload().getParams().setCmpNumber(id);
-        Subscription subscription = ZKTecoRequest.getLoginAPI().
+        Subscription subscription = ZKTecoRequest.getATTPAI().
                 searchcompany(request).
                 observeOn(AndroidSchedulers.mainThread()).
                 subscribeOn(Schedulers.io()).
@@ -61,7 +61,7 @@ public class ApplyJoinCompanyPresenterImpl implements ApplyJoinCompanyPresenter 
         request.getPayload().getParams().setAgree(true);
         request.getPayload().getParams().setCmpId(searchCompanyResponse.getPayload().getResults().getCmpId());
         request.getPayload().getParams().setCmpName(searchCompanyResponse.getPayload().getResults().getCmpName());
-        Subscription subscription = ZKTecoRequest.getLoginAPI().
+        Subscription subscription = ZKTecoRequest.getAccountAPI().
                 applyjoincompany(request).
                 observeOn(AndroidSchedulers.mainThread()).
                 subscribeOn(Schedulers.io()).
@@ -73,12 +73,14 @@ public class ApplyJoinCompanyPresenterImpl implements ApplyJoinCompanyPresenter 
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.postmesg(e.getMessage());
                     }
 
                     @Override
                     public void onNext(ApplyCmpResponse applyCmpResponse) {
-
+                        if (applyCmpResponse.getCode().equals("00000000")) {
+                            view.postmesg(applyCmpResponse.getMessage());
+                        }
                     }
                 });
 

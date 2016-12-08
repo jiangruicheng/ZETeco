@@ -127,8 +127,8 @@ public class AskForLeaveRequest {
             private String cmpId;
             private String empId;
             private String approveManId;
-            private long startTime;
-            private long endTime;
+            private long startTime = -1;
+            private long endTime = -1;
             private String leaveType;
             private String reason;
 

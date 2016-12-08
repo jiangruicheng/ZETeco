@@ -2,15 +2,22 @@ package com.zkteco.bigboss.mvp.presenter.Impl;
 
 import com.zkteco.bigboss.bean.json.QueryAttRequest;
 import com.zkteco.bigboss.bean.json.QueryAttResponse;
+import com.zkteco.bigboss.bean.json.bean.AttMesg;
 import com.zkteco.bigboss.bean.json.bean.UserMesg;
 import com.zkteco.bigboss.mvp.BaseView;
 import com.zkteco.bigboss.mvp.mode.ZKTecoRequest;
 import com.zkteco.bigboss.mvp.presenter.QueryAttPresenter;
 import com.zkteco.bigboss.mvp.view.QueryAttView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -32,11 +39,40 @@ public class QueryAttPresenterImpl implements QueryAttPresenter {
             request.setSessionId(UserMesg.getInstance().getResponse().getSessionId());
         }
 
-        Subscription subscription = ZKTecoRequest.getAPI().
+        Subscription subscription = ZKTecoRequest.getATTPAI().
                 queryatt(request).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
-                subscribe(new Observer<QueryAttResponse>() {
+                map(new Func1<QueryAttResponse, AttMesg[]>() {
+                    @Override
+                    public AttMesg[] call(QueryAttResponse queryAttResponse) {
+                        AttMesg[] attMesgs = new AttMesg[31];
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+                        if (queryAttResponse.getPayload().getResults().getPunchEventList() != null && !queryAttResponse.getPayload().getResults().getPunchEventList().isEmpty()) {
+                            for (QueryAttResponse.PayloadBean.ResultsBean.PunchEventListBean punch : queryAttResponse.getPayload().getResults().getPunchEventList()) {
+                                try {
+                                    Date date = simpleDateFormat.parse(punch.getAttDate());
+                                    Calendar c = Calendar.getInstance();
+                                    c.setTime(date);
+                                    int index = c.get(Calendar.DAY_OF_MONTH) - 1;
+                                    if (attMesgs[index] != null) {
+                                        attMesgs[index].getPunchEventList().add(punch);
+                                    } else {
+                                        attMesgs[index] = new AttMesg();
+                                        attMesgs[index].getPunchEventList().add(punch);
+                                    }
+                                    if (punch.getSubType() != 0 && punch.getSubType() != 1) {
+                                        attMesgs[index].setIserro(true);
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        return attMesgs;
+                    }
+                }).
+                subscribe(new Observer<AttMesg[]>() {
                     @Override
                     public void onCompleted() {
 
@@ -48,22 +84,8 @@ public class QueryAttPresenterImpl implements QueryAttPresenter {
                     }
 
                     @Override
-                    public void onNext(QueryAttResponse queryAttResponse) {
-                        if (queryAttResponse.getCode().equals("00000000")) {
-                            for (QueryAttResponse.PayloadBean.ResultsBean.PunchEventListBean pu : queryAttResponse.getPayload().getResults().getPunchEventList()) {
-                                switch (pu.getSubType()) {
-                                    case 0:
-                                        view.showtype0(pu.getName(), pu.getValue());
-                                        break;
-                                    case 1:
-                                        view.showtype1(pu.getName(), pu.getValue());
-                                        break;
-                                    case 3:
-                                        view.showtype3(pu.getName(), pu.getValue());
-                                        break;
-                                }
-                            }
-                        }
+                    public void onNext(AttMesg[] attMesgs) {
+                        view.setmonthatt(attMesgs);
                     }
                 });
     }

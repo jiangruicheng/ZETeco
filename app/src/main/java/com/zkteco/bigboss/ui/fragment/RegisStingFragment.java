@@ -1,6 +1,7 @@
 package com.zkteco.bigboss.ui.fragment;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.zkteco.bigboss.R;
 import com.zkteco.bigboss.bean.json.bean.UserMesg;
 import com.zkteco.bigboss.util.StringUtil;
+import com.zkteco.bigboss.view.MyDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +53,8 @@ public class RegisStingFragment extends BaseFragment {
 
     @OnClick(R.id.next)
     void onnextclick() {
+        /*UserMesg.getInstance().setUsername(user.getText().toString());
+        UserMesg.getInstance().setPassword(setpassword.getText().toString());*/
         //replaceFragment(new RegisSuccesFragment(), null);
         Log.i("user", "onnextclick: " + user.getText().toString());
         if (StringUtil.isEmptyIgnoreBlank(user.getText().toString())) {
@@ -65,7 +69,15 @@ public class RegisStingFragment extends BaseFragment {
                 UserMesg.getInstance().setPassword(setpassword.getText().toString());
                 replaceFragment(new RegisSuccesFragment(), null);
             } else {
-                Toast.makeText(getActivity(), "密码不一致", Toast.LENGTH_SHORT).show();
+                MyDialog.Builder mydialog = new MyDialog.Builder(getActivity());
+                mydialog.setMessage("密码不一致");
+                mydialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                mydialog.create().show();
             }
         }
 

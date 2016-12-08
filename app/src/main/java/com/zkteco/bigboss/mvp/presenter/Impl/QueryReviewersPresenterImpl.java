@@ -34,7 +34,7 @@ public class QueryReviewersPresenterImpl implements QueryReviewersPresenter {
         reviewersRequest.setSessionId(UserMesg.getInstance().getResponse().getSessionId());
         reviewersRequest.getPayload().getParams().setCmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getCmpId());
         reviewersRequest.getPayload().getParams().setEmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getEmpId());
-        Subscription subscription = ZKTecoRequest.getAPI().
+        Subscription subscription = ZKTecoRequest.getATTPAI().
                 queryreviewers(reviewersRequest).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).

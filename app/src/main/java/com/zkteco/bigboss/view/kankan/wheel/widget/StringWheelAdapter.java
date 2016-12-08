@@ -13,52 +13,57 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+
 package com.zkteco.bigboss.view.kankan.wheel.widget;
 
 import java.util.ArrayList;
 
 /**
  * The simple Array wheel adapter
+ *
  * @param <T> the element type
  */
 public class StringWheelAdapter implements WheelAdapter {
-	
-	/** The default items length */
-	public static final int DEFAULT_LENGTH = -1;
-	
-	// items
-	private ArrayList<DateObject> list;
-	
-	// length
-	private int length;
 
-	/**
-	 * Constructor
-	 * @param items the items
-	 * @param length the max items length
-	 */
-	public StringWheelAdapter(ArrayList<DateObject> list, int length) {
-		this.list = list;
-		this.length = length;
-	}
-	
+    /**
+     * The default items length
+     */
+    public static final int DEFAULT_LENGTH = -1;
 
-	@Override
-	public String getItem(int index) {
-		if (index >= 0 && index < list.size()) {
-			return list.get(index).getListItem();
-		}
-		return null;
-	}
+    // items
+    private ArrayList<DateObject> list;
 
-	@Override
-	public int getItemsCount() {
-		return list.size();
-	}
+    // length
+    private int length;
 
-	@Override
-	public int getMaximumLength() {
-		return length;
-	}
+    /**
+     * Constructor
+     *
+     * @param items  the items
+     * @param length the max items length
+     */
+    public StringWheelAdapter(ArrayList<DateObject> list, int length) {
+        this.list = list;
+        this.length = length;
+    }
+
+
+    @Override
+    public String getItem(int index) {
+        if (index >= 0 && index < list.size()) {
+            return list.get(index).getListItem() ;
+        }
+        return null;
+    }
+
+    @Override
+    public int getItemsCount() {
+        return list.size();
+    }
+
+    @Override
+    public int getMaximumLength() {
+        return length;
+    }
 
 }

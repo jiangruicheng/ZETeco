@@ -3,14 +3,13 @@ package com.zkteco.bigboss.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.zkteco.bigboss.R;
 import com.zkteco.bigboss.mvp.presenter.Impl.LoginPresenterImpl;
 import com.zkteco.bigboss.ui.fragment.LoginFragment;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     FragmentManager fragmentManager;
 
     @Override

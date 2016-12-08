@@ -33,7 +33,7 @@ public class PopWindowManager {
     }
 
     public interface PopviewTimeCallback {
-        void setTime(long time);
+        void setTime(long time, String week);
     }
 
     public static void popListWindow(Context context, View view, ArrayList list, final Popviewcallback popviewcallback, String title) {
@@ -45,10 +45,12 @@ public class PopWindowManager {
         Button makesure = (Button) relativeLayout.findViewById(R.id.makesure);
 
         textView.setText(title);
+        final int[] i = new int[1];
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                popviewcallback.callback(position);
+                i[0] = position;
+
             }
         });
         MListViewAdapter adpater = new MListViewAdapter(context.getApplicationContext());
@@ -77,13 +79,14 @@ public class PopWindowManager {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
+                popviewcallback.callback(i[0]);
             }
         });
     }
 
-    public static void poptimewindow(final Context context, View Popview, final PopviewTimeCallback callback) {
+    public static void poptimewindow(final Context context, View Popview, int minut_type, final PopviewTimeCallback callback) {
         final int currentHour;
-        final int currentMinute;
+        final int currentMinute = 0;
         final int currentDay;
         final int[] selectHour = new int[1];
         final int[] selectMinute = new int[1];
@@ -103,7 +106,7 @@ public class PopWindowManager {
                 selectDay[0] = day;
                 selectyear[0] = year;
                 selectmonth[0] = month;
-                selectDate[0] = year + "年" + month + "月" + day + "日" + DatePick.getDayOfWeekCN(day_of_week);
+                selectDate[0] = DatePick.getDayOfWeekCN(day_of_week);
             }
         };
         final TimePicker.OnChangeListener tp_onchanghelistener = new TimePicker.OnChangeListener() {
@@ -120,13 +123,21 @@ public class PopWindowManager {
                 + DatePick.getDayOfWeekCN(calendar.get(Calendar.DAY_OF_WEEK));
         //选择时间与当前时间的初始化，用于判断用户选择的是否是以前的时间，如果是，弹出toss提示不能选择过去的时间
         selectDay[0] = currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-        selectMinute[0] = currentMinute = calendar.get(Calendar.MINUTE);
+        switch (minut_type) {
+            case TimePicker.MINUTE_TYPE_FIVE:
+                selectMinute[0] = 0;
+                break;
+            case TimePicker.MINUTE_TYPE_ALL:
+                selectMinute[0] = calendar.get(Calendar.MINUTE);
+                break;
+        }
         selectHour[0] = currentHour = calendar.get(Calendar.HOUR_OF_DAY);
         selectyear[0] = calendar.get(Calendar.YEAR);
-        selectmonth[0] = calendar.get(Calendar.MONTH);
+        selectmonth[0] = calendar.get(Calendar.MONTH) + 1;
         selectTime[0] = currentHour + "点" + ((currentMinute < 10) ? ("0" + currentMinute) : currentMinute) + "分";
         dp_test = (DatePick) view.findViewById(R.id.dp_test);
         tp_test = (TimePicker) view.findViewById(R.id.tp_test);
+        tp_test.setType(minut_type);
         tv_ok = (TextView) view.findViewById(R.id.tv_ok);
         tv_cancel = (TextView) view.findViewById(R.id.tv_cancel);
         //设置滑动改变监听器
@@ -139,6 +150,7 @@ public class PopWindowManager {
 //				pw.setBackgroundDrawable(new BitmapDrawable());
 
         //出现在布局底端
+
         pw.setFocusable(true);
         pw.setOutsideTouchable(true);
         pw.setBackgroundDrawable(new BitmapDrawable());
@@ -154,13 +166,12 @@ public class PopWindowManager {
                 try {
                     date = simpleDateFormat.parse(selectyear[0] + "-" + selectmonth[0] + "-" + selectDay[0] + " " + selectHour[0] + ":" + selectMinute[0]);
                     long time = date.getTime();
-                    callback.setTime(time);
+                    callback.setTime(time, selectDate[0]);
 
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 pw.dismiss();
-
             }
 
         });

@@ -30,7 +30,7 @@ public class ApplyPresenterImpl implements ApplysPresenter {
         request.setCmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getCmpId());
         request.setSessionId(UserMesg.getInstance().getResponse().getSessionId());
         request.getPayload().setParams(paramsBean);
-        Subscription subscription = ZKTecoRequest.getAPI().
+        Subscription subscription = ZKTecoRequest.getATTPAI().
                 askforleave(request).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
@@ -47,7 +47,13 @@ public class ApplyPresenterImpl implements ApplysPresenter {
 
                     @Override
                     public void onNext(AskForLeaveResponse askForLeaveResponse) {
-                        view.postmesg(askForLeaveResponse.getMessage());
+                        if (askForLeaveResponse.getCode().equals("00000000")) {
+                            view.postmesg("申请成功");
+                            view.backup();
+                        } else {
+                            view.postmesg(askForLeaveResponse.getMessage());
+                            //view.backup();
+                        }
                     }
                 });
     }
@@ -58,7 +64,7 @@ public class ApplyPresenterImpl implements ApplysPresenter {
         request.setCmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getCmpId());
         request.setSessionId(UserMesg.getInstance().getResponse().getSessionId());
         request.getPayload().getParams().setCmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getCmpId() == null ? "" : UserMesg.getInstance().getResponse().getPayload().getResults().getCmpId());
-        Subscription subscription = ZKTecoRequest.getAPI().
+        Subscription subscription = ZKTecoRequest.getATTPAI().
                 quesubtype(request).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
@@ -98,6 +104,13 @@ public class ApplyPresenterImpl implements ApplysPresenter {
     public String getTypeID(int id) {
         if (response != null)
             return response.getPayload().getResults().get(id).getSubType();
+        return null;
+    }
+
+    @Override
+    public String getTypeName(int id) {
+        if (response != null)
+            return response.getPayload().getResults().get(id).getTitle();
         return null;
     }
 

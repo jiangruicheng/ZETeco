@@ -3,7 +3,6 @@ package com.zkteco.bigboss.view.com.bigkoo.pickerview.view;
 import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
+import com.zkteco.bigboss.view.BaseViewGroup;
 import com.zkteco.bigboss.R;
 import com.zkteco.bigboss.view.com.bigkoo.pickerview.listener.OnDismissListener;
 import com.zkteco.bigboss.view.com.bigkoo.pickerview.utils.PickerViewAnimateUtil;
@@ -29,7 +29,7 @@ public class BasePickerView {
     protected ViewGroup contentContainer;
     private ViewGroup decorView;//activity的根View
     private ViewGroup rootView;//附加View 的 根View
-
+    private BaseViewGroup outcontent;
     private OnDismissListener onDismissListener;
     private boolean dismissing;
 
@@ -50,9 +50,24 @@ public class BasePickerView {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
         rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, decorView, false);
+
         rootView.setLayoutParams(new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
         ));
+        /*rootView.setOntouchEvent(new BaseViewGroup.OntouchEvent() {
+            @Override
+            public void ontouchu() {
+                dismiss();
+            }
+        });*/
+        /*outcontent = (BaseViewGroup) rootView.findViewById(R.id.outmost_container);
+        outcontent.setLayoutParams(params);
+        outcontent.setOntouchEvent(new BaseViewGroup.OntouchEvent() {
+            @Override
+            public void ontouchu() {
+                dismiss();
+            }
+        });*/
         contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
         contentContainer.setLayoutParams(params);
     }
@@ -71,6 +86,8 @@ public class BasePickerView {
      * @param view 这个View
      */
     private void onAttached(View view) {
+       /* WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        windowManager.addView(view, view.getLayoutParams());*/
         decorView.addView(view);
         contentContainer.startAnimation(inAnim);
     }
@@ -129,6 +146,8 @@ public class BasePickerView {
 
     public void dismissImmediately() {
         //从activity根视图移除
+//        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+//        windowManager.removeView(rootView);
         decorView.removeView(rootView);
         isShowing = false;
         dismissing = false;
@@ -181,64 +200,4 @@ public class BasePickerView {
         return contentContainer.findViewById(id);
     }
 
-    private class BaseViewGroup extends FrameLayout {
-
-        public BaseViewGroup(Context context) {
-            super(context);
-        }
-
-        @Override
-        public boolean dispatchKeyEvent(KeyEvent event) {
-            if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-                if (getKeyDispatcherState() == null) {
-                    return super.dispatchKeyEvent(event);
-                }
-
-                if (event.getAction() == KeyEvent.ACTION_DOWN
-                        && event.getRepeatCount() == 0) {
-                    KeyEvent.DispatcherState state = getKeyDispatcherState();
-                    if (state != null) {
-                        state.startTracking(event, this);
-                    }
-                    return true;
-                } else if (event.getAction() == KeyEvent.ACTION_UP) {
-                    KeyEvent.DispatcherState state = getKeyDispatcherState();
-                    if (state != null && state.isTracking(event) && !event.isCanceled()) {
-                        dismiss();
-                        return true;
-                    }
-                }
-                return super.dispatchKeyEvent(event);
-            } else {
-                return super.dispatchKeyEvent(event);
-            }
-        }
-
-        /*private OnTouchListener mTouchInterceptor;
-
-        @Override
-        public boolean dispatchTouchEvent(MotionEvent ev) {
-            if (mTouchInterceptor != null && mTouchInterceptor.onTouch(this, ev)) {
-                return true;
-            }
-            return super.dispatchTouchEvent(ev);
-        }*/
-
-        @Override
-        public boolean onTouchEvent(MotionEvent event) {
-            final int x = (int) event.getX();
-            final int y = (int) event.getY();
-
-            if ((event.getAction() == MotionEvent.ACTION_DOWN)
-                    && ((x < 0) || (x >= getWidth()) || (y < 0) || (y >= getHeight()))) {
-                dismiss();
-                return true;
-            } else if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                dismiss();
-                return true;
-            } else {
-                return super.onTouchEvent(event);
-            }
-        }
-    }
 }

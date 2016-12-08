@@ -159,4 +159,8 @@ public class Lift2Right extends View {
         isCheckLift = checkLift;
         invalidate();
     }
+
+    public boolean isCheckLift() {
+        return isCheckLift;
+    }
 }

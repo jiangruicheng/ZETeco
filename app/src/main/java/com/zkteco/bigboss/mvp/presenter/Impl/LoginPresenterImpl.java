@@ -38,7 +38,10 @@ public class LoginPresenterImpl implements LoginPresenter {
         paramsBean.setPassword(MD5.GetMD5Code(password));
         payloadBean.setParams(paramsBean);
         loginRequest.setPayload(payloadBean);
-        Subscription subscription = ZKTecoRequest.getLoginAPI().
+        if (loginView != null) {
+            loginView.showprogs();
+        }
+        Subscription subscription = ZKTecoRequest.getATTPAI().
                 login(loginRequest).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
@@ -50,6 +53,7 @@ public class LoginPresenterImpl implements LoginPresenter {
                     @Override
                     public void onError(Throwable e) {
                         if (loginView != null) {
+                            loginView.displayprogs();
                             loginView.postmesg(e.getMessage());
                         }
                         Log.e("error", "onError: " + e.toString());
@@ -57,6 +61,9 @@ public class LoginPresenterImpl implements LoginPresenter {
 
                     @Override
                     public void onNext(LoginResponse loginResponse) {
+                        if (loginView != null) {
+                            loginView.displayprogs();
+                        }
                         if (loginResponse.getCode().equals("00000000")) {
                             context.startActivity(new Intent(context, MainActivity.class));
                             ((Activity) context).finish();
@@ -65,8 +72,33 @@ public class LoginPresenterImpl implements LoginPresenter {
                             Log.e("onNext", "cmp: " + loginResponse.getPayload().getResults().getCmpId());
                             Log.e("onNext", "emp: " + loginResponse.getPayload().getResults().getEmpId());
                         } else {
-                            if (loginView != null) {
-                                loginView.postmesg(loginResponse.getMessage());
+                            switch (loginResponse.getCode()) {
+                                case "E1ASU201":
+                                    if (loginView != null) {
+                                        loginView.postmesg("对不起,用户名不能为空");
+                                    }
+                                    break;
+                                case "E1ASU203":
+                                    if (loginView != null) {
+                                        loginView.postmesg("对不起,手机号未注册");
+                                    }
+                                    break;
+                                case "E1ASU204":
+                                    if (loginView != null) {
+                                        loginView.postmesg("对不起,用户名格式不对");
+                                    }
+                                    break;
+                                case "E1ASU205":
+                                    if (loginView != null) {
+                                        loginView.postmesg("对不起,密码错误");
+                                    }
+                                    break;
+                                default:
+                                    if (loginView != null) {
+                                        loginView.postmesg(loginResponse.getMessage());
+                                    }
+                                    break;
+
                             }
                             Log.e("error", "onError: " + loginResponse.getMessage());
                         }

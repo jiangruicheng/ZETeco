@@ -10,4 +10,5 @@ import java.util.ArrayList;
  */
 public interface SignCardView extends BaseView<SignCardPresenter> {
     void showlist(ArrayList list);
+    void backup();
 }

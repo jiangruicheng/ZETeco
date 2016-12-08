@@ -88,7 +88,9 @@ public class MListViewAdapter extends BaseAdapter {
     }
 
     public static void setUnbinder() {
-        unbinder.unbind();
-        unbinder = null;
+        if (unbinder != null) {
+            unbinder.unbind();
+            unbinder = null;
+        }
     }
 }
