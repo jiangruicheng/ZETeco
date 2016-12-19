@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="42dp"
         android:layout_marginTop="12dp"
-        android:text="当月请假: 3天"
+        android:text=""
         android:textColor="@color/blak"
         android:textSize="16sp"/>
 

@@ -46,7 +46,7 @@
             android:configChanges="fontScale|keyboard|uiMode|screenSize|locale|layoutDirection"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            >
         </activity>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for

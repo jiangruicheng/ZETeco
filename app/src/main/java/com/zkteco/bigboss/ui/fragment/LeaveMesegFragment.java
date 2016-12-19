@@ -113,6 +113,9 @@ public class LeaveMesegFragment extends BasemainFragment {
         this.bean = bean;
     }
 
+    public LeaveMesegFragment() {
+    }
+
     public LeaveMesegFragment(boolean b) {
         // Required empty public constructor
         ButtonVisable = b;

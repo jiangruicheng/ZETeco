@@ -57,7 +57,7 @@ public class ContainsEmojiEditText extends EditText {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!resetText) {
+                /*if (!resetText) {
                     if (count >= 2) {//表情符号的字符长度最小为2
                         CharSequence input = s.subSequence(cursorPos, cursorPos + count);
                         if (containsEmoji(input.toString())) {
@@ -74,12 +74,20 @@ public class ContainsEmojiEditText extends EditText {
                     }
                 } else {
                     resetText = false;
-                }
+                }*/
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                if (containsEmoji(editable.toString())) {
+                    setText(inputAfterText);
+                    CharSequence text = getText();
+                    if (text instanceof Spannable) {
+                        Spannable spanText = (Spannable) text;
+                        Selection.setSelection(spanText, text.length());
+                    }
+                    Toast.makeText(mContext, "不支持输入Emoji表情符号", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -101,6 +109,7 @@ public class ContainsEmojiEditText extends EditText {
         }
         return false;
     }
+
     public boolean isEmoji(String string) {
         Pattern p = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
                 Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);

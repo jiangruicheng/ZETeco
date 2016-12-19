@@ -3,6 +3,7 @@ package com.zkteco.bigboss.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +71,7 @@ public class SetupCompanyFragment extends BaseFragment implements SetupCompanyVi
 
     @OnClick(R.id.address_layout)
     void setGetlocation() {
+        showprog("");
         showaddress();
     }
 
@@ -134,6 +136,8 @@ public class SetupCompanyFragment extends BaseFragment implements SetupCompanyVi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_setup_company, container, false);
         unbinder = ButterKnife.bind(this, view);
+        EditLocation.setMovementMethod(ScrollingMovementMethod.getInstance());
+        EditIndus.setMovementMethod(ScrollingMovementMethod.getInstance());
         return view;
     }
 
@@ -167,6 +171,7 @@ public class SetupCompanyFragment extends BaseFragment implements SetupCompanyVi
         Observable.just(getaddressjson()).map(new Func1<List<CounAddress>, OptionsPickerView>() {
             @Override
             public OptionsPickerView call(final List<CounAddress> counAddresses) {
+
                 if (item0.size() == 0) {
                     for (int i = 0; i < counAddresses.size(); i++) {
                         item0.add(new ItemString(counAddresses.get(i).getName()));
@@ -204,6 +209,7 @@ public class SetupCompanyFragment extends BaseFragment implements SetupCompanyVi
                 optionsPickerView = new OptionsPickerView(getActivity());
                 optionsPickerView.setPicker(item0, item1, item2, true);
                 optionsPickerView.setCyclic(false, false, false);
+                displayprog();
                 optionsPickerView.show();
                 optionsPickerView.setOnDismissListener(new OnDismissListener() {
                     @Override
@@ -263,6 +269,16 @@ public class SetupCompanyFragment extends BaseFragment implements SetupCompanyVi
                 EditIndus.setText(presenter.getIndName(p));
             }
         }, "选择所属行业");
+    }
+
+    @Override
+    public void showprogs(String mesg) {
+        showprog("");
+    }
+
+    @Override
+    public void displayprogs() {
+        displayprog();
     }
 
     @Override

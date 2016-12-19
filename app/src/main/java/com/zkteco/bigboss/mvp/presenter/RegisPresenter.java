@@ -8,7 +8,9 @@ import com.zkteco.bigboss.mvp.BasePresenter;
 public interface RegisPresenter extends BasePresenter {
     void sendsmscaptcha(String user);
 
-    void nextstep(String user, String captcha);
+    void nextstep(String user, String captcha, NextDO nextDO);
 
-
+    interface NextDO {
+        void nextdothing();
+    }
 }

@@ -10,5 +10,5 @@ import java.util.List;
  * Created by jiang_ruicheng on 16/11/13.
  */
 public interface ReviewersView extends BaseView<QueryReviewersPresenter> {
-    void showList(List<QueryReviewersResponse.PayloadBean.ResultsBean> resultsBeen);
+    void showList(List<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean> resultsBeen);
 }

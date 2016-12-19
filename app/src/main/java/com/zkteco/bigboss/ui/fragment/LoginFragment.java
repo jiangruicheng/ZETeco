@@ -1,7 +1,9 @@
 package com.zkteco.bigboss.ui.fragment;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -46,6 +48,7 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
     @OnClick(R.id.login)
     void onclick() {
+        // showprogs();
         // getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
         presenter.login(getActivity(), account.getText().toString(), password.getText().toString());
         /*PopWindowManager.poptimewindow(getActivity(), login, TimePicker.MINUTE_TYPE_FIVE ,new PopWindowManager.PopviewTimeCallback() {
@@ -98,11 +101,13 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
     private ProgressDialog progressDialog;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void showprogs() {
-        progressDialog = new ProgressDialog(getActivity());
+        /*progressDialog = new ProgressDialog(getActivity(), android.R.style.Theme_Material_Light_Dialog);
         progressDialog.setMessage("正在登陆");
-        progressDialog.show();
+        progressDialog.show();*/
+        super.showprog("");
     }
 
     @Override
@@ -121,10 +126,11 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
     @Override
     public void displayprogs() {
-        if (progressDialog != null) {
+        /*if (progressDialog != null) {
             progressDialog.dismiss();
             progressDialog = null;
-        }
+        }*/
+        super.displayprog();
 
     }
 

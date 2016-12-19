@@ -45,11 +45,11 @@
         <LinearLayout
             android:id="@+id/content_leave"
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="320dp"
             android:layout_below="@+id/title"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
-            android:layout_marginTop="42dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/content_background_frame"
             android:orientation="vertical"
             android:padding="24dp">
@@ -142,9 +142,12 @@
             <com.zkteco.bigboss.view.ContainsEmojiEditText
                 android:id="@+id/reason"
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="110dp"
                 android:layout_marginTop="12dp"
+                android:background="@null"
+                android:gravity="left|clip_vertical"
                 android:hint="请填写请假理由"
+                android:maxLength="150"
                 android:textColor="@color/blak"
                 android:textColorHint="@color/colorHintText"
                 android:textSize="@dimen/text_size_apply_leav"/>
@@ -155,7 +158,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/content_leave"
             android:layout_marginLeft="48dp"
-            android:layout_marginTop="68dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
             <ImageView

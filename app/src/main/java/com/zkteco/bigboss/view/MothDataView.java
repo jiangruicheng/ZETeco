@@ -85,7 +85,7 @@ public class MothDataView extends View {
     protected void onDraw(Canvas canvas) {
         initSize();
         daysString = new int[6][7];
-
+        canvas.drawLine(0, 0, getWidth(), 0, mPaint);
         mPaint.setTextSize(mDaySize * mDisplayMetrics.scaledDensity);
         String dayString;
         int mMonthDays = DateUtils.getMonthDays(mSelYear, mSelMonth);
@@ -141,6 +141,8 @@ public class MothDataView extends View {
 
                 int startX = (int) (mColumnSize * day + (mColumnSize - mPaint.measureText(dayString)) / 2);
                 int startY = (int) (mRowSize / 2 - (mPaint.ascent() + mPaint.descent()) / 2);
+                canvas.drawLine(0, (float) (mRowSize * 0.98), getWidth(), (float) (mRowSize * 0.98), mPaint);
+
                 if (dayString.equals(mSelDay + "") && !dayString.equals("") && !dayString.equals("0")) {
                     //绘制背景色矩形
                 /*int startRecX = mColumnSize * column;
@@ -192,7 +194,7 @@ public class MothDataView extends View {
             int linerow = (mMonthDays + weekNumber - 2) / 7;
             for (int i = 1; i <= linerow; i++) {
                 mPaint.setColor(mSelectBGColor);
-                canvas.drawLine(0, i * mRowSize, getWidth(), i * mRowSize, mPaint);
+                canvas.drawLine(0, (i + 1) * mRowSize, getWidth(), (float) ((i + 1) * mRowSize * 0.98), mPaint);
             }
             for (int day = 0; day < mMonthDays; day++) {
                 dayString = (day + 1) + "";
@@ -329,10 +331,11 @@ public class MothDataView extends View {
      * @param y
      */
     private void doClickAction(int x, int y) {
-        int row = y / mRowSize;
+        int row = (int) Math.floor(y / mRowSize);
         int column = x / mColumnSize;
         if (IsWeek && dateString[weekRow - 1][column] != 0) {
             setSelectYearMonth(mSelYear, mSelMonth, dateString[weekRow - 1][column]);
+            Log.i("mothdataviewdoclick", "doClickAction: " + row);
             Log.i("selectday", "doClickAction: " + dateString[weekRow - 1][column]);
             invalidate();
             if (dateClick != null) {
@@ -397,7 +400,7 @@ public class MothDataView extends View {
             }
             setSelectYearMonth(year, month, day);
         } else {
-            if (weekRow < 6)
+            if (weekRow < 6 && dateString[weekRow][0] != 0)
                 weekRow = weekRow + 1;
         }
         invalidate();

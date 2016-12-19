@@ -10,5 +10,7 @@ public interface RegisView extends BaseView {
 
     void replaceFragment();
 
+    void recount();
+
     void backFragment();
 }

@@ -7,17 +7,18 @@ import java.util.List;
  */
 public class QueryReviewersResponse {
 
+
     /**
      * code : 00000000
-     * message : Success
-     * payload : {"results":[{"name":"Nick","empId":"40287e96574240d00157424bb4400001"}],"dataFmt":1}
+     * message : 成功
+     * payload : {"dataFmt":"1","results":{"totalRecords":1,"curPage":1,"dataFmt":1,"totalPages":1,"pageSize":10,"dataLists":[{"empId":"5a91ab6458f1d74b0159005dcbb00116","phone":"15001372759","name":"小姜"}]}}
      */
 
     private String code;
     private String message;
     /**
-     * results : [{"name":"Nick","empId":"40287e96574240d00157424bb4400001"}]
      * dataFmt : 1
+     * results : {"totalRecords":1,"curPage":1,"dataFmt":1,"totalPages":1,"pageSize":10,"dataLists":[{"empId":"5a91ab6458f1d74b0159005dcbb00116","phone":"15001372759","name":"小姜"}]}
      */
 
     private PayloadBean payload;
@@ -47,58 +48,144 @@ public class QueryReviewersResponse {
     }
 
     public static class PayloadBean {
-        private int dataFmt;
+        private String dataFmt;
         /**
-         * name : Nick
-         * empId : 40287e96574240d00157424bb4400001
+         * totalRecords : 1
+         * curPage : 1
+         * dataFmt : 1
+         * totalPages : 1
+         * pageSize : 10
+         * dataLists : [{"empId":"5a91ab6458f1d74b0159005dcbb00116","phone":"15001372759","name":"小姜"}]
          */
 
-        private List<ResultsBean> results;
+        private ResultsBean results;
 
-        public int getDataFmt() {
+        public String getDataFmt() {
             return dataFmt;
         }
 
-        public void setDataFmt(int dataFmt) {
+        public void setDataFmt(String dataFmt) {
             this.dataFmt = dataFmt;
         }
 
-        public List<ResultsBean> getResults() {
+        public ResultsBean getResults() {
             return results;
         }
 
-        public void setResults(List<ResultsBean> results) {
+        public void setResults(ResultsBean results) {
             this.results = results;
         }
 
         public static class ResultsBean {
-            private String name;
-            private String empId;
+            private int totalRecords;
+            private int curPage;
+            private int dataFmt;
+            private int totalPages;
+            private int pageSize;
+            /**
+             * empId : 5a91ab6458f1d74b0159005dcbb00116
+             * phone : 15001372759
+             * name : 小姜
+             */
 
-            public String getFirstLetter() {
-                return firstLetter;
+            private List<DataListsBean> dataLists;
+
+            public int getTotalRecords() {
+                return totalRecords;
             }
 
-            public void setFirstLetter(String firstLetter) {
-                this.firstLetter = firstLetter;
+            public void setTotalRecords(int totalRecords) {
+                this.totalRecords = totalRecords;
             }
 
-            private String firstLetter;
-
-            public String getName() {
-                return name;
+            public int getCurPage() {
+                return curPage;
             }
 
-            public void setName(String name) {
-                this.name = name;
+            public void setCurPage(int curPage) {
+                this.curPage = curPage;
             }
 
-            public String getEmpId() {
-                return empId;
+            public int getDataFmt() {
+                return dataFmt;
             }
 
-            public void setEmpId(String empId) {
-                this.empId = empId;
+            public void setDataFmt(int dataFmt) {
+                this.dataFmt = dataFmt;
+            }
+
+            public int getTotalPages() {
+                return totalPages;
+            }
+
+            public void setTotalPages(int totalPages) {
+                this.totalPages = totalPages;
+            }
+
+            public int getPageSize() {
+                return pageSize;
+            }
+
+            public void setPageSize(int pageSize) {
+                this.pageSize = pageSize;
+            }
+
+            public List<DataListsBean> getDataLists() {
+                return dataLists;
+            }
+
+            public void setDataLists(List<DataListsBean> dataLists) {
+                this.dataLists = dataLists;
+            }
+
+            public static class DataListsBean {
+                private String empId;
+                private String phone;
+                private String name;
+
+                public String getPingyinfirst() {
+                    return pingyinfirst;
+                }
+
+                public void setPingyinfirst(String pingyinfirst) {
+                    this.pingyinfirst = pingyinfirst;
+                }
+
+                private String pingyinfirst;
+
+                public String getFirstLetter() {
+                    return firstLetter;
+                }
+
+                public void setFirstLetter(String firstLetter) {
+                    this.firstLetter = firstLetter;
+                }
+
+                private String firstLetter;
+
+                public String getEmpId() {
+                    return empId;
+                }
+
+                public void setEmpId(String empId) {
+                    this.empId = empId;
+                }
+
+                public String getPhone() {
+                    return phone;
+                }
+
+                public void setPhone(String phone) {
+                    this.phone = phone;
+                }
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
             }
         }
     }

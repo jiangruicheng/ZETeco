@@ -81,7 +81,9 @@ public class RegisPresentImpl implements RegisPresenter {
 
                     @Override
                     public void onNext(Boolean aBoolean) {
+
                         if (aBoolean) {
+                            regisView.recount();
                             regisView.postmesg("验证码已发送");
                         } else {
                             regisView.postmesg("手机号已经注册");
@@ -91,7 +93,7 @@ public class RegisPresentImpl implements RegisPresenter {
     }
 
     @Override
-    public void nextstep(final String user, String captcha) {
+    public void nextstep(final String user, String captcha, final NextDO nextDO) {
         final String url = "http://218.17.43.228:28082/m/apiv1/account/verifycaptcha/";//+ MD5.GetMD5Code(user) + "/" + MD5.GetMD5Code(captcha)
         Log.i("MD5", "nextstep: " + "http://218.17.43.228:28080/apiv1/account/verifycaptcha/" + MD5.GetMD5Code(user) + "/" + MD5.GetMD5Code(captcha));
         VerifyCaptchaRequest r = new VerifyCaptchaRequest();
@@ -115,6 +117,7 @@ public class RegisPresentImpl implements RegisPresenter {
                     @Override
                     public void onNext(VerifyCaptchaResponse verifyCaptchaResponse) {
                         if (verifyCaptchaResponse.getCode().equals("00000000")) {
+                            nextDO.nextdothing();
                             regisView.replaceFragment();
                             UserMesg.getInstance().setAccount(user);
                             // regisView.postmesg(verifyCaptchaResponse.getMessage());

@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,9 +54,13 @@ public class ApprovalerSelectFragment extends BasemainFragment implements Review
     private ArrayList<String> letters = new ArrayList<>();
     private HashMap<String, Integer> lettermap = new HashMap<>();
     private ReviewersAdpater adpater;
+    private List<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean> resultsBeen;
+    private StickyRecyclerHeadersDecoration headersDecoration;
+    private int page = 1;
 
     @Override
-    public void showList(final List<QueryReviewersResponse.PayloadBean.ResultsBean> resultsBeen) {
+    public void showList(final List<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean> resultsBeen) {
+        this.resultsBeen = resultsBeen;
         /*for (int i = 0; i < resultsBeen.size(); i++) {
             resultsBeen.get(i).setFirstLetter(StringHelper.getHeadChar(StringHelper.getPingYin(resultsBeen.get(i).getName())));
             if (!lettermap.containsKey(resultsBeen.get(i).getFirstLetter())) {
@@ -88,12 +95,13 @@ public class ApprovalerSelectFragment extends BasemainFragment implements Review
             }
         });*/
         Observable.just(resultsBeen).
-                map(new Func1<List<QueryReviewersResponse.PayloadBean.ResultsBean>, List<QueryReviewersResponse.PayloadBean.ResultsBean>>() {
+                map(new Func1<List<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean>, List<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean>>() {
 
                     @Override
-                    public List<QueryReviewersResponse.PayloadBean.ResultsBean> call(List<QueryReviewersResponse.PayloadBean.ResultsBean> resultsBeen) {
+                    public List<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean> call(List<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean> resultsBeen) {
                         for (int i = 0; i < resultsBeen.size(); i++) {
                             resultsBeen.get(i).setFirstLetter(StringHelper.getHeadChar(StringHelper.getPingYin(resultsBeen.get(i).getName())));
+                            resultsBeen.get(i).setPingyinfirst(StringHelper.getPinYinHeadChar(resultsBeen.get(i).getName()));
                             if (!lettermap.containsKey(resultsBeen.get(i).getFirstLetter())) {
                                 letters.add(resultsBeen.get(i).getFirstLetter());
                                 lettermap.put(resultsBeen.get(i).getFirstLetter(), i);
@@ -105,7 +113,7 @@ public class ApprovalerSelectFragment extends BasemainFragment implements Review
                 }).
                 subscribeOn(Schedulers.newThread()).
                 observeOn(AndroidSchedulers.mainThread()).
-                subscribe(new Observer<List<QueryReviewersResponse.PayloadBean.ResultsBean>>() {
+                subscribe(new Observer<List<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean>>() {
                     @Override
                     public void onCompleted() {
 
@@ -117,13 +125,16 @@ public class ApprovalerSelectFragment extends BasemainFragment implements Review
                     }
 
                     @Override
-                    public void onNext(final List<QueryReviewersResponse.PayloadBean.ResultsBean> resultsBeen) {
+                    public void onNext(final List<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean> resultsBeen) {
                         adpater = new ReviewersAdpater();
-                        adpater.setResultsBeen((ArrayList<QueryReviewersResponse.PayloadBean.ResultsBean>) resultsBeen);
+                        adpater.setResultsBeen((ArrayList<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean>) resultsBeen);
                         quickSideBarView.setLetters(letters);
                         recyclerView.setAdapter(adpater);
-                        StickyRecyclerHeadersDecoration headersDecoration = new StickyRecyclerHeadersDecoration(adpater);
-
+                        if (headersDecoration == null) {
+                            headersDecoration = new StickyRecyclerHeadersDecoration(adpater);
+                        } else {
+                            headersDecoration.invalidateHeaders();
+                        }
                         recyclerView.addItemDecoration(headersDecoration);
                         quickSideBarView.setOnQuickSideBarTouchListener(new OnQuickSideBarTouchListener() {
                             @Override
@@ -183,6 +194,9 @@ public class ApprovalerSelectFragment extends BasemainFragment implements Review
     QuickSideBarView quickSideBarView;
     private FragmentCallBack callBack;
 
+    public ApprovalerSelectFragment() {
+    }
+
     public ApprovalerSelectFragment(SetID setID) {
         // Required empty public constructor
         setIsshownavg(true);
@@ -213,8 +227,56 @@ public class ApprovalerSelectFragment extends BasemainFragment implements Review
         unbinder = ButterKnife.bind(this, view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
+        searchEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        presenter.queryreviewers();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                final List<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean> list = new ArrayList<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean>();
+                if (s.equals(" ")) {
+                    showList(resultsBeen);
+                    return;
+                }
+                if (adpater != null) {
+                    if (adpater.getResultsBeen() != null) {
+                        for (int i = 0; i < adpater.getResultsBeen().size(); i++) {
+                            Log.i("TAG", "onTextChanged: " + adpater.getResultsBeen().get(i).getPingyinfirst());
+                            if (adpater.getResultsBeen().get(i).getName().toLowerCase().contains(s.toString().toLowerCase()) || StringHelper.getPingYin(adpater.getResultsBeen().get(i).getName()).toLowerCase().contains(s.toString().toLowerCase()) || adpater.getResultsBeen().get(i).getPingyinfirst().toLowerCase().contains(s.toString().toLowerCase())) {
+                                list.add(adpater.getResultsBeen().get(i));
+                            }
+                        }
+                        ReviewersAdpater a = new ReviewersAdpater();
+                        a.setResultsBeen((ArrayList<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean>) list);
+                        recyclerView.setAdapter(a);
+                        if (headersDecoration == null) {
+                            headersDecoration = new StickyRecyclerHeadersDecoration(adpater);
+                        } else {
+                            headersDecoration.invalidateHeaders();
+                        }
+                        a.setOnItemClickListener(new ReviewersAdpater.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(int posion) {
+                                setID.setID(list.get(posion).getEmpId());
+                                setID.setName(list.get(posion).getName());
+                                callBack.Back(ApprovalerSelectFragment.this);
+                            }
+                        });
+/*recyclerView.addItemDecoration(headersDecoration);
+                        recyclerView.setl
+*/
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        presenter.queryreviewers(1);
         return view;
     }
 

@@ -1,6 +1,7 @@
 package com.zkteco.bigboss.ui.fragment;
 
 
+import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
 
 import com.zkteco.bigboss.R;
@@ -30,5 +31,18 @@ public class BaseFragment extends Fragment {
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
+    private ProgressDialog progressDialog;
 
+    protected void showprog(String mesg) {
+        progressDialog = new ProgressDialog(getActivity(), android.R.style.Theme_Material_Light_Dialog);
+        if (mesg != null) {
+            progressDialog.setMessage("loading");
+            progressDialog.show();
+        }
+        progressDialog.show();
+    }
+
+    protected void displayprog() {
+        progressDialog.dismiss();
+    }
 }

@@ -120,15 +120,15 @@ public class QueryReviewersRequest {
         }
 
         public static class ParamsBean {
-            private String cmpId;
+            private String companyId;
             private String empId;
 
             public String getCmpId() {
-                return cmpId;
+                return companyId;
             }
 
             public void setCmpId(String cmpId) {
-                this.cmpId = cmpId;
+                this.companyId = cmpId;
             }
 
             public String getEmpId() {

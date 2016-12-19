@@ -11,4 +11,8 @@ import java.util.List;
  */
 public interface QueryAproView extends BaseView<QueryAproPresentrer> {
     void showlist(List<QueryAproResponse.PayloadBean.ResultsBean> list);
+
+    void showprogs(String mesg);
+
+    void displayprogs();
 }

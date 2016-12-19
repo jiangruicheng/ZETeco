@@ -53,8 +53,6 @@ public class RegisStingFragment extends BaseFragment {
 
     @OnClick(R.id.next)
     void onnextclick() {
-        /*UserMesg.getInstance().setUsername(user.getText().toString());
-        UserMesg.getInstance().setPassword(setpassword.getText().toString());*/
         //replaceFragment(new RegisSuccesFragment(), null);
         Log.i("user", "onnextclick: " + user.getText().toString());
         if (StringUtil.isEmptyIgnoreBlank(user.getText().toString())) {

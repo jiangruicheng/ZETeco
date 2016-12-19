@@ -1,5 +1,7 @@
 package com.zkteco.bigboss.mvp.presenter.Impl;
 
+import android.util.Log;
+
 import com.zkteco.bigboss.bean.json.QueryReviewersRequest;
 import com.zkteco.bigboss.bean.json.QueryReviewersResponse;
 import com.zkteco.bigboss.bean.json.bean.UserMesg;
@@ -19,7 +21,7 @@ import rx.schedulers.Schedulers;
 public class QueryReviewersPresenterImpl implements QueryReviewersPresenter {
 
     @Override
-    public void queryreviewers() {
+    public void queryreviewers(int page) {
         /*QueryReviewersResponse.PayloadBean.ResultsBean p = new QueryReviewersResponse.PayloadBean.ResultsBean();
         p.setName("卢鹏琳");
         QueryReviewersResponse.PayloadBean.ResultsBean s = new QueryReviewersResponse.PayloadBean.ResultsBean();
@@ -34,6 +36,7 @@ public class QueryReviewersPresenterImpl implements QueryReviewersPresenter {
         reviewersRequest.setSessionId(UserMesg.getInstance().getResponse().getSessionId());
         reviewersRequest.getPayload().getParams().setCmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getCmpId());
         reviewersRequest.getPayload().getParams().setEmpId(UserMesg.getInstance().getResponse().getPayload().getResults().getEmpId());
+        Log.i("TAG", "queryreviewers: " + "ssid :" + reviewersRequest.getSessionId() + "cmpid:" + reviewersRequest.getCmpId());
         Subscription subscription = ZKTecoRequest.getATTPAI().
                 queryreviewers(reviewersRequest).
                 subscribeOn(Schedulers.io()).
@@ -51,7 +54,7 @@ public class QueryReviewersPresenterImpl implements QueryReviewersPresenter {
 
                     @Override
                     public void onNext(QueryReviewersResponse queryReviewersResponse) {
-                        view.showList(queryReviewersResponse.getPayload().getResults());
+                        view.showList(queryReviewersResponse.getPayload().getResults().getDataLists());
                     }
                 });
     }

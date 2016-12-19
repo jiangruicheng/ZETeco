@@ -79,7 +79,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             fragmentManager.beginTransaction().show(fragmentList.get(fragmentList.size() - 1)).commit();
             SetVisable(fragmentList.get(fragmentList.size() - 1).isIsshownavg());
         } else {
-            final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setTitle("退出APP").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Light_Dialog).setTitle("退出APP").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     finish();

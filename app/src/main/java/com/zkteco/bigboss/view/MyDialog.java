@@ -53,7 +53,6 @@ public class MyDialog extends Dialog {
         /**
          * Set the Dialog message from resource
          *
-         * @param title
          * @return
          */
         public Builder setMessage(int message) {
@@ -129,9 +128,7 @@ public class MyDialog extends Dialog {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             // instantiate the dialog with the custom Theme
-            final MyDialog dialog = new MyDialog(context);
-
-
+            final MyDialog dialog = new MyDialog(context, R.style.MyDialog);
             View layout = inflater.inflate(R.layout.mydialog, null);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.addContentView(layout, new LinearLayout.LayoutParams(
@@ -160,15 +157,14 @@ public class MyDialog extends Dialog {
             if (message != null) {
                 ((TextView) layout.findViewById(R.id.message)).setText(message);
             }
-
             dialog.setContentView(layout);
             Window window = dialog.getWindow();
             WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             WindowManager.LayoutParams layoutParams = window.getAttributes();
             Display display = windowManager.getDefaultDisplay();
             window.setGravity(Gravity.CENTER);
-            layoutParams.width = (int) (display.getWidth()*0.8);
-            layoutParams.height = (int) (display.getWidth()*0.5);
+            layoutParams.width = (int) (display.getWidth() * 0.8);
+            layoutParams.height = (int) (display.getWidth() * 0.5);
             window.setAttributes(layoutParams);
             return dialog;
         }

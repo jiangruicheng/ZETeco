@@ -3,7 +3,7 @@ apply plugin: 'android-apt'
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 23
     buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "com.zkteco.bigboss"

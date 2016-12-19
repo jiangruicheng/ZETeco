@@ -47,7 +47,7 @@
             android:layout_below="@+id/title"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
-            android:layout_marginTop="42dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/content_background_long"
             android:orientation="vertical"
             android:padding="24dp">
@@ -89,23 +89,23 @@
 
 
                 <TextView
-                    android:gravity="left"
                     android:id="@+id/signcard_start_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:layout_weight="1"
+                    android:gravity="left"
                     android:text="签卡时间"
                     android:textColor="@color/blak"
                     android:textSize="@dimen/text_size_apply_leav"/>
 
                 <TextView
-                    android:gravity="right"
                     android:id="@+id/select_start_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:layout_weight="1"
+                    android:gravity="right"
                     android:text=">"
                     android:textColor="@color/blak"
                     android:textSize="@dimen/text_size_apply_leav"/>
@@ -116,9 +116,12 @@
             <com.zkteco.bigboss.view.ContainsEmojiEditText
                 android:id="@+id/reason"
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="120dp"
                 android:layout_marginTop="12dp"
+                android:background="@null"
+                android:gravity="left|clip_vertical"
                 android:hint="请填写签卡理由"
+                android:maxLength="150"
                 android:textColor="@color/blak"
                 android:textColorHint="@color/colorHintText"
                 android:textSize="19sp"/>
@@ -129,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/content_leave"
             android:layout_marginLeft="48dp"
-            android:layout_marginTop="68dp"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
             <ImageView

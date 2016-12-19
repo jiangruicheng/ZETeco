@@ -81,6 +81,7 @@
             >
 
             <TextView
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
@@ -92,11 +93,12 @@
 
             <EditText
                 android:id="@+id/editcmpname"
-                android:layout_width="wrap_content"
+                android:layout_width="160dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/name"
                 android:background="@null"
-                android:gravity="center"
+                android:gravity="left|center_vertical"
                 android:hint="请输入企业名称"
                 android:padding="5dp"
                 android:textColor="@color/colorText"
@@ -119,6 +121,7 @@
             >
 
             <TextView
+                android:id="@+id/indus"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
@@ -130,11 +133,13 @@
 
             <TextView
                 android:id="@+id/Edit_indus"
-                android:layout_width="wrap_content"
+                android:layout_width="160dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
                 android:layout_marginRight="4dp"
                 android:layout_toLeftOf="@+id/getindus"
-                android:gravity="center"
+                android:layout_toRightOf="@+id/indus"
+                android:gravity="left|center_vertical"
                 android:padding="5dp"
                 android:textColor="@color/colorText"
                 android:textColorHint="@color/colorHintText"
@@ -164,6 +169,7 @@
             >
 
             <TextView
+                android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
@@ -175,11 +181,12 @@
 
             <TextView
                 android:id="@+id/Edit_location"
-                android:layout_width="160dp"
+                android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="4dp"
                 android:layout_toLeftOf="@+id/getlocation"
-                android:gravity="center"
+                android:layout_toRightOf="@+id/address"
+                android:gravity="left|center_vertical"
                 android:padding="1dp"
                 android:textColor="@color/colorText"
                 android:textSize="14sp"/>
@@ -207,6 +214,7 @@
             >
 
             <TextView
+                android:id="@+id/xiangxidizhi"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
@@ -218,11 +226,12 @@
 
             <EditText
                 android:id="@+id/editaddress"
-                android:layout_width="160dp"
+                android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/xiangxidizhi"
                 android:background="@null"
-                android:gravity="center"
+                android:gravity="left|center_vertical"
                 android:hint="请输入详细地址"
                 android:padding="5dp"
                 android:textColor="@color/colorText"

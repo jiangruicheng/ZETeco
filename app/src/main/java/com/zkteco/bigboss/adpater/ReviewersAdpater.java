@@ -21,9 +21,13 @@ public class ReviewersAdpater extends RecyclerView.Adapter<ReviewersAdpater.myVi
         void onItemClick(int posion);
     }
 
-    private ArrayList<QueryReviewersResponse.PayloadBean.ResultsBean> resultsBeen;
+    public ArrayList<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean> getResultsBeen() {
+        return resultsBeen;
+    }
 
-    public void setResultsBeen(ArrayList<QueryReviewersResponse.PayloadBean.ResultsBean> been) {
+    private ArrayList<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean> resultsBeen;
+
+    public void setResultsBeen(ArrayList<QueryReviewersResponse.PayloadBean.ResultsBean.DataListsBean> been) {
         resultsBeen = been;
         notifyDataSetChanged();
     }
@@ -42,20 +46,26 @@ public class ReviewersAdpater extends RecyclerView.Adapter<ReviewersAdpater.myVi
 
     @Override
     public void onBindViewHolder(myViewHolder holder, final int position) {
-        holder.name.setText(String.valueOf(resultsBeen.get(position).getName()));
-        if (onItemClickListener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickListener.onItemClick(position);
-                }
-            });
+        if (resultsBeen != null) {
+            holder.name.setText(String.valueOf(resultsBeen.get(position).getName()));
+            if (onItemClickListener != null) {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onItemClickListener.onItemClick(position);
+                    }
+                });
+            }
         }
     }
 
     @Override
     public long getHeaderId(int position) {
-        return resultsBeen.get(position).getFirstLetter().charAt(0);
+        if (resultsBeen.get(position).getFirstLetter() != null) {
+            //Log.i("TAG", "getHeaderId: " + resultsBeen.get(position).getFirstLetter().toUpperCase().charAt(0));
+            return resultsBeen.get(position).getFirstLetter().toUpperCase().charAt(0);
+        }
+        return 0;
     }
 
     @Override
@@ -69,13 +79,18 @@ public class ReviewersAdpater extends RecyclerView.Adapter<ReviewersAdpater.myVi
 
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-        TextView textView = (TextView) holder.itemView;
-        textView.setText(resultsBeen.get(position).getFirstLetter());
+        if (resultsBeen != null) {
+            TextView textView = (TextView) holder.itemView;
+            textView.setText(resultsBeen.get(position).getFirstLetter());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return resultsBeen.size();
+        if (resultsBeen != null) {
+            return resultsBeen.size();
+        }
+        return 0;
     }
 
     class myViewHolder extends RecyclerView.ViewHolder {

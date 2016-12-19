@@ -39,12 +39,14 @@ public class ApplyJoinCompanyPresenterImpl implements ApplyJoinCompanyPresenter 
 
                     @Override
                     public void onError(Throwable e) {
-                        view.postmesg(e.getMessage());
+                        if (view != null)
+                            view.postmesg(e.getMessage());
                     }
 
                     @Override
                     public void onNext(SearchCompanyResponse searchCompanyRespose) {
-                        view.showList(searchCompanyRespose);
+                        if (view != null)
+                            view.showList(searchCompanyRespose);
                         ApplyJoinCompanyPresenterImpl.this.searchCompanyResponse = searchCompanyRespose;
                     }
                 });
@@ -73,13 +75,15 @@ public class ApplyJoinCompanyPresenterImpl implements ApplyJoinCompanyPresenter 
 
                     @Override
                     public void onError(Throwable e) {
-                        view.postmesg(e.getMessage());
+                        if (view != null)
+                            view.postmesg(e.getMessage());
                     }
 
                     @Override
                     public void onNext(ApplyCmpResponse applyCmpResponse) {
                         if (applyCmpResponse.getCode().equals("00000000")) {
-                            view.postmesg(applyCmpResponse.getMessage());
+                            if (view != null)
+                                view.postmesg(applyCmpResponse.getMessage());
                         }
                     }
                 });

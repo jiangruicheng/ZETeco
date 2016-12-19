@@ -36,7 +36,7 @@ public class SetupCompanyPresenterImpl implements SetupCompanyPresenter {
     @Override
     public void checkoutindu() {
         checkoutCmpindusRequest = new CheckoutCmpindusRequest();
-
+        view.showprogs("");
         Subscription subscription = ZKTecoRequest.getListApi().
                 checkoutindu(checkoutCmpindusRequest).
                 observeOn(AndroidSchedulers.mainThread()).
@@ -66,6 +66,7 @@ public class SetupCompanyPresenterImpl implements SetupCompanyPresenter {
             @Override
             public void onNext(ArrayList<String> strings) {
                 view.showindus(strings);
+                view.displayprogs();
             }
         });
     }

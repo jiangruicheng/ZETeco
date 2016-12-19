@@ -59,6 +59,9 @@ public class LeaveListFragment extends BasemainFragment implements QueryAproView
     private boolean IsLIFT = true;
     private boolean isapproval;
 
+    public LeaveListFragment() {
+    }
+
     public LeaveListFragment(boolean isapproval) {
         // Required empty public constructor
         this.isapproval = isapproval;
@@ -175,6 +178,16 @@ public class LeaveListFragment extends BasemainFragment implements QueryAproView
     public void showlist(List<QueryAproResponse.PayloadBean.ResultsBean> list) {
         mesgListAdapter.setList(list);
         mesgListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showprogs(String mesg) {
+        showprog(mesg);
+    }
+
+    @Override
+    public void displayprogs() {
+        displayprog();
     }
 
     @Override

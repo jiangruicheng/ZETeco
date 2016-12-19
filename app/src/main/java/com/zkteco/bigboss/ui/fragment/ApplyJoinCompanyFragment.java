@@ -1,6 +1,7 @@
 package com.zkteco.bigboss.ui.fragment;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,13 +12,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zkteco.bigboss.R;
 import com.zkteco.bigboss.bean.json.SearchCompanyResponse;
 import com.zkteco.bigboss.mvp.presenter.ApplyJoinCompanyPresenter;
 import com.zkteco.bigboss.mvp.view.ApplyJoinCompanyView;
 import com.zkteco.bigboss.util.StringUtil;
+import com.zkteco.bigboss.view.MyDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -124,7 +125,15 @@ public class ApplyJoinCompanyFragment extends BaseFragment implements ApplyJoinC
 
     @Override
     public void postmesg(String msg) {
-        Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+        MyDialog.Builder mydialog = new MyDialog.Builder(getActivity());
+        mydialog.setMessage(msg);
+        mydialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        mydialog.create().show();
     }
 
     @Override

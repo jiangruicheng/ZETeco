@@ -23,6 +23,7 @@ public class QueryAproPresenterImpl implements QueryAproPresentrer {
     public final static int APPROVAL = 5;
 
     private QueryAproView view;
+
     @Override
     public void queryApro(int applyorapproval, int statu) {
         QueryAprolistRquest rquest = new QueryAprolistRquest();
@@ -40,6 +41,7 @@ public class QueryAproPresenterImpl implements QueryAproPresentrer {
             rquest.getPayload().getParams().setPageSize(20);
             rquest.getPayload().getParams().setApprovalRet(statu);
         }
+        view.showprogs("");
         Subscription subscription = ZKTecoRequest.getATTPAI().
                 queryaprolist(rquest).
                 subscribeOn(Schedulers.io()).
@@ -58,6 +60,7 @@ public class QueryAproPresenterImpl implements QueryAproPresentrer {
                     @Override
                     public void onNext(QueryAproResponse queryAproResponse) {
                         view.showlist(queryAproResponse.getPayload().getResults());
+                        view.displayprogs();
                     }
                 });
     }

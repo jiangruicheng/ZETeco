@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface SetupCompanyView extends BaseView<SetupCompanyPresenter> {
     void showindus(List<String> cmpIndusResponse);
+    void showprogs(String mesg);
+    void displayprogs();
 }

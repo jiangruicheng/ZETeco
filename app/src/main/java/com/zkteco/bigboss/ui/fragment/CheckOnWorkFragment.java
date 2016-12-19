@@ -2,6 +2,7 @@ package com.zkteco.bigboss.ui.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zkteco.bigboss.R;
 import com.zkteco.bigboss.adpater.AttListAdapter;
@@ -28,6 +28,7 @@ import com.zkteco.bigboss.util.FragmentCallBack;
 import com.zkteco.bigboss.util.ScreenUtil;
 import com.zkteco.bigboss.view.Lift2Right;
 import com.zkteco.bigboss.view.MothDataView;
+import com.zkteco.bigboss.view.MyDialog;
 import com.zkteco.bigboss.view.WeekView;
 
 import java.text.ParseException;
@@ -70,7 +71,7 @@ public class CheckOnWorkFragment extends BasemainFragment implements QueryAttVie
         /*layoutParams.height = ScreenUtil.dip2px(getActivity(), 210);
         mothData.setLayoutParams(layoutParams);*/
         mothData.onLeftClick();
-        if (!swichWeektoMonth.isCheckLift()){
+        if (!swichWeektoMonth.isCheckLift()) {
             currdatatext.setText(mothData.getmSelYear() + "年" + (mothData.getmSelMonth() + 1) + "月");
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
             Date date = null;
@@ -97,7 +98,7 @@ public class CheckOnWorkFragment extends BasemainFragment implements QueryAttVie
         layoutParams.height = ScreenUtil.dip2px(getActivity(), 210);
         mothData.setLayoutParams(layoutParams);*/
         mothData.onRightClick();
-        if (!swichWeektoMonth.isCheckLift()){
+        if (!swichWeektoMonth.isCheckLift()) {
             currdatatext.setText(mothData.getmSelYear() + "年" + (mothData.getmSelMonth() + 1) + "月");
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
             Date date = null;
@@ -263,7 +264,15 @@ public class CheckOnWorkFragment extends BasemainFragment implements QueryAttVie
 
     @Override
     public void postmesg(String msg) {
-        Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+        MyDialog.Builder mydialog = new MyDialog.Builder(getActivity());
+        mydialog.setMessage(msg);
+        mydialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        mydialog.create().show();
     }
 
     private AttListAdapter adapter;
